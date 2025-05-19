@@ -3,10 +3,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Configuration object - easy to modify dashboard links
     const config = {
         // Hardcoded credentials (simple validation)
-        credentials: {
-            username: 'admin',
-            password: '1234'
-        },
+        credentials: [
+            { username: 'andrea', password: 'andkuntz123' },
+            { username: 'leonardo', password: '8520' },
+            { username: 'helton', password: 'helton2025' }
+        ],
         
         // Dashboard configuration - add/remove dashboards here
         dashboards: {
@@ -44,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             'estudo-i': {
                 title: 'Hospital São Vicente de Paulo',
-                url: 'https://app.powerbi.com/view?r=eyJrIjoiYjc4NzQ2MmYtNDI5MC00ZTI0LWE0YjEtZDgxNGNjNmNkYzJmIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
+                url: 'https://app.powerbi.com/view?r=eyJrIjoiYWVjNjdlZDQtOTE3Yy00ZDNhLWE0MDQtNzNhZDcxOWRkOGEzIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             }
         }
     };
@@ -74,7 +75,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const password = document.getElementById('password').value;
         
         // Simple credential validation
-        if (username === config.credentials.username && password === config.credentials.password) {
+        const validUser = config.credentials.find(user => user.username === username && user.password === password);
+
+        if (validUser) {
             // Successful login
             sessionStorage.setItem('loggedIn', 'true');
             showDashboardSelection();
