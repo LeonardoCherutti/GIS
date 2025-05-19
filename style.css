@@ -1,0 +1,27 @@
+/* Custom CSS for elements that need more specific styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8fafc;
+}
+.dashboard-iframe {
+    width: 100%;
+    height: calc(100vh - 80px);
+    border: none;
+    background: #fff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+.dashboard-card {
+    transition: all 0.3s ease;
+    border-left: 4px solid #3b82f6;
+}
+.dashboard-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
