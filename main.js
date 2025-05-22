@@ -1,14 +1,7 @@
 // Main application script
 document.addEventListener('DOMContentLoaded', function() {
     // Configuration object - easy to modify dashboard links
-    const config = {
-        // Hardcoded credentials (simple validation)
-        credentials: [
-            { username: 'andrea', password: 'andkuntz123' },
-            { username: 'leonardo', password: '8520' },
-            { username: 'helton', password: 'helton2025' }
-        ],
-        
+    const config = {        
         // Dashboard configuration - add/remove dashboards here
         dashboards: {
             'estudo-a': {
@@ -68,22 +61,31 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Login Form Submission
-    loginForm.addEventListener('submit', function(e) {
+    loginForm.addEventListener('submit', async function(e) {
         e.preventDefault();
-        
+    
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
+    
+        try {
+            const res = await fetch('https://backend-app-113139671688.southamerica-east1.run.app/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
         
-        // Simple credential validation
-        const validUser = config.credentials.find(user => user.username === username && user.password === password);
-
-        if (validUser) {
-            // Successful login
-            sessionStorage.setItem('loggedIn', 'true');
-            showDashboardSelection();
-            loginError.classList.add('hidden');
-        } else {
-            // Failed login
+            const data = await res.json();
+        
+            if (res.ok) {
+                sessionStorage.setItem('token', data.token);
+                sessionStorage.setItem('loggedIn', 'true');
+                showDashboardSelection();
+                loginError.classList.add('hidden');
+            } else {
+                loginError.classList.remove('hidden');
+            }
+        } catch (err) {
+            console.error('Erro ao autenticar', err);
             loginError.classList.remove('hidden');
         }
     });
