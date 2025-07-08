@@ -13,7 +13,7 @@
     <!-- Main container that will hold all our views -->
     <div id="app" class="min-h-screen">
         <!-- Login View (default view) -->
-        <div id="login-view" class="flex items-center justify-center min-h-screen px-4">
+        <div id="login-view" class="flex items-center justify-center hidden min-h-screen px-4">
             <div class="login-container p-8 w-full max-w-lg">
                 <div class="text-center mb-8">
                     <img src="./imagens/1.png" alt="Logo da empresa" class="mx-auto mb-2 max-h-24">
@@ -47,7 +47,7 @@
         </div>
         
         <!-- Dashboard Selection View (hidden by default) -->
-        <div id="dashboard-selection-view" class="hidden p-6 max-w-6xl mx-auto">
+        <div id="dashboard-selection-view" class="p-6 max-w-6xl mx-auto">
             <div class="flex justify-between items-center mb-8">
                 <h1 class="text-2xl font-bold text-gray-800">Selecione um Dashboard</h1>
                 <button id="logout-btn" class="text-gray-500 hover:text-gray-700">
