@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 url: 'https://app.powerbi.com/view?r=eyJrIjoiYjY2NThkMGQtMjU2MS00NmQyLTg5OTgtODE5MjJkMTEzODRmIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             },
             'estudo-h': {
-                title: 'Hospital do Câncer de Londrina',
-                url: 'https://app.powerbi.com/view?r=eyJrIjoiNjNjMzczYzItMjZlMC00MjliLTgzYTItNDUyZWI1MTFkZjQwIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
+                title: 'HPS Pref. Dr. Marcos Antonio Ronchetti',
+                url: 'https://app.powerbi.com/view?r=eyJrIjoiYjEwYTA2M2YtOGZlNS00YmI3LTg3ZTQtNWYxY2FhNGUzY2UxIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             },
             'estudo-i': {
                 title: 'Hospital Nsa. Sra. Das Graças',
