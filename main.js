@@ -39,6 +39,18 @@ document.addEventListener('DOMContentLoaded', function() {
             'estudo-i': {
                 title: 'Hospital Nsa. Sra. Das Graças',
                 url: 'https://app.powerbi.com/view?r=eyJrIjoiMjE5OWFjOGItMzU2Zi00MDNlLTg2YzMtZmEwZDdmYTQ2YjE0IiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
+            },
+            'estudo-j': {
+                title: 'Hospital Nsa. Sra. do Perpétuo Socorro',
+                url: 'https://app.powerbi.com/view?r=eyJrIjoiMGEzNDI2ODItYTExYi00NWM1LWJmMzAtMjc2YzM1OWQ5NjRjIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
+            },
+            'estudo-k': {
+                title: 'Hospital do Câncer de Londrina',
+                url: 'https://app.powerbi.com/view?r=eyJrIjoiNjNjMzczYzItMjZlMC00MjliLTgzYTItNDUyZWI1MTFkZjQwIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
+            },
+            'estudo-l': {
+                title: 'Hospital São Vicente de Paulo',
+                url: 'https://app.powerbi.com/view?r=eyJrIjoiYWVjNjdlZDQtOTE3Yy00ZDNhLWE0MDQtNzNhZDcxOWRkOGEzIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             }
         }
     };
