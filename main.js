@@ -25,8 +25,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 url: 'https://app.powerbi.com/view?r=eyJrIjoiYWVkMGUzYmEtNzk5Ni00YjBmLThjYWEtYjUzODcyYzkxOWYyIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             },
             'estudo-f': {
-                title: 'Hospital Nsa. Sra. do Perpétuo Socorro',
-                url: 'https://app.powerbi.com/view?r=eyJrIjoiMGEzNDI2ODItYTExYi00NWM1LWJmMzAtMjc2YzM1OWQ5NjRjIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
+                title: 'Hospital Universitário de Canoas',
+                url: 'https://app.powerbi.com/view?r=eyJrIjoiYTY4MGYzNjQtZDhiYS00ZTkzLTlmODktNWEyMjI5ODM2Njk4IiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             },
             'estudo-g': {
                 title: 'Hospital São Francisco de Assis',
