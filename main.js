@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             'estudo-f': {
                 title: 'Maternidade Santo Antônio HMSA',
-                url: 'https://app.powerbi.com/view?r=eyJrIjoiNjRmMDM0OTgtNmQ4ZS00YzRhLThjMDAtNzg0ODMwMjFlYjg0IiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9" frameborder="0" allowFullScreen="true"></iframe>'
+                url: 'https://app.powerbi.com/view?r=eyJrIjoiNjRmMDM0OTgtNmQ4ZS00YzRhLThjMDAtNzg0ODMwMjFlYjg0IiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             },
             'estudo-g': {
                 title: 'Hospital São Francisco de Assis',
