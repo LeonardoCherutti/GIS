@@ -21,12 +21,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 url: 'https://app.powerbi.com/view?r=eyJrIjoiNDExNGVmOGUtY2FhYS00NWYyLTg4NTctODUyZGVlMDY4ZjIyIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             },
             'estudo-e': {
-                title: 'Hospital da Cidade',
-                url: 'https://app.powerbi.com/view?r=eyJrIjoiYWVkMGUzYmEtNzk5Ni00YjBmLThjYWEtYjUzODcyYzkxOWYyIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
+                title: '',
+                url: '' // Replace with actual Power BI URL
             },
             'estudo-f': {
-                title: 'Hospital Universitário de Canoas',
-                url: 'https://app.powerbi.com/view?r=eyJrIjoiYTY4MGYzNjQtZDhiYS00ZTkzLTlmODktNWEyMjI5ODM2Njk4IiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
+                title: 'Maternidade Santo Antônio HMSA',
+                url: 'https://app.powerbi.com/view?r=eyJrIjoiNjRmMDM0OTgtNmQ4ZS00YzRhLThjMDAtNzg0ODMwMjFlYjg0IiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9" frameborder="0" allowFullScreen="true"></iframe>'
             },
             'estudo-g': {
                 title: 'Hospital São Francisco de Assis',
