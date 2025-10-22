@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             'estudo-e': {
                 title: 'Estudo em elaboração...',
-                url: '' // Replace with actual Power BI URL
+                url: 'https://app.powerbi.com/view?r=eyJrIjoiNzdhZDIxYTQtN2M0My00MDA0LTg1OGEtZTFkMDMxYmYwMzM4IiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             },
             'estudo-f': {
                 title: 'Maternidade Santo Antônio HMSA (informações CNES pendentes...)',
