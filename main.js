@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 url: 'https://app.powerbi.com/view?r=eyJrIjoiNDExNGVmOGUtY2FhYS00NWYyLTg4NTctODUyZGVlMDY4ZjIyIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             },
             'estudo-e': {
-                title: 'Hospital do Coração de Cariri (informações CNES pendentes...)',
+                title: 'Hospital do Coração de Cariri',
                 url: 'https://app.powerbi.com/view?r=eyJrIjoiNzdhZDIxYTQtN2M0My00MDA0LTg1OGEtZTFkMDMxYmYwMzM4IiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             },
             'estudo-f': {
@@ -155,4 +155,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
 
