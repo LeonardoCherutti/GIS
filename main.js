@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 url: 'https://app.powerbi.com/view?r=eyJrIjoiNjRmMDM0OTgtNmQ4ZS00YzRhLThjMDAtNzg0ODMwMjFlYjg0IiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             },
             'estudo-g': {
-                title: 'Hospital São Francisco de Assis',
-                url: 'https://app.powerbi.com/view?r=eyJrIjoiYjY2NThkMGQtMjU2MS00NmQyLTg5OTgtODE5MjJkMTEzODRmIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
+                title: 'Hospital do Idoso Zilda Arns',
+                url: 'https://app.powerbi.com/view?r=eyJrIjoiYjdlN2UzNjQtZDRiYi00ZGM5LWE0MjItOWQyODg4NjhlMzNlIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             },
             'estudo-h': {
                 title: 'HPS Pref. Dr. Marcos Antonio Ronchetti',
