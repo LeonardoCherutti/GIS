@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 url: 'https://app.powerbi.com/view?r=eyJrIjoiNjJhZjcyYjAtYzI4Ni00NDVmLWE3NmUtNDk1MjA4YTY4ZmVlIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             },
             'estudo-b': {
-                title: 'Hospital Municipal Ruth Cardoso',
-                url: 'https://app.powerbi.com/view?r=eyJrIjoiMGE2NmJlNzctYWFmYy00MjhjLTgwNzAtZDdhNWM2YzZiMjEwIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
+                title: 'Hospital Geral Clériston Andrade',
+                url: 'https://app.powerbi.com/view?r=eyJrIjoiMmQ0ZmFiNGQtZmQ3OC00ZWU5LTk5MjYtYmQyZTU4NzlmOTZhIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             },
             'estudo-c': {
                 title: 'UPAs Florianópolis',
