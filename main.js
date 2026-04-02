@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 url: 'https://app.powerbi.com/view?r=eyJrIjoiYjdlN2UzNjQtZDRiYi00ZGM5LWE0MjItOWQyODg4NjhlMzNlIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             },
             'estudo-h': {
-                title: 'HPS Pref. Dr. Marcos Antonio Ronchetti',
-                url: 'https://app.powerbi.com/view?r=eyJrIjoiYjEwYTA2M2YtOGZlNS00YmI3LTg3ZTQtNWYxY2FhNGUzY2UxIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
+                title: 'Hospital Municipal Dr. Ricardo de Tadeu Ladeia',
+                url: 'https://app.powerbi.com/view?r=eyJrIjoiMzUyZGU3MTQtMDIzMC00ZWUyLTk5MDYtYTBkOTQyZWM1NjI4IiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             },
             'estudo-i': {
                 title: 'Hospital Nsa. Sra. Das Graças',
