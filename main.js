@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             'estudo-j': {
                 title: 'Hospital Nsa. Sra. do Perpétuo Socorro',
-                url: 'https://app.powerbi.com/view?r=eyJrIjoiMGEzNDI2ODItYTExYi00NWM1LWJmMzAtMjc2YzM1OWQ5NjRjIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
+                url: 'https://app.powerbi.com/view?r=eyJrIjoiN2E0ZDA5OGItNDU5OC00YzU4LTgzZmItNTQ5NjI2ZmI0MGI1IiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9' // Replace with actual Power BI URL
             },
             'estudo-k': {
                 title: 'Hospital do Câncer de Londrina',
