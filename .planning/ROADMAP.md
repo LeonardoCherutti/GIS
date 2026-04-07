@@ -83,7 +83,12 @@ Plans:
   1. Changing the locale segment in the URL (e.g., `/en` vs `/pt-BR`) switches UI language without a full page reload
   2. Zero hardcoded Portuguese strings exist in component JSX -- all text comes from next-intl message files
   3. Adding a new locale requires only a new messages JSON file and a config entry, no component changes
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — Install next-intl, configure [locale] routing, proxy.ts, message files, route restructuring
+- [ ] 04-02-PLAN.md — Extract all hardcoded Portuguese strings to useTranslations() calls
+
 **UI hint**: yes
 
 ---
@@ -95,9 +100,9 @@ Plans:
 | 1. Foundation | 3/3 | Complete | 2026-04-07 |
 | 2. Auth + Data | 3/3 | Complete | 2026-04-07 |
 | 3. Core UI | 4/5 | In Progress|  |
-| 4. Polish + i18n | 0/? | Not started | - |
+| 4. Polish + i18n | 0/2 | Not started | - |
 
 ---
 
 *Roadmap created: 2026-04-07*
-*Last updated: 2026-04-07 after Phase 3 planning*
+*Last updated: 2026-04-07 after Phase 4 planning*
