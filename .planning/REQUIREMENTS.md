@@ -68,9 +68,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Internationalization
 
-- [ ] **I18N-01**: next-intl configured with [locale] routing
+- [x] **I18N-01**: next-intl configured with [locale] routing
 - [ ] **I18N-02**: All UI strings extracted to pt-BR message files (no hardcoded Portuguese)
-- [ ] **I18N-03**: i18n-ready architecture supporting future language additions
+- [x] **I18N-03**: i18n-ready architecture supporting future language additions
 
 ## v2 Requirements
 
@@ -153,9 +153,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UX-01 | Phase 3 | Complete |
 | UX-02 | Phase 3 | Complete |
 | UX-03 | Phase 3 | Complete |
-| I18N-01 | Phase 4 | Pending |
+| I18N-01 | Phase 4 | Complete |
 | I18N-02 | Phase 4 | Pending |
-| I18N-03 | Phase 4 | Pending |
+| I18N-03 | Phase 4 | Complete |
 
 **Coverage:**
 - v1 requirements: 41 total

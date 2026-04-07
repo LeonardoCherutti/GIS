@@ -2,38 +2,38 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planning
-last_updated: "2026-04-07T20:11:28.030Z"
+status: executing
+last_updated: "2026-04-07T20:33:34.982Z"
 progress:
   total_phases: 4
   completed_phases: 3
-  total_plans: 11
-  completed_plans: 11
-  percent: 100
+  total_plans: 13
+  completed_plans: 12
+  percent: 92
 ---
 
 # State: GIS - Gestao Inteligente em Saude
 
 **Last updated:** 2026-04-07
-**Session:** Completed 03-04-PLAN.md
+**Session:** Completed 04-01-PLAN.md
 
 ---
 
 ## Project Reference
 
 **Core value:** Authenticated users can quickly access hospital-specific Power BI dashboards from a single, clean portal
-**Current focus:** Phase 03 — core-ui
+**Current focus:** Phase 04 — polish-i18n
 
 ---
 
 ## Current Position
 
-Phase: 03 (core-ui) — EXECUTING
-Plan: 5 of 5
+Phase: 04 (polish-i18n) — EXECUTING
+Plan: 2 of 2
 **Phase:** 04
-**Plan:** Not started
-**Status:** Ready to plan
-**Progress:** [██████████] 100%
+**Plan:** 04-01 complete, 04-02 next
+**Status:** Executing Phase 04
+**Progress:** [█████████░] 92%
 
 ### Phase Progress
 
@@ -42,7 +42,7 @@ Plan: 5 of 5
 | 1. Foundation | Complete (3/3 plans) |
 | 2. Auth + Data | Complete (3/3 plans) |
 | 3. Core UI | In progress (1/5 plans) |
-| 4. Polish + i18n | Not started |
+| 4. Polish + i18n | In progress (1/2 plans) |
 
 ---
 
@@ -83,6 +83,9 @@ Plan: 5 of 5
 | Functional error boundary for iframe timeout | React class ErrorBoundary won't catch iframe errors |
 | 30s timeout + key remount for Power BI retry | Forces iframe recreation on retry |
 | Phase 03 P05 | 1min | 2 tasks | 0 files |
+| Only pt-BR locale for now | Adding locale requires JSON file + routing.ts entry |
+| No auth check in proxy.ts | GIS uses client-side AuthGuard, not middleware auth |
+| Phase 04 P01 | 3min | 2 tasks | 14 files |
 
 ### Reference Projects
 

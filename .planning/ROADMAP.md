@@ -86,7 +86,7 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 04-01-PLAN.md — Install next-intl, configure [locale] routing, proxy.ts, message files, route restructuring
+- [x] 04-01-PLAN.md — Install next-intl, configure [locale] routing, proxy.ts, message files, route restructuring
 - [ ] 04-02-PLAN.md — Extract all hardcoded Portuguese strings to useTranslations() calls
 
 **UI hint**: yes
