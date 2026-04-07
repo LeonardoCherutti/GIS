@@ -4,6 +4,7 @@ import { use, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { toast } from 'sonner'
 import { ArrowLeft } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { apiFetch } from '@/lib/api/client'
 import { DashboardEmbed } from '@/components/dashboard/DashboardEmbed'
 
@@ -25,6 +26,9 @@ function DashboardContent({
   params: Promise<{ cnes: string }>
 }) {
   const { cnes } = use(params)
+  const tc = useTranslations('common')
+  const th = useTranslations('hospital')
+  const td = useTranslations('dashboard')
   const [hospital, setHospital] = useState<Hospital | null>(null)
   const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
@@ -58,7 +62,7 @@ function DashboardContent({
               borderTopColor: 'var(--palette-primary)',
             }}
           />
-          <p style={{ color: 'var(--palette-muted-fg)' }}>Carregando...</p>
+          <p style={{ color: 'var(--palette-muted-fg)' }}>{tc('loading')}</p>
         </div>
       </div>
     )
@@ -72,14 +76,14 @@ function DashboardContent({
             className="text-xl font-bold mb-4"
             style={{ color: 'var(--palette-foreground)' }}
           >
-            Hospital nao encontrado
+            {th('notFound')}
           </h1>
           <Link
             href="/hospital"
             className="text-sm underline"
             style={{ color: 'var(--palette-primary)' }}
           >
-            Voltar para a lista
+            {th('backToList')}
           </Link>
         </div>
       </div>
@@ -95,7 +99,7 @@ function DashboardContent({
           style={{ color: 'var(--palette-muted-fg)' }}
         >
           <ArrowLeft className="size-4" />
-          Voltar para hospitais
+          {th('backToHospitals')}
         </Link>
         <h2
           className="text-lg font-semibold"
@@ -117,7 +121,7 @@ function DashboardContent({
           }}
         >
           <p style={{ color: 'var(--palette-muted-fg)' }}>
-            Dashboard nao configurado para este hospital.
+            {td('notConfigured')}
           </p>
         </div>
       )}

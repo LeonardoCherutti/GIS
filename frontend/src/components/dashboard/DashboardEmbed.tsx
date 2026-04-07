@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { DashboardErrorBoundary } from './DashboardErrorBoundary'
 import { FullscreenToggle } from './FullscreenToggle'
 
@@ -10,6 +11,7 @@ interface DashboardEmbedProps {
 }
 
 export function DashboardEmbed({ url, title }: DashboardEmbedProps) {
+  const t = useTranslations('dashboard')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [iframeKey, setIframeKey] = useState(0)
@@ -55,7 +57,7 @@ export function DashboardEmbed({ url, title }: DashboardEmbedProps) {
                 borderTopColor: 'var(--palette-primary)',
               }}
             />
-            <p style={{ color: 'var(--palette-muted-fg)' }}>Carregando dashboard...</p>
+            <p style={{ color: 'var(--palette-muted-fg)' }}>{t('loading')}</p>
           </div>
         </div>
       )}

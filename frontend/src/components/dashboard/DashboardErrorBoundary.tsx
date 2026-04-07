@@ -1,6 +1,7 @@
 'use client'
 
 import { AlertTriangle } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 
 interface DashboardErrorBoundaryProps {
@@ -8,6 +9,8 @@ interface DashboardErrorBoundaryProps {
 }
 
 export function DashboardErrorBoundary({ onRetry }: DashboardErrorBoundaryProps) {
+  const t = useTranslations('dashboard')
+
   return (
     <div
       className="absolute inset-0 z-10 flex items-center justify-center rounded-lg"
@@ -22,16 +25,16 @@ export function DashboardErrorBoundary({ onRetry }: DashboardErrorBoundaryProps)
           className="text-lg font-semibold mb-2"
           style={{ color: 'var(--palette-foreground)' }}
         >
-          Erro ao carregar dashboard
+          {t('error.title')}
         </h2>
         <p
           className="text-sm mb-6 max-w-sm"
           style={{ color: 'var(--palette-muted-fg)' }}
         >
-          O dashboard nao pode ser carregado. Verifique sua conexao e tente novamente.
+          {t('error.description')}
         </p>
         <Button onClick={onRetry}>
-          Tentar novamente
+          {t('error.retry')}
         </Button>
       </div>
     </div>

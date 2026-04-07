@@ -1,6 +1,9 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { Building2 } from 'lucide-react'
+import { useTranslations, useLocale } from 'next-intl'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 
 interface HospitalCardProps {
@@ -13,22 +16,19 @@ interface HospitalCardProps {
   }
 }
 
-const PT_MONTHS = [
-  'jan', 'fev', 'mar', 'abr', 'mai', 'jun',
-  'jul', 'ago', 'set', 'out', 'nov', 'dez',
-]
-
-function formatPeriod(dateStr: string | null): string {
+function formatPeriod(dateStr: string | null, locale: string): string {
   if (!dateStr) return ''
   const d = new Date(dateStr + 'T00:00:00')
-  const month = PT_MONTHS[d.getMonth()]
-  const year = d.getFullYear()
-  return `${month}/${year}`
+  const month = new Intl.DateTimeFormat(locale, { month: 'short' }).format(d)
+  return `${month}/${d.getFullYear()}`
 }
 
 export function HospitalCard({ hospital }: HospitalCardProps) {
-  const periodStart = formatPeriod(hospital.period_start)
-  const periodEnd = formatPeriod(hospital.period_end)
+  const t = useTranslations('hospital')
+  const locale = useLocale()
+
+  const periodStart = formatPeriod(hospital.period_start, locale)
+  const periodEnd = formatPeriod(hospital.period_end, locale)
   const periodText =
     periodStart && periodEnd
       ? `${periodStart} - ${periodEnd}`
@@ -72,7 +72,7 @@ export function HospitalCard({ hospital }: HospitalCardProps) {
             className="text-sm"
             style={{ color: 'var(--palette-muted-fg)' }}
           >
-            CNES {hospital.cnes}
+            {t('cnesLabel', { code: hospital.cnes })}
           </p>
           {periodText && (
             <p

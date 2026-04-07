@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { Maximize, Minimize } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 
 interface FullscreenToggleProps {
@@ -9,6 +10,7 @@ interface FullscreenToggleProps {
 }
 
 export function FullscreenToggle({ containerRef }: FullscreenToggleProps) {
+  const t = useTranslations('dashboard')
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [supported, setSupported] = useState(false)
 
@@ -39,7 +41,7 @@ export function FullscreenToggle({ containerRef }: FullscreenToggleProps) {
       size="icon"
       className="absolute top-2 right-2 z-20"
       onClick={toggle}
-      aria-label={isFullscreen ? 'Sair da tela cheia' : 'Tela cheia'}
+      aria-label={isFullscreen ? t('fullscreen.exit') : t('fullscreen.enter')}
     >
       {isFullscreen ? <Minimize className="size-4" /> : <Maximize className="size-4" />}
     </Button>

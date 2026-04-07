@@ -10,7 +10,7 @@ interface SearchInputProps {
 export function SearchInput({
   value,
   onChange,
-  placeholder = 'Buscar por nome ou CNES...',
+  placeholder = '',
 }: SearchInputProps) {
   return (
     <div className="relative w-full max-w-md">

@@ -1,4 +1,7 @@
+'use client'
+
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 
 interface PaginationProps {
@@ -38,18 +41,20 @@ export function Pagination({
   totalPages,
   onPageChange,
 }: PaginationProps) {
+  const t = useTranslations('hospital')
+
   if (totalPages <= 1) return null
 
   const pages = getPageNumbers(currentPage, totalPages)
 
   return (
-    <nav className="flex items-center justify-center gap-1" aria-label="Paginacao">
+    <nav className="flex items-center justify-center gap-1" aria-label={t('pagination.label')}>
       <Button
         variant="outline"
         size="icon-sm"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        aria-label="Pagina anterior"
+        aria-label={t('pagination.previous')}
       >
         <ChevronLeft className="h-4 w-4" />
       </Button>
@@ -81,7 +86,7 @@ export function Pagination({
         size="icon-sm"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        aria-label="Proxima pagina"
+        aria-label={t('pagination.next')}
       >
         <ChevronRight className="h-4 w-4" />
       </Button>

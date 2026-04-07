@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 import { apiFetch } from '@/lib/api/client'
 import { HospitalCard } from '@/components/hospital/HospitalCard'
@@ -16,6 +17,7 @@ export function HospitalGrid() {
   const [loading, setLoading] = useState(true)
   const [query, setQuery] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
+  const t = useTranslations('hospital')
 
   useEffect(() => {
     async function fetchHospitals() {
@@ -52,7 +54,7 @@ export function HospitalGrid() {
   return (
     <div>
       <div className="mb-6">
-        <SearchInput value={query} onChange={setQuery} />
+        <SearchInput value={query} onChange={setQuery} placeholder={t('searchPlaceholder')} />
       </div>
 
       {loading ? (
@@ -67,7 +69,7 @@ export function HospitalGrid() {
             className="text-sm"
             style={{ color: 'var(--palette-muted-fg)' }}
           >
-            Nenhum hospital encontrado.
+            {t('noResults')}
           </p>
         </div>
       ) : (
