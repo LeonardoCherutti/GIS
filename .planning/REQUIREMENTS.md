@@ -34,13 +34,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Hospital Grid
 
-- [ ] **GRID-01**: Hospital cards loaded from Go API (database-driven, placeholder config for v1)
-- [ ] **GRID-02**: Each card displays hospital logo, name, CNES code, and data period
-- [ ] **GRID-03**: Responsive grid layout (1 col mobile, 2 col tablet, 3 col desktop)
-- [ ] **GRID-04**: Click on card navigates to hospital dashboard view
-- [ ] **GRID-05**: Search/filter input filters hospitals by name or CNES
-- [ ] **GRID-06**: Skeleton loading placeholders while hospital data loads
-- [ ] **GRID-07**: Pagination for hospital grid
+- [x] **GRID-01**: Hospital cards loaded from Go API (database-driven, placeholder config for v1)
+- [x] **GRID-02**: Each card displays hospital logo, name, CNES code, and data period
+- [x] **GRID-03**: Responsive grid layout (1 col mobile, 2 col tablet, 3 col desktop)
+- [x] **GRID-04**: Click on card navigates to hospital dashboard view
+- [x] **GRID-05**: Search/filter input filters hospitals by name or CNES
+- [x] **GRID-06**: Skeleton loading placeholders while hospital data loads
+- [x] **GRID-07**: Pagination for hospital grid
 
 ### Dashboard Display
 
@@ -131,13 +131,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SPA-03 | Phase 2 | Complete |
 | SPA-04 | Phase 2 | Complete |
 | SPA-05 | Phase 2 | Complete |
-| GRID-01 | Phase 3 | Pending |
-| GRID-02 | Phase 3 | Pending |
-| GRID-03 | Phase 3 | Pending |
-| GRID-04 | Phase 3 | Pending |
-| GRID-05 | Phase 3 | Pending |
-| GRID-06 | Phase 3 | Pending |
-| GRID-07 | Phase 3 | Pending |
+| GRID-01 | Phase 3 | Complete |
+| GRID-02 | Phase 3 | Complete |
+| GRID-03 | Phase 3 | Complete |
+| GRID-04 | Phase 3 | Complete |
+| GRID-05 | Phase 3 | Complete |
+| GRID-06 | Phase 3 | Complete |
+| GRID-07 | Phase 3 | Complete |
 | DASH-01 | Phase 3 | Complete |
 | DASH-02 | Phase 3 | Pending |
 | DASH-03 | Phase 3 | Pending |
