@@ -9,7 +9,7 @@
 
 ## Phases
 
-- [ ] **Phase 1: Foundation** - Docker Compose skeleton, Postgres schema, Go scaffold, Next.js scaffold with proxy wiring
+- [x] **Phase 1: Foundation** - Docker Compose skeleton, Postgres schema, Go scaffold, Next.js scaffold with proxy wiring
 - [ ] **Phase 2: Auth + Data** - Google OAuth popup, session cookies, auth middleware, hospital API endpoints, SPA navigation
 - [ ] **Phase 3: Core UI** - Hospital card grid, Power BI dashboard embed, design system, dark mode, user profile
 - [ ] **Phase 4: Polish + i18n** - next-intl with pt-BR messages, i18n-ready architecture
@@ -28,12 +28,12 @@
   3. Next.js app loads in browser at `localhost:3000` with SPA routing active (no full reloads on navigation)
   4. Next.js proxy route forwards requests to Go API and returns data (verifiable with browser network tab)
   5. Postgres migrations run on first boot and create the hospitals/dashboard_configs tables
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans executed
 
 Plans:
 - [x] 01-01-PLAN.md — Go API scaffold with chi router, health endpoint, Postgres migrations, and seed data
 - [x] 01-02-PLAN.md — Next.js scaffold with palette.css, provider stack, proxy route, and API client
-- [ ] 01-03-PLAN.md — Docker Compose orchestration, Dockerfiles, and end-to-end verification
+- [x] 01-03-PLAN.md — Docker Compose orchestration, Dockerfiles, and end-to-end verification
 
 **UI hint**: yes
 
@@ -79,7 +79,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 2/3 | In Progress|  |
+| 1. Foundation | 3/3 | Complete | 2026-04-07 |
 | 2. Auth + Data | 0/? | Not started | - |
 | 3. Core UI | 0/? | Not started | - |
 | 4. Polish + i18n | 0/? | Not started | - |
@@ -87,4 +87,4 @@ Plans:
 ---
 
 *Roadmap created: 2026-04-07*
-*Last updated: 2026-04-07 after Phase 1 planning*
+*Last updated: 2026-04-07 after Phase 1 completion*
