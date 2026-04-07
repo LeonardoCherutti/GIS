@@ -64,7 +64,15 @@ Plans:
   3. User can filter hospitals by name or CNES code and results update instantly
   4. Dark mode toggle switches the palette and the preference is remembered on next visit
   5. User avatar and email are visible in the header; toast notifications appear on auth events and errors
-**Plans**: TBD
+**Plans:** 5 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Seed data fix (real CNES, periods, logos) + CSP frame-src for Power BI
+- [ ] 03-02-PLAN.md — Design system: shared layout, AppHeader, AppFooter, ThemeToggle, UserMenu
+- [ ] 03-03-PLAN.md — Hospital card grid with search/filter, skeleton loading, pagination
+- [ ] 03-04-PLAN.md — Power BI dashboard embed with loading, error boundary, fullscreen
+- [ ] 03-05-PLAN.md — Visual and functional verification checkpoint
+
 **UI hint**: yes
 
 ### Phase 4: Polish + i18n
@@ -86,10 +94,10 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete | 2026-04-07 |
 | 2. Auth + Data | 3/3 | Complete | 2026-04-07 |
-| 3. Core UI | 0/? | Not started | - |
+| 3. Core UI | 0/5 | Planning complete | - |
 | 4. Polish + i18n | 0/? | Not started | - |
 
 ---
 
 *Roadmap created: 2026-04-07*
-*Last updated: 2026-04-07 after Phase 2 planning*
+*Last updated: 2026-04-07 after Phase 3 planning*
