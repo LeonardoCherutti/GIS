@@ -28,7 +28,7 @@ func main() {
 	}
 	log.Println("connected to database")
 
-	r := router.New(pool)
+	r := router.New(pool, &cfg)
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%s", cfg.Port),
 		Handler: r,

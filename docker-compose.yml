@@ -7,6 +7,7 @@ services:
       - "3000:3000"
     environment:
       - API_URL=http://api:8080
+      - NEXT_PUBLIC_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
     depends_on:
       api:
         condition: service_healthy
@@ -20,6 +21,10 @@ services:
     environment:
       - PORT=8080
       - DATABASE_URL=postgres://gis:${DB_PASSWORD:-gisdev}@postgres:5432/gis?sslmode=disable
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
+      - JWT_SECRET=${JWT_SECRET:-gis-dev-secret-change-in-production}
+      - ALLOWED_EMAILS=${ALLOWED_EMAILS:-}
+      - ALLOWED_DOMAINS=${ALLOWED_DOMAINS:-}
     depends_on:
       postgres:
         condition: service_healthy
