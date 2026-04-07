@@ -106,6 +106,12 @@ Plan: 2 of 2
 
 None.
 
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260407-pp2 | Fix Google OAuth client_id missing at Docker build time | 2026-04-07 | b177f77 | [260407-pp2-fix-google-oauth-client-id-missing-at-do](./quick/260407-pp2-fix-google-oauth-client-id-missing-at-do/) |
+
 ---
 
 ## Session Continuity
