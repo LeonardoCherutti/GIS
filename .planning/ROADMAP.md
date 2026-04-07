@@ -68,7 +68,7 @@ Plans:
 
 Plans:
 - [ ] 03-01-PLAN.md — Seed data fix (real CNES, periods, logos) + CSP frame-src for Power BI
-- [ ] 03-02-PLAN.md — Design system: shared layout, AppHeader, AppFooter, ThemeToggle, UserMenu
+- [x] 03-02-PLAN.md — Design system: shared layout, AppHeader, AppFooter, ThemeToggle, UserMenu
 - [ ] 03-03-PLAN.md — Hospital card grid with search/filter, skeleton loading, pagination
 - [ ] 03-04-PLAN.md — Power BI dashboard embed with loading, error boundary, fullscreen
 - [ ] 03-05-PLAN.md — Visual and functional verification checkpoint
