@@ -44,7 +44,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Dashboard Display
 
-- [ ] **DASH-01**: Power BI iframe embeds correctly with proper CSP frame-src headers
+- [x] **DASH-01**: Power BI iframe embeds correctly with proper CSP frame-src headers
 - [ ] **DASH-02**: Loading indicator shown while Power BI iframe loads (3-10 seconds)
 - [ ] **DASH-03**: Dashboard title (hospital name) displayed in header
 - [ ] **DASH-04**: Back navigation returns to hospital grid
@@ -53,18 +53,18 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Visual Design
 
-- [x] **UI-01**: palette.css with CSS custom properties for light and dark themes
-- [x] **UI-02**: Dark mode toggle persisted in localStorage
-- [x] **UI-03**: Global header with logo, portal name, user profile, dark mode toggle, logout
-- [x] **UI-04**: Global footer with company branding
-- [x] **UI-05**: Reusable component architecture (cards, buttons, inputs, layout)
-- [x] **UI-06**: Palette system matching ferreiracontabilidade reference patterns
+- [ ] **UI-01**: palette.css with CSS custom properties for light and dark themes
+- [ ] **UI-02**: Dark mode toggle persisted in localStorage
+- [ ] **UI-03**: Global header with logo, portal name, user profile, dark mode toggle, logout
+- [ ] **UI-04**: Global footer with company branding
+- [ ] **UI-05**: Reusable component architecture (cards, buttons, inputs, layout)
+- [ ] **UI-06**: Palette system matching ferreiracontabilidade reference patterns
 
 ### User Experience
 
-- [x] **UX-01**: User profile display in header (Google avatar + email)
-- [x] **UX-02**: Toast notification system for feedback (login success, errors, etc.)
-- [ ] **UX-03**: All 12 existing hospitals seeded in database with Power BI URLs
+- [ ] **UX-01**: User profile display in header (Google avatar + email)
+- [ ] **UX-02**: Toast notification system for feedback (login success, errors, etc.)
+- [x] **UX-03**: All 12 existing hospitals seeded in database with Power BI URLs
 
 ### Internationalization
 
@@ -138,21 +138,21 @@ Which phases cover which requirements. Updated during roadmap creation.
 | GRID-05 | Phase 3 | Pending |
 | GRID-06 | Phase 3 | Pending |
 | GRID-07 | Phase 3 | Pending |
-| DASH-01 | Phase 3 | Pending |
+| DASH-01 | Phase 3 | Complete |
 | DASH-02 | Phase 3 | Pending |
 | DASH-03 | Phase 3 | Pending |
 | DASH-04 | Phase 3 | Pending |
 | DASH-05 | Phase 3 | Pending |
 | DASH-06 | Phase 3 | Pending |
-| UI-01 | Phase 3 | Complete |
-| UI-02 | Phase 3 | Complete |
-| UI-03 | Phase 3 | Complete |
-| UI-04 | Phase 3 | Complete |
-| UI-05 | Phase 3 | Complete |
-| UI-06 | Phase 3 | Complete |
-| UX-01 | Phase 3 | Complete |
-| UX-02 | Phase 3 | Complete |
-| UX-03 | Phase 3 | Pending |
+| UI-01 | Phase 3 | Pending |
+| UI-02 | Phase 3 | Pending |
+| UI-03 | Phase 3 | Pending |
+| UI-04 | Phase 3 | Pending |
+| UI-05 | Phase 3 | Pending |
+| UI-06 | Phase 3 | Pending |
+| UX-01 | Phase 3 | Pending |
+| UX-02 | Phase 3 | Pending |
+| UX-03 | Phase 3 | Complete |
 | I18N-01 | Phase 4 | Pending |
 | I18N-02 | Phase 4 | Pending |
 | I18N-03 | Phase 4 | Pending |
