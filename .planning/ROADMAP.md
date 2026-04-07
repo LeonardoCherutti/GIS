@@ -12,7 +12,7 @@
 - [x] **Phase 1: Foundation** - Docker Compose skeleton, Postgres schema, Go scaffold, Next.js scaffold with proxy wiring
 - [x] **Phase 2: Auth + Data** - Google OAuth popup, session cookies, auth middleware, hospital API endpoints, SPA navigation
 - [ ] **Phase 3: Core UI** - Hospital card grid, Power BI dashboard embed, design system, dark mode, user profile
-- [ ] **Phase 4: Polish + i18n** - next-intl with pt-BR messages, i18n-ready architecture
+- [x] **Phase 4: Polish + i18n** - next-intl with pt-BR messages, i18n-ready architecture (completed 2026-04-07)
 
 ---
 
@@ -83,11 +83,11 @@ Plans:
   1. Changing the locale segment in the URL (e.g., `/en` vs `/pt-BR`) switches UI language without a full page reload
   2. Zero hardcoded Portuguese strings exist in component JSX -- all text comes from next-intl message files
   3. Adding a new locale requires only a new messages JSON file and a config entry, no component changes
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
 - [x] 04-01-PLAN.md — Install next-intl, configure [locale] routing, proxy.ts, message files, route restructuring
-- [ ] 04-02-PLAN.md — Extract all hardcoded Portuguese strings to useTranslations() calls
+- [x] 04-02-PLAN.md — Extract all hardcoded Portuguese strings to useTranslations() calls
 
 **UI hint**: yes
 
@@ -100,7 +100,7 @@ Plans:
 | 1. Foundation | 3/3 | Complete | 2026-04-07 |
 | 2. Auth + Data | 3/3 | Complete | 2026-04-07 |
 | 3. Core UI | 4/5 | In Progress|  |
-| 4. Polish + i18n | 0/2 | Not started | - |
+| 4. Polish + i18n | 2/2 | Complete   | 2026-04-07 |
 
 ---
 
