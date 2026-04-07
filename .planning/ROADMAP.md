@@ -47,11 +47,11 @@ Plans:
   3. User session survives browser tab close and returns the user to the grid on reopen
   4. User can log out and is returned to the login screen with session fully cleared
   5. Browser back/forward navigation moves correctly between login, grid, and dashboard views without full reloads
-**Plans:** 3 plans
+**Plans:** 2/3 plans executed
 
 Plans:
 - [x] 02-01-PLAN.md — Go API auth + hospital endpoints (config, auth service, middleware, hospital repository)
-- [ ] 02-02-PLAN.md — Frontend auth (AuthContext with Google OAuth, LoginButton, session management)
+- [x] 02-02-PLAN.md — Frontend auth (AuthContext with Google OAuth, LoginButton, session management)
 - [ ] 02-03-PLAN.md — SPA navigation (AuthGuard, hospital grid page, dashboard page, routing)
 
 ### Phase 3: Core UI
@@ -85,7 +85,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete | 2026-04-07 |
-| 2. Auth + Data | 1/3 | In progress | - |
+| 2. Auth + Data | 2/3 | In Progress|  |
 | 3. Core UI | 0/? | Not started | - |
 | 4. Polish + i18n | 0/? | Not started | - |
 

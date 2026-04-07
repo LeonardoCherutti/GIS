@@ -16,11 +16,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Authentication
 
-- [ ] **AUTH-01**: User can sign in via Google OAuth popup (no redirect URI)
+- [x] **AUTH-01**: User can sign in via Google OAuth popup (no redirect URI)
 - [x] **AUTH-02**: Only whitelisted emails and specified domain emails can access (env var driven)
-- [ ] **AUTH-03**: User session persists across tab close via httpOnly cookie with token refresh
-- [ ] **AUTH-04**: User can log out with full session cleanup
-- [ ] **AUTH-05**: Auth loading state shown during OAuth popup flow
+- [x] **AUTH-03**: User session persists across tab close via httpOnly cookie with token refresh
+- [x] **AUTH-04**: User can log out with full session cleanup
+- [x] **AUTH-05**: Auth loading state shown during OAuth popup flow
 - [x] **AUTH-06**: Go API middleware validates auth on protected endpoints
 - [x] **AUTH-07**: Next.js proxy route forwards auth headers to Go API
 
@@ -121,11 +121,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INFRA-04 | Phase 1 | Complete |
 | SPA-01 | Phase 1 | Complete |
 | SPA-02 | Phase 1 | Complete |
-| AUTH-01 | Phase 2 | Pending |
+| AUTH-01 | Phase 2 | Complete |
 | AUTH-02 | Phase 2 | Complete |
-| AUTH-03 | Phase 2 | Pending |
-| AUTH-04 | Phase 2 | Pending |
-| AUTH-05 | Phase 2 | Pending |
+| AUTH-03 | Phase 2 | Complete |
+| AUTH-04 | Phase 2 | Complete |
+| AUTH-05 | Phase 2 | Complete |
 | AUTH-06 | Phase 2 | Complete |
 | AUTH-07 | Phase 2 | Complete |
 | SPA-03 | Phase 2 | Pending |
