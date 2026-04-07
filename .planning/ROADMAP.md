@@ -71,7 +71,7 @@ Plans:
 - [x] 03-02-PLAN.md — Design system: shared layout, AppHeader, AppFooter, ThemeToggle, UserMenu
 - [x] 03-03-PLAN.md — Hospital card grid with search/filter, skeleton loading, pagination
 - [x] 03-04-PLAN.md — Power BI dashboard embed with loading, error boundary, fullscreen
-- [ ] 03-05-PLAN.md — Visual and functional verification checkpoint
+- [x] 03-05-PLAN.md — Visual and functional verification checkpoint
 
 **UI hint**: yes
 
