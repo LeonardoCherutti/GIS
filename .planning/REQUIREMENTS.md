@@ -28,9 +28,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **SPA-01**: Single page application with view handler and view context pattern
 - [x] **SPA-02**: Next.js app/api/route.ts proxy layer communicates with Go API
-- [ ] **SPA-03**: Client-side view transitions (login -> grid -> dashboard) without full page reloads
-- [ ] **SPA-04**: URL-based routing for dashboards (e.g., /hospital/[cnes])
-- [ ] **SPA-05**: Browser back/forward navigation works correctly within SPA
+- [x] **SPA-03**: Client-side view transitions (login -> grid -> dashboard) without full page reloads
+- [x] **SPA-04**: URL-based routing for dashboards (e.g., /hospital/[cnes])
+- [x] **SPA-05**: Browser back/forward navigation works correctly within SPA
 
 ### Hospital Grid
 
@@ -128,9 +128,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | AUTH-05 | Phase 2 | Complete |
 | AUTH-06 | Phase 2 | Complete |
 | AUTH-07 | Phase 2 | Complete |
-| SPA-03 | Phase 2 | Pending |
-| SPA-04 | Phase 2 | Pending |
-| SPA-05 | Phase 2 | Pending |
+| SPA-03 | Phase 2 | Complete |
+| SPA-04 | Phase 2 | Complete |
+| SPA-05 | Phase 2 | Complete |
 | GRID-01 | Phase 3 | Pending |
 | GRID-02 | Phase 3 | Pending |
 | GRID-03 | Phase 3 | Pending |
