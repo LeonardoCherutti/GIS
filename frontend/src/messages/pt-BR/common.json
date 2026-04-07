@@ -1,0 +1,19 @@
+{
+  "brand": {
+    "short": "G.I.S.",
+    "full": "Gestao Inteligente em Saude",
+    "tagline": "Portal de Dashboards Hospitalares"
+  },
+  "nav": {
+    "avatar": "Avatar",
+    "logout": "Sair"
+  },
+  "theme": {
+    "switchToLight": "Mudar para tema claro",
+    "switchToDark": "Mudar para tema escuro"
+  },
+  "footer": {
+    "copyright": "G.I.S. Gestao Inteligente em Saude \u00a9 {year}"
+  },
+  "loading": "Carregando..."
+}

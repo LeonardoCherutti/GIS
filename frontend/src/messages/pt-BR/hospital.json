@@ -1,0 +1,13 @@
+{
+  "searchPlaceholder": "Buscar por nome ou CNES...",
+  "noResults": "Nenhum hospital encontrado.",
+  "cnesLabel": "CNES {code}",
+  "notFound": "Hospital nao encontrado",
+  "backToList": "Voltar para a lista",
+  "backToHospitals": "Voltar para hospitais",
+  "pagination": {
+    "label": "Paginacao",
+    "previous": "Pagina anterior",
+    "next": "Proxima pagina"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "loading": "Carregando dashboard...",
+  "notConfigured": "Dashboard nao configurado para este hospital.",
+  "error": {
+    "title": "Erro ao carregar dashboard",
+    "description": "O dashboard nao pode ser carregado. Verifique sua conexao e tente novamente.",
+    "retry": "Tentar novamente"
+  },
+  "fullscreen": {
+    "enter": "Tela cheia",
+    "exit": "Sair da tela cheia"
+  }
+}
