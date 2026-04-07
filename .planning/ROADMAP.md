@@ -31,7 +31,7 @@
 **Plans:** 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Go API scaffold with chi router, health endpoint, Postgres migrations, and seed data
+- [x] 01-01-PLAN.md — Go API scaffold with chi router, health endpoint, Postgres migrations, and seed data
 - [ ] 01-02-PLAN.md — Next.js scaffold with palette.css, provider stack, proxy route, and API client
 - [ ] 01-03-PLAN.md — Docker Compose orchestration, Dockerfiles, and end-to-end verification
 
