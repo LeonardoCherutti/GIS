@@ -50,7 +50,7 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Go API auth + hospital endpoints (config, auth service, middleware, hospital repository)
+- [x] 02-01-PLAN.md — Go API auth + hospital endpoints (config, auth service, middleware, hospital repository)
 - [ ] 02-02-PLAN.md — Frontend auth (AuthContext with Google OAuth, LoginButton, session management)
 - [ ] 02-03-PLAN.md — SPA navigation (AuthGuard, hospital grid page, dashboard page, routing)
 
@@ -85,7 +85,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete | 2026-04-07 |
-| 2. Auth + Data | 0/3 | Planned | - |
+| 2. Auth + Data | 1/3 | In progress | - |
 | 3. Core UI | 0/? | Not started | - |
 | 4. Polish + i18n | 0/? | Not started | - |
 
