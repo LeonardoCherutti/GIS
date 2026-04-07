@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Option F: Circle with ECG that trends up — cleaner, more centered -->
+
+  <!-- Circle base -->
+  <circle cx="60" cy="60" r="54" fill="#094344"/>
+  <circle cx="60" cy="60" r="48" fill="#0c5657" opacity="0.35"/>
+
+  <!-- Subtle grid lines (data/analytics feel) -->
+  <line x1="16" y1="45" x2="104" y2="45" stroke="#0eb8bc" stroke-width="0.5" opacity="0.1"/>
+  <line x1="16" y1="60" x2="104" y2="60" stroke="#0eb8bc" stroke-width="0.5" opacity="0.1"/>
+  <line x1="16" y1="75" x2="104" y2="75" stroke="#0eb8bc" stroke-width="0.5" opacity="0.1"/>
+  <line x1="16" y1="90" x2="104" y2="90" stroke="#0eb8bc" stroke-width="0.5" opacity="0.1"/>
+
+  <!-- ECG line: flat → P wave → QRS spike → second QRS → upward trend -->
+  <polyline points="
+    14,68
+    22,68
+    26,68
+    29,64
+    31,68
+    34,68
+    36,60
+    38,80
+    40,32
+    43,74
+    46,62
+    48,68
+    56,68
+    59,64
+    61,68
+    64,68
+    66,58
+    68,78
+    70,28
+    73,70
+    76,60
+    80,54
+    84,46
+    89,38
+    94,30
+    99,22
+    106,12
+  "
+  stroke="#0eb8bc" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Glow on upward section -->
+  <polyline points="80,54 84,46 89,38 94,30 99,22 106,12"
+    stroke="#0eb8bc" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.15"/>
+
+  <!-- Accent dots on QRS peaks -->
+  <circle cx="40" cy="32" r="2.5" fill="#f05483"/>
+  <circle cx="70" cy="28" r="2.5" fill="#f05483"/>
+
+  <!-- Upward arrow at end -->
+  <path d="M103,8 L106,12 L101,13" stroke="#f05483" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- Area fill under the upward trend (subtle growth indicator) -->
+  <path d="M73,70 L76,60 L80,54 L84,46 L89,38 L94,30 L99,22 L106,12 L106,68 L73,68 Z"
+        fill="#0eb8bc" opacity="0.08"/>
+</svg>

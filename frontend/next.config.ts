@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
       source: '/(.*)',
       headers: [
         { key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups' },
-        { key: 'Content-Security-Policy', value: "frame-src 'self' https://app.powerbi.com" },
+        { key: 'Content-Security-Policy', value: "frame-src 'self' https://accounts.google.com https://app.powerbi.com" },
       ]
     }]
   },

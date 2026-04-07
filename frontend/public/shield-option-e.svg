@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Option E: ECG/EKG heartbeat that ends trending upward -->
+
+  <!-- Rounded square base -->
+  <rect x="6" y="6" width="108" height="108" rx="22" fill="#094344"/>
+  <rect x="12" y="12" width="96" height="96" rx="18" fill="#0c5657" opacity="0.35"/>
+
+  <!-- ECG heartbeat line — flat, then PQRST complex, then trends UP -->
+  <polyline points="
+    16,62
+    24,62
+    30,62
+    34,62
+    37,58
+    39,62
+    42,62
+    44,56
+    46,82
+    49,30
+    52,72
+    55,58
+    58,62
+    64,62
+    67,58
+    69,62
+    72,62
+    75,56
+    77,68
+    79,22
+    82,60
+    85,52
+    88,46
+    92,38
+    96,30
+    100,22
+    104,14
+  "
+  stroke="#0eb8bc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Glow effect on the upward trend end -->
+  <polyline points="88,46 92,38 96,30 100,22 104,14"
+    stroke="#0eb8bc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.25"/>
+
+  <!-- Small arrow tip at the end -->
+  <polyline points="100,11 104,14 100,18" stroke="#f05483" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" transform="rotate(-40, 104, 14)"/>
+
+  <!-- Dot accent at peak of each QRS complex -->
+  <circle cx="49" cy="30" r="2" fill="#f05483" opacity="0.7"/>
+  <circle cx="79" cy="22" r="2" fill="#f05483" opacity="0.7"/>
+
+  <!-- Small medical cross bottom-right corner -->
+  <rect x="84" y="90" width="10" height="2.5" rx="1" fill="#f05483" opacity="0.6"/>
+  <rect x="87.75" y="86.75" width="2.5" height="10" rx="1" fill="#f05483" opacity="0.6"/>
+</svg>

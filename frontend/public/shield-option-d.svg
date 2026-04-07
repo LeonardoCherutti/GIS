@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Option D: Hexagonal — medical cross made of data pixels/blocks
+       with chart line emerging from it. Modern, techy, clean. -->
+
+  <!-- Hexagon base -->
+  <polygon points="60,4 108,30 108,82 60,108 12,82 12,30"
+           fill="#094344"/>
+  <polygon points="60,12 100,34 100,78 60,100 20,78 20,34"
+           fill="#0c5657" opacity="0.35"/>
+
+  <!-- Pixelated medical cross (blocks = data/digital) -->
+  <!-- Horizontal bar of cross -->
+  <rect x="36" y="44" width="10" height="10" rx="1.5" fill="#0eb8bc" opacity="0.5"/>
+  <rect x="47" y="44" width="10" height="10" rx="1.5" fill="#0eb8bc" opacity="0.7"/>
+  <rect x="58" y="44" width="10" height="10" rx="1.5" fill="#0eb8bc" opacity="0.7"/>
+  <rect x="69" y="44" width="10" height="10" rx="1.5" fill="#0eb8bc" opacity="0.5"/>
+
+  <!-- Vertical bar of cross -->
+  <rect x="47" y="22" width="10" height="10" rx="1.5" fill="#0eb8bc" opacity="0.4"/>
+  <rect x="58" y="22" width="10" height="10" rx="1.5" fill="#0eb8bc" opacity="0.4"/>
+  <rect x="47" y="33" width="10" height="10" rx="1.5" fill="#0eb8bc" opacity="0.6"/>
+  <rect x="58" y="33" width="10" height="10" rx="1.5" fill="#0eb8bc" opacity="0.6"/>
+  <rect x="47" y="55" width="10" height="10" rx="1.5" fill="#0eb8bc" opacity="0.6"/>
+  <rect x="58" y="55" width="10" height="10" rx="1.5" fill="#0eb8bc" opacity="0.6"/>
+  <rect x="47" y="66" width="10" height="10" rx="1.5" fill="#0eb8bc" opacity="0.4"/>
+  <rect x="58" y="66" width="10" height="10" rx="1.5" fill="#0eb8bc" opacity="0.4"/>
+
+  <!-- Center block highlighted (the "intelligence" core) -->
+  <rect x="47" y="44" width="10" height="10" rx="1.5" fill="#f05483"/>
+  <rect x="58" y="44" width="10" height="10" rx="1.5" fill="#f05483"/>
+
+  <!-- Upward trend line overlaid -->
+  <polyline points="28,90 42,82 55,78 68,68 82,52 96,38"
+            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.35"/>
+
+  <!-- Arrow tip -->
+  <polyline points="90,36 96,38 93,44" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.35"/>
+</svg>
