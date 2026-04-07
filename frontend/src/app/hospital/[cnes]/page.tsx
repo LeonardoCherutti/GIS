@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { toast } from 'sonner'
 import { ArrowLeft } from 'lucide-react'
 import { apiFetch } from '@/lib/api/client'
+import { DashboardEmbed } from '@/components/dashboard/DashboardEmbed'
 
 interface Hospital {
   id: string
@@ -86,46 +87,27 @@ function DashboardContent({
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-8">
-      <div className="flex items-center gap-3 mb-6">
+    <div className="px-6 py-4">
+      <div className="flex items-center justify-between mb-4">
         <Link
           href="/hospital"
-          className="flex items-center gap-1 text-sm transition-colors hover:text-primary"
+          className="flex items-center gap-2 text-sm transition-colors"
           style={{ color: 'var(--palette-muted-fg)' }}
         >
           <ArrowLeft className="size-4" />
-          Voltar
+          Voltar para hospitais
         </Link>
-        <h1
-          className="text-xl font-bold"
+        <h2
+          className="text-lg font-semibold"
           style={{ color: 'var(--palette-foreground)' }}
         >
           {hospital?.name}
-        </h1>
+        </h2>
+        <div className="w-32" />
       </div>
 
       {hospital?.powerbi_url ? (
-        <div
-          className="rounded-lg p-8 text-center"
-          style={{
-            background: 'var(--palette-surface-raised)',
-            border: '1px solid var(--palette-border)',
-            minHeight: '400px',
-          }}
-        >
-          <p
-            className="text-lg font-medium mb-2"
-            style={{ color: 'var(--palette-foreground)' }}
-          >
-            Dashboard Power BI sera exibido aqui
-          </p>
-          <p
-            className="text-sm break-all"
-            style={{ color: 'var(--palette-muted-fg)' }}
-          >
-            {hospital.powerbi_url}
-          </p>
-        </div>
+        <DashboardEmbed url={hospital.powerbi_url} title={hospital.name} />
       ) : (
         <div
           className="rounded-lg p-8 text-center"
@@ -135,7 +117,7 @@ function DashboardContent({
           }}
         >
           <p style={{ color: 'var(--palette-muted-fg)' }}>
-            Dashboard nao configurado
+            Dashboard nao configurado para este hospital.
           </p>
         </div>
       )}
