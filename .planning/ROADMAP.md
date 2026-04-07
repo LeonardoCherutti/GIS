@@ -28,7 +28,13 @@
   3. Next.js app loads in browser at `localhost:3000` with SPA routing active (no full reloads on navigation)
   4. Next.js proxy route forwards requests to Go API and returns data (verifiable with browser network tab)
   5. Postgres migrations run on first boot and create the hospitals/dashboard_configs tables
-**Plans**: TBD
+**Plans:** 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Go API scaffold with chi router, health endpoint, Postgres migrations, and seed data
+- [ ] 01-02-PLAN.md — Next.js scaffold with palette.css, provider stack, proxy route, and API client
+- [ ] 01-03-PLAN.md — Docker Compose orchestration, Dockerfiles, and end-to-end verification
+
 **UI hint**: yes
 
 ### Phase 2: Auth + Data
@@ -73,7 +79,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/? | Not started | - |
+| 1. Foundation | 0/3 | Planning complete | - |
 | 2. Auth + Data | 0/? | Not started | - |
 | 3. Core UI | 0/? | Not started | - |
 | 4. Polish + i18n | 0/? | Not started | - |
@@ -81,4 +87,4 @@
 ---
 
 *Roadmap created: 2026-04-07*
-*Last updated: 2026-04-07 after initial roadmap creation*
+*Last updated: 2026-04-07 after Phase 1 planning*
