@@ -1,64 +1,118 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 210" fill="none">
-  <!-- GIS Logo: Heart containing brain with rising chart arrow -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 440" fill="none">
+  <!-- GIS Logo — faithful SVG trace of board (3).png -->
 
-  <!-- Outer heart outline -->
-  <path d="M100 190
-           C45 150 8 115 8 72
-           C8 42 30 16 60 16
-           C78 16 92 30 100 44
-           C108 30 122 16 140 16
-           C170 16 192 42 192 72
-           C192 115 155 150 100 190Z"
-        fill="none" stroke="#0eb8bc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Outer heart shape with bottom-left swoosh tail -->
+  <path d="M210 400
+           C210 400 180 380 148 358
+           C100 325 40 270 28 205
+           C16 148 28 100 68 65
+           C95 42 130 32 162 38
+           C185 42 200 56 210 72
+           C220 56 235 42 258 38
+           C290 32 325 42 352 65
+           C392 100 404 148 392 205
+           C380 270 320 325 272 358
+           C240 380 210 400 210 400Z"
+        fill="none" stroke="url(#heartGradient)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <!-- Inner heart outline (thinner, creates double-line effect) -->
-  <path d="M100 175
-           C52 140 22 110 22 74
-           C22 50 40 28 64 28
-           C80 28 92 40 100 52
-           C108 40 120 28 136 28
-           C160 28 178 50 178 74
-           C178 110 148 140 100 175Z"
-        fill="none" stroke="#0eb8bc" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+  <!-- Bottom-left decorative swoosh -->
+  <path d="M148 358 C120 345 85 338 60 350 C45 358 38 370 42 382"
+        fill="none" stroke="url(#heartGradient)" stroke-width="10" stroke-linecap="round"/>
 
-  <!-- Left brain hemisphere (lighter teal) -->
-  <path d="M100 60
-           C95 58 88 52 78 52
-           C62 52 48 62 44 78
-           C40 92 46 108 54 118
-           C62 128 74 136 86 142
-           C92 146 96 150 100 158
-           L100 60Z"
-        fill="#0eb8bc"/>
+  <!-- Inner heart outline -->
+  <path d="M210 370
+           C210 370 185 352 160 335
+           C118 306 65 258 55 202
+           C46 155 56 115 88 86
+           C110 68 140 58 165 62
+           C185 65 200 76 210 90
+           C220 76 235 65 255 62
+           C280 58 310 68 332 86
+           C364 115 374 155 365 202
+           C355 258 302 306 260 335
+           C235 352 210 370 210 370Z"
+        fill="none" stroke="#5BBFEA" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+
+  <!-- Left brain hemisphere (light blue) -->
+  <path d="M210 110
+           C200 105 188 95 170 92
+           C155 90 140 95 130 100
+           C118 108 108 120 104 132
+           C96 152 92 168 96 185
+           C100 202 108 218 120 232
+           C132 248 152 262 172 275
+           C185 284 195 295 205 310
+           C208 316 210 320 210 325
+           L210 110Z"
+        fill="#5BBFEA"/>
+
+  <!-- Left brain top lobes (bumpy silhouette) -->
+  <path d="M210 110
+           C200 105 195 92 182 88
+           C170 84 158 90 152 96
+           C142 88 130 86 120 92
+           C110 98 104 110 104 122
+           C104 126 104 130 104 132"
+        fill="#5BBFEA" stroke="#5BBFEA" stroke-width="2"/>
 
   <!-- Left brain folds -->
-  <path d="M58 72 C66 68 76 72 80 80" stroke="white" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.7"/>
-  <path d="M52 92 C60 86 72 88 78 96" stroke="white" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.6"/>
-  <path d="M58 110 C66 104 76 108 82 114" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <path d="M128 135 C142 126 160 130 172 145" stroke="white" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.85"/>
+  <path d="M118 168 C134 158 156 160 168 178" stroke="white" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.7"/>
+  <path d="M126 200 C140 192 158 196 168 208" stroke="white" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.55"/>
 
-  <!-- Right brain hemisphere (darker) -->
-  <path d="M100 60
-           C105 58 112 52 122 52
-           C138 52 152 62 156 78
-           C160 92 154 108 146 118
-           C138 128 126 136 114 142
-           C108 146 104 150 100 158
-           L100 60Z"
-        fill="#094344"/>
+  <!-- Right brain hemisphere (dark blue) -->
+  <path d="M210 110
+           C220 105 232 95 250 92
+           C265 90 280 95 290 100
+           C302 108 312 120 316 132
+           C324 152 328 168 324 185
+           C320 202 312 218 300 232
+           C288 248 268 262 248 275
+           C235 284 225 295 215 310
+           C212 316 210 320 210 325
+           L210 110Z"
+        fill="#0B5FA5"/>
+
+  <!-- Right brain top lobes -->
+  <path d="M210 110
+           C220 105 225 92 238 88
+           C250 84 262 90 268 96
+           C278 88 290 86 300 92
+           C310 98 316 110 316 122
+           C316 126 316 130 316 132"
+        fill="#0B5FA5" stroke="#0B5FA5" stroke-width="2"/>
 
   <!-- Right brain folds -->
-  <path d="M142 72 C134 68 124 72 120 80" stroke="#0eb8bc" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.5"/>
-  <path d="M148 92 C140 86 128 88 122 96" stroke="#0eb8bc" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.4"/>
-  <path d="M142 110 C134 104 124 108 118 114" stroke="#0eb8bc" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.35"/>
+  <path d="M292 145 C278 136 260 140 248 155" stroke="#5BBFEA" stroke-width="4.5" stroke-linecap="round" fill="none" opacity="0.45"/>
+  <path d="M302 178 C286 168 264 170 252 188" stroke="#5BBFEA" stroke-width="4.5" stroke-linecap="round" fill="none" opacity="0.38"/>
+  <path d="M294 210 C280 202 262 206 252 218" stroke="#5BBFEA" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.3"/>
 
-  <!-- Brain stem / bottom connection -->
-  <path d="M92 148 C96 156 100 162 100 162 C100 162 104 156 108 148"
-        fill="none" stroke="#0eb8bc" stroke-width="2" opacity="0.4"/>
+  <!-- Brain stem -->
+  <path d="M198 310 C204 325 210 338 210 338 C210 338 216 325 222 310"
+        fill="none" stroke="#1A7EC5" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
 
-  <!-- Rising chart arrow through center -->
-  <polyline points="62,130 76,112 88,118 100,90 112,78 130,56 148,34"
-            stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Rising chart arrow (white zigzag trending up) -->
+  <polyline points="
+    130,255
+    155,225
+    175,240
+    200,190
+    220,170
+    245,130
+    275,95
+    305,65
+  "
+  stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <!-- Arrow tip -->
-  <polygon points="148,34 138,30 142,42" fill="white"/>
+  <!-- Arrow head -->
+  <polygon points="305,65 288,62 295,80" fill="white"/>
+
+  <!-- Gradients -->
+  <defs>
+    <linearGradient id="heartGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1A7EC5"/>
+      <stop offset="50%" stop-color="#3BA3E0"/>
+      <stop offset="100%" stop-color="#5BBFEA"/>
+    </linearGradient>
+  </defs>
 </svg>
