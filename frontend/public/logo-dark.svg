@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" fill="none">
+  <!-- GIS Logo - Dark mode variant -->
+
+  <!-- Icon: Shield with pulse line + data bars -->
+  <g transform="translate(10, 10)">
+    <!-- Shield shape -->
+    <path d="M50 0 C75 0 95 8 95 8 L95 52 C95 75 75 92 50 100 C25 92 5 75 5 52 L5 8 C5 8 25 0 50 0Z"
+          fill="#0eb8bc"/>
+
+    <!-- Inner shield highlight -->
+    <path d="M50 6 C71 6 88 12 88 12 L88 50 C88 70 71 85 50 92 C29 85 12 70 12 50 L12 12 C12 12 29 6 50 6Z"
+          fill="#12d4d8" opacity="0.4"/>
+
+    <!-- Heartbeat/pulse line -->
+    <polyline points="18,52 30,52 36,38 42,65 48,45 54,58 60,52 72,52"
+              stroke="#f0f4f4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+    <!-- Data bars -->
+    <rect x="28" y="72" width="6" height="10" rx="1" fill="#f0f4f4" opacity="0.4"/>
+    <rect x="37" y="68" width="6" height="14" rx="1" fill="#f0f4f4" opacity="0.55"/>
+    <rect x="46" y="64" width="6" height="18" rx="1" fill="#f0f4f4" opacity="0.7"/>
+    <rect x="55" y="60" width="6" height="22" rx="1" fill="#f0f4f4"/>
+
+    <!-- Small cross -->
+    <rect x="68" y="18" width="10" height="3" rx="1" fill="#f05483"/>
+    <rect x="71.5" y="14.5" width="3" height="10" rx="1" fill="#f05483"/>
+  </g>
+
+  <!-- Text: G.I.S. -->
+  <text x="125" y="58" font-family="Poppins, sans-serif" font-weight="700" font-size="48" fill="#f0f4f4" letter-spacing="2">
+    G<tspan fill="#0eb8bc">.</tspan>I<tspan fill="#0eb8bc">.</tspan>S<tspan fill="#0eb8bc">.</tspan>
+  </text>
+
+  <!-- Subtitle -->
+  <text x="126" y="82" font-family="Open Sans, sans-serif" font-weight="400" font-size="14" fill="#8fa8aa" letter-spacing="3.5">
+    GESTAO INTELIGENTE EM SAUDE
+  </text>
+
+  <!-- Accent line -->
+  <rect x="126" y="90" width="60" height="2.5" rx="1.25" fill="#0eb8bc"/>
+  <rect x="190" y="90" width="20" height="2.5" rx="1.25" fill="#f05483"/>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- GIS Icon - compact shield with pulse + bars -->
+
+  <!-- Shield shape -->
+  <path d="M50 2 C75 2 95 10 95 10 L95 54 C95 77 75 94 50 100 C25 94 5 77 5 54 L5 10 C5 10 25 2 50 2Z"
+        fill="#094344"/>
+
+  <!-- Inner shield -->
+  <path d="M50 8 C71 8 88 14 88 14 L88 52 C88 72 71 87 50 93 C29 87 12 72 12 52 L12 14 C12 14 29 8 50 8Z"
+        fill="#0c5657" opacity="0.6"/>
+
+  <!-- Heartbeat/pulse line -->
+  <polyline points="16,50 30,50 37,34 44,66 50,42 56,58 62,50 78,50"
+            stroke="#0eb8bc" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- Data bars -->
+  <rect x="28" y="72" width="8" height="12" rx="1.5" fill="#0eb8bc" opacity="0.5"/>
+  <rect x="39" y="66" width="8" height="18" rx="1.5" fill="#0eb8bc" opacity="0.7"/>
+  <rect x="50" y="60" width="8" height="24" rx="1.5" fill="#0eb8bc" opacity="0.85"/>
+  <rect x="61" y="54" width="8" height="30" rx="1.5" fill="#0eb8bc"/>
+
+  <!-- Healthcare cross -->
+  <rect x="70" y="16" width="12" height="3.5" rx="1" fill="#f05483"/>
+  <rect x="74.25" y="11.75" width="3.5" height="12" rx="1" fill="#f05483"/>
+</svg>
