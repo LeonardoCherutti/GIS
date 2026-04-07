@@ -28,6 +28,7 @@ func New(pool *pgxpool.Pool, cfg *config.Config) chi.Router {
 	hospitalHandler := handler.NewHospitalHandler(hospitalService)
 
 	// Public routes
+	r.Head("/api/health", handler.Health)
 	r.Get("/api/health", handler.Health)
 	r.Post("/api/auth/login", authHandler.Login)
 
