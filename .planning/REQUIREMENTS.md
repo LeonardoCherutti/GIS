@@ -44,7 +44,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Dashboard Display
 
-- [ ] **DASH-01**: Power BI iframe embeds correctly with proper CSP frame-src headers
+- [x] **DASH-01**: Power BI iframe embeds correctly with proper CSP frame-src headers
 - [ ] **DASH-02**: Loading indicator shown while Power BI iframe loads (3-10 seconds)
 - [ ] **DASH-03**: Dashboard title (hospital name) displayed in header
 - [ ] **DASH-04**: Back navigation returns to hospital grid
@@ -64,7 +64,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [ ] **UX-01**: User profile display in header (Google avatar + email)
 - [ ] **UX-02**: Toast notification system for feedback (login success, errors, etc.)
-- [ ] **UX-03**: All 12 existing hospitals seeded in database with Power BI URLs
+- [x] **UX-03**: All 12 existing hospitals seeded in database with Power BI URLs
 
 ### Internationalization
 
@@ -138,7 +138,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | GRID-05 | Phase 3 | Pending |
 | GRID-06 | Phase 3 | Pending |
 | GRID-07 | Phase 3 | Pending |
-| DASH-01 | Phase 3 | Pending |
+| DASH-01 | Phase 3 | Complete |
 | DASH-02 | Phase 3 | Pending |
 | DASH-03 | Phase 3 | Pending |
 | DASH-04 | Phase 3 | Pending |
@@ -152,7 +152,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UI-06 | Phase 3 | Pending |
 | UX-01 | Phase 3 | Pending |
 | UX-02 | Phase 3 | Pending |
-| UX-03 | Phase 3 | Pending |
+| UX-03 | Phase 3 | Complete |
 | I18N-01 | Phase 4 | Pending |
 | I18N-02 | Phase 4 | Pending |
 | I18N-03 | Phase 4 | Pending |
