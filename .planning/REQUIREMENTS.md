@@ -45,11 +45,11 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Dashboard Display
 
 - [x] **DASH-01**: Power BI iframe embeds correctly with proper CSP frame-src headers
-- [ ] **DASH-02**: Loading indicator shown while Power BI iframe loads (3-10 seconds)
-- [ ] **DASH-03**: Dashboard title (hospital name) displayed in header
-- [ ] **DASH-04**: Back navigation returns to hospital grid
-- [ ] **DASH-05**: Fullscreen toggle for Power BI iframe
-- [ ] **DASH-06**: Error boundary with retry button when iframe fails to load
+- [x] **DASH-02**: Loading indicator shown while Power BI iframe loads (3-10 seconds)
+- [x] **DASH-03**: Dashboard title (hospital name) displayed in header
+- [x] **DASH-04**: Back navigation returns to hospital grid
+- [x] **DASH-05**: Fullscreen toggle for Power BI iframe
+- [x] **DASH-06**: Error boundary with retry button when iframe fails to load
 
 ### Visual Design
 
@@ -139,11 +139,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | GRID-06 | Phase 3 | Complete |
 | GRID-07 | Phase 3 | Complete |
 | DASH-01 | Phase 3 | Complete |
-| DASH-02 | Phase 3 | Pending |
-| DASH-03 | Phase 3 | Pending |
-| DASH-04 | Phase 3 | Pending |
-| DASH-05 | Phase 3 | Pending |
-| DASH-06 | Phase 3 | Pending |
+| DASH-02 | Phase 3 | Complete |
+| DASH-03 | Phase 3 | Complete |
+| DASH-04 | Phase 3 | Complete |
+| DASH-05 | Phase 3 | Complete |
+| DASH-06 | Phase 3 | Complete |
 | UI-01 | Phase 3 | Pending |
 | UI-02 | Phase 3 | Pending |
 | UI-03 | Phase 3 | Pending |
