@@ -3,21 +3,28 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
+    restart: unless-stopped
     environment:
       - API_URL=http://api:8080
       - NEXT_PUBLIC_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
     depends_on:
       api:
         condition: service_healthy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`${APP_DOMAIN:-gis.localhost}`)"
+      - "traefik.http.routers.frontend.entrypoints=websecure"
+      - "traefik.http.routers.frontend.tls.certresolver=myresolver"
+      - "traefik.docker.network=coolify"
+    networks:
+      - coolify
+      - internal
 
   api:
     build:
       context: ./api
       dockerfile: Dockerfile
-    expose:
-      - "8080"
+    restart: unless-stopped
     environment:
       - PORT=8080
       - DATABASE_URL=postgres://gis:${DB_PASSWORD:-gisdev}@postgres:5432/gis?sslmode=disable
@@ -34,9 +41,12 @@ services:
       timeout: 5s
       retries: 3
       start_period: 5s
+    networks:
+      - internal
 
   postgres:
     image: postgres:16-alpine
+    restart: unless-stopped
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./api/migrations:/docker-entrypoint-initdb.d
@@ -49,6 +59,14 @@ services:
       interval: 5s
       timeout: 3s
       retries: 5
+    networks:
+      - internal
 
 volumes:
   pgdata:
+
+networks:
+  coolify:
+    external: true
+  internal:
+    driver: bridge
