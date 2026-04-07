@@ -2,12 +2,15 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { useAuth } from '@/contexts/AuthContext'
 import LoginButton from '@/components/auth/LoginButton'
 
 export default function Home() {
   const { isAuthenticated, isLoading } = useAuth()
   const router = useRouter()
+  const tc = useTranslations('common')
+  const ta = useTranslations('auth')
 
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
@@ -29,7 +32,7 @@ export default function Home() {
               borderTopColor: 'var(--palette-primary)',
             }}
           />
-          <p style={{ color: 'var(--palette-muted-fg)' }}>Carregando...</p>
+          <p style={{ color: 'var(--palette-muted-fg)' }}>{tc('loading')}</p>
         </div>
       </main>
     )
@@ -43,7 +46,7 @@ export default function Home() {
       >
         <div className="text-center">
           <p style={{ color: 'var(--palette-muted-fg)' }}>
-            Redirecionando...
+            {ta('redirecting')}
           </p>
         </div>
       </main>
@@ -67,19 +70,19 @@ export default function Home() {
             className="text-3xl font-bold"
             style={{ color: 'var(--palette-primary)' }}
           >
-            GIS
+            {tc('brand.short')}
           </h1>
           <p
             className="text-sm mt-1"
             style={{ color: 'var(--palette-foreground)' }}
           >
-            Gestao Inteligente em Saude
+            {tc('brand.full')}
           </p>
           <p
             className="text-xs mt-2"
             style={{ color: 'var(--palette-muted-fg)' }}
           >
-            Portal de Dashboards Hospitalares
+            {tc('brand.tagline')}
           </p>
         </div>
         <LoginButton />

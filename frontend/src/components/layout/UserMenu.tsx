@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { LogOut } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
+import { useTranslations } from 'next-intl'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -16,6 +17,7 @@ import {
 export default function UserMenu() {
   const { user, logout } = useAuth()
   const router = useRouter()
+  const t = useTranslations('common')
 
   if (!user) return null
 
@@ -35,7 +37,7 @@ export default function UserMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger className="cursor-pointer rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring">
         <Avatar>
-          <AvatarImage src={user.picture ?? undefined} alt={user.name ?? 'Avatar'} />
+          <AvatarImage src={user.picture ?? undefined} alt={user.name ?? t('nav.avatar')} />
           <AvatarFallback className="text-xs">{initials}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
@@ -49,7 +51,7 @@ export default function UserMenu() {
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
           <LogOut className="mr-2 size-4" />
-          Sair
+          {t('nav.logout')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

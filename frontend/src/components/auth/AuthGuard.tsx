@@ -2,6 +2,7 @@
 
 import { useEffect, type ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { useAuth } from '@/contexts/AuthContext'
 
 interface AuthGuardProps {
@@ -11,6 +12,7 @@ interface AuthGuardProps {
 export default function AuthGuard({ children }: AuthGuardProps) {
   const { isAuthenticated, isLoading } = useAuth()
   const router = useRouter()
+  const t = useTranslations('common')
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -32,7 +34,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
               borderTopColor: 'var(--palette-primary)',
             }}
           />
-          <p style={{ color: 'var(--palette-muted-fg)' }}>Carregando...</p>
+          <p style={{ color: 'var(--palette-muted-fg)' }}>{t('loading')}</p>
         </div>
       </main>
     )
