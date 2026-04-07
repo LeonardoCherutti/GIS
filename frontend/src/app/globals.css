@@ -20,7 +20,8 @@
   --color-disabled-fg:      var(--palette-disabled-fg);
   --color-destructive:      var(--palette-destructive);
   --color-destructive-fg:   var(--palette-destructive-fg);
-  --font-sans:              var(--font-sans);
+  --font-sans:              var(--font-open-sans), 'Open Sans', sans-serif;
+  --font-heading:           var(--font-poppins), 'Poppins', sans-serif;
 }
 
 @theme inline {
@@ -139,6 +140,9 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
   }
   html {
     @apply font-sans;

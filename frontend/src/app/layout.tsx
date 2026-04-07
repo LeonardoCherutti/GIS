@@ -1,15 +1,21 @@
 import type { Metadata } from "next"
-import { Roboto } from "next/font/google"
+import { Poppins, Open_Sans } from "next/font/google"
 import { ThemeProvider } from "next-themes"
 import { Toaster } from "sonner"
 import { AuthProvider } from "@/contexts/AuthContext"
 import QueryProvider from "@/providers/QueryProvider"
 import "./globals.css"
 
-const roboto = Roboto({
-  variable: "--font-roboto",
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
+  weight: ["300", "400", "500", "600", "700"],
+})
+
+const openSans = Open_Sans({
+  variable: "--font-open-sans",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 })
 
 export const metadata: Metadata = {
@@ -23,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html suppressHydrationWarning className={roboto.variable}>
+    <html suppressHydrationWarning className={`${poppins.variable} ${openSans.variable}`}>
       <body className="antialiased">
         <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem={false}>
           <AuthProvider>
