@@ -47,7 +47,12 @@ Plans:
   3. User session survives browser tab close and returns the user to the grid on reopen
   4. User can log out and is returned to the login screen with session fully cleared
   5. Browser back/forward navigation moves correctly between login, grid, and dashboard views without full reloads
-**Plans**: TBD
+**Plans:** 3 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Go API auth + hospital endpoints (config, auth service, middleware, hospital repository)
+- [ ] 02-02-PLAN.md — Frontend auth (AuthContext with Google OAuth, LoginButton, session management)
+- [ ] 02-03-PLAN.md — SPA navigation (AuthGuard, hospital grid page, dashboard page, routing)
 
 ### Phase 3: Core UI
 **Goal**: An authenticated user can browse all hospitals in a grid, click into any hospital's Power BI dashboard, and experience a polished design with dark mode
@@ -80,11 +85,11 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete | 2026-04-07 |
-| 2. Auth + Data | 0/? | Not started | - |
+| 2. Auth + Data | 0/3 | Planned | - |
 | 3. Core UI | 0/? | Not started | - |
 | 4. Polish + i18n | 0/? | Not started | - |
 
 ---
 
 *Roadmap created: 2026-04-07*
-*Last updated: 2026-04-07 after Phase 1 completion*
+*Last updated: 2026-04-07 after Phase 2 planning*
