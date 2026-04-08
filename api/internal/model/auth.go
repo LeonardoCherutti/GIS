@@ -9,6 +9,7 @@ type AuthUser struct {
 
 type LoginRequest struct {
 	GoogleToken string `json:"google_token"`
+	TokenType   string `json:"token_type"` // "id_token" or "access_token"
 }
 
 type LoginResponse struct {
