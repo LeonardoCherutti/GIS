@@ -111,6 +111,7 @@ None.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260407-pp2 | Fix Google OAuth client_id missing at Docker build time | 2026-04-07 | b177f77 | [260407-pp2-fix-google-oauth-client-id-missing-at-do](./quick/260407-pp2-fix-google-oauth-client-id-missing-at-do/) |
+| 260408-l73 | Add GIS horizontal logo branding to login page and dashboard header | 2026-04-08 | 548fb58, 4ed1a70 | [260408-l73-add-gis-horizontal-logo-branding-to-logi](./quick/260408-l73-add-gis-horizontal-logo-branding-to-logi/) |
 
 ---
 
