@@ -146,6 +146,7 @@
   }
   html {
     @apply font-sans;
+    background: var(--palette-background);
   }
   select {
     @apply bg-background text-foreground border-border;
