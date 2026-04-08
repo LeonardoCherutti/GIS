@@ -56,24 +56,24 @@ export default function Home() {
 
   return (
     <main
-      className="flex min-h-screen items-center justify-center"
+      className="flex min-h-screen items-center justify-center px-4"
       style={{ background: 'var(--palette-background)' }}
     >
       <div
-        className="w-full max-w-md rounded-xl p-8 shadow-lg"
+        className="w-full max-w-sm sm:max-w-md rounded-xl p-6 sm:p-8 shadow-lg"
         style={{
           background: 'var(--palette-surface-raised)',
           border: '1px solid var(--palette-border)',
         }}
       >
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-6 sm:mb-8">
           <Image
             src="/logo_horizontal.png"
             alt="G.S.I - Gestao Inteligente em Saude"
             width={388}
             height={132}
             priority
-            className="dark:brightness-200 dark:contrast-50"
+            className="w-full max-w-[280px] sm:max-w-[388px] h-auto dark:brightness-200 dark:contrast-50"
           />
         </div>
         <LoginButton />
