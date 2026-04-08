@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { useAuth } from '@/contexts/AuthContext'
 
@@ -9,6 +9,7 @@ export default function LoginButton() {
   const [error, setError] = useState<string | null>(null)
   const { login } = useAuth()
   const t = useTranslations('auth')
+  const fallbackRef = useRef<HTMLDivElement>(null)
 
   function handleLogin() {
     setLoading(true)
@@ -32,23 +33,26 @@ export default function LoginButton() {
           setLoading(false)
         }
       },
-      ux_mode: 'popup',
     })
 
-    google.accounts.id.prompt((notification: any) => {
-      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-        google.accounts.id.renderButton(
-          document.getElementById('google-signin-fallback'),
-          { theme: 'outline', size: 'large', width: '100%' }
-        )
-        const btn = document.getElementById('google-signin-fallback')?.querySelector('div[role="button"]') as HTMLElement
-        if (btn) btn.click()
-        else {
-          setError(t('errors.popupBlocked'))
-          setLoading(false)
-        }
-      }
+    // Skip One Tap — go straight to popup window
+    google.accounts.id.renderButton(fallbackRef.current, {
+      type: 'standard',
+      theme: 'outline',
+      size: 'large',
+      width: '100%',
     })
+
+    // Click the rendered Google button to open the popup
+    setTimeout(() => {
+      const btn = fallbackRef.current?.querySelector('div[role="button"]') as HTMLElement
+      if (btn) {
+        btn.click()
+      } else {
+        setError(t('errors.popupBlocked'))
+        setLoading(false)
+      }
+    }, 100)
   }
 
   return (
@@ -75,7 +79,7 @@ export default function LoginButton() {
           </>
         )}
       </button>
-      <div id="google-signin-fallback" className="hidden" />
+      <div ref={fallbackRef} className="hidden overflow-hidden h-0" />
       {error && (
         <p role="alert" className="text-xs mt-2 text-center" style={{ color: 'var(--palette-destructive)' }}>
           {error}
