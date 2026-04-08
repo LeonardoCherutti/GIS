@@ -13,8 +13,8 @@
     "switchToDark": "Mudar para tema escuro"
   },
   "footer": {
-    "copyright": "G.I.S. Gestao Inteligente em Saude \u00a9 {year}",
-    "madeBy": "Made by <link>Pixelrogue Art</link>"
+    "copyright": "\u00a9 {year} G.I.S. Gestao Inteligente em Saude. Todos os direitos reservados.",
+    "madeBy": "Desenvolvido por <link>Pixelrogue Art</link>"
   },
   "loading": "Carregando..."
 }
