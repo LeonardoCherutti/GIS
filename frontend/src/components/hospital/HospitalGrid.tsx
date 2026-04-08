@@ -52,33 +52,35 @@ export function HospitalGrid() {
   )
 
   return (
-    <div>
+    <div className="flex flex-col" style={{ minHeight: 'calc(100vh - 16rem)' }}>
       <div className="mb-6">
         <SearchInput value={query} onChange={setQuery} placeholder={t('searchPlaceholder')} />
       </div>
 
-      {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <HospitalCardSkeleton key={i} />
-          ))}
-        </div>
-      ) : paginated.length === 0 ? (
-        <div className="flex items-center justify-center py-20">
-          <p
-            className="text-sm"
-            style={{ color: 'var(--palette-muted-fg)' }}
-          >
-            {t('noResults')}
-          </p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {paginated.map((hospital) => (
-            <HospitalCard key={hospital.id} hospital={hospital} />
-          ))}
-        </div>
-      )}
+      <div className="flex-1">
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <HospitalCardSkeleton key={i} />
+            ))}
+          </div>
+        ) : paginated.length === 0 ? (
+          <div className="flex items-center justify-center py-20">
+            <p
+              className="text-sm"
+              style={{ color: 'var(--palette-muted-fg)' }}
+            >
+              {t('noResults')}
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 content-start">
+            {paginated.map((hospital) => (
+              <HospitalCard key={hospital.id} hospital={hospital} />
+            ))}
+          </div>
+        )}
+      </div>
 
       {!loading && totalPages > 1 && (
         <div className="mt-6">
