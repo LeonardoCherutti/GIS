@@ -16,7 +16,7 @@ interface AuthContextType {
   isAuthenticated: boolean
   isLoading: boolean
   token: string | null
-  login: (credentialResponse: { credential?: string; access_token?: string }) => Promise<void>
+  login: (credentialResponse: { credential?: string }) => Promise<void>
   logout: () => Promise<void>
 }
 
@@ -68,16 +68,13 @@ function AuthProviderInner({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const login = useCallback(async (credentialResponse: { credential?: string; access_token?: string }) => {
-    const googleToken = credentialResponse.credential ?? credentialResponse.access_token
-    if (!googleToken) return
+  const login = useCallback(async (credentialResponse: { credential?: string }) => {
+    const credential = credentialResponse.credential
+    if (!credential) return
 
     const result = await apiFetch<{ token: string; user: AuthUser }>('/auth/login', {
       method: 'POST',
-      body: JSON.stringify({
-        google_token: googleToken,
-        token_type: credentialResponse.access_token ? 'access_token' : 'id_token',
-      }),
+      body: JSON.stringify({ google_token: credential }),
     })
 
     if (!result.ok) {

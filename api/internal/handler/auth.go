@@ -28,11 +28,7 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tokenType := req.TokenType
-	if tokenType == "" {
-		tokenType = "id_token"
-	}
-	user, token, err := h.service.VerifyAndLogin(r.Context(), req.GoogleToken, tokenType)
+	user, token, err := h.service.VerifyAndLogin(r.Context(), req.GoogleToken)
 	if err != nil {
 		writeError(w, http.StatusForbidden, err.Error())
 		return

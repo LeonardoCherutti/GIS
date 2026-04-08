@@ -2,10 +2,7 @@ package service
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
 	"strings"
 	"time"
 
@@ -24,30 +21,16 @@ func NewAuthService(cfg *config.Config) *AuthService {
 	return &AuthService{cfg: cfg}
 }
 
-func (s *AuthService) VerifyAndLogin(ctx context.Context, googleToken string, tokenType string) (*model.AuthUser, string, error) {
-	var email, name, picture, sub string
-
-	if tokenType == "access_token" {
-		// Fetch user info from Google using the access token
-		userInfo, err := s.fetchGoogleUserInfo(googleToken)
-		if err != nil {
-			return nil, "", fmt.Errorf("Token do Google invalido")
-		}
-		email = userInfo.Email
-		name = userInfo.Name
-		picture = userInfo.Picture
-		sub = userInfo.Sub
-	} else {
-		// Verify ID token
-		payload, err := idtoken.Validate(ctx, googleToken, s.cfg.GoogleClientID)
-		if err != nil {
-			return nil, "", fmt.Errorf("Token do Google invalido")
-		}
-		email, _ = payload.Claims["email"].(string)
-		name, _ = payload.Claims["name"].(string)
-		picture, _ = payload.Claims["picture"].(string)
-		sub = payload.Subject
+func (s *AuthService) VerifyAndLogin(ctx context.Context, googleToken string) (*model.AuthUser, string, error) {
+	payload, err := idtoken.Validate(ctx, googleToken, s.cfg.GoogleClientID)
+	if err != nil {
+		return nil, "", fmt.Errorf("Token do Google invalido")
 	}
+
+	email, _ := payload.Claims["email"].(string)
+	name, _ := payload.Claims["name"].(string)
+	picture, _ := payload.Claims["picture"].(string)
+	sub := payload.Subject
 
 	if !s.isAllowed(email) {
 		return nil, "", fmt.Errorf("Email nao autorizado")
@@ -98,38 +81,6 @@ func (s *AuthService) isAllowed(email string) bool {
 	}
 
 	return false
-}
-
-type googleUserInfo struct {
-	Sub     string `json:"sub"`
-	Email   string `json:"email"`
-	Name    string `json:"name"`
-	Picture string `json:"picture"`
-}
-
-func (s *AuthService) fetchGoogleUserInfo(accessToken string) (*googleUserInfo, error) {
-	req, err := http.NewRequest("GET", "https://www.googleapis.com/oauth2/v3/userinfo", nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header.Set("Authorization", "Bearer "+accessToken)
-
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		body, _ := io.ReadAll(resp.Body)
-		return nil, fmt.Errorf("google userinfo failed: %s", string(body))
-	}
-
-	var info googleUserInfo
-	if err := json.NewDecoder(resp.Body).Decode(&info); err != nil {
-		return nil, err
-	}
-	return &info, nil
 }
 
 func (s *AuthService) ValidateSessionToken(tokenStr string) (jwt.MapClaims, error) {

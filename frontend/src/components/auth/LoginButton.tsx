@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useGoogleLogin } from '@react-oauth/google'
 import { useTranslations } from 'next-intl'
 import { useAuth } from '@/contexts/AuthContext'
 
@@ -11,27 +10,45 @@ export default function LoginButton() {
   const { login } = useAuth()
   const t = useTranslations('auth')
 
-  const googleLogin = useGoogleLogin({
-    flow: 'implicit',
-    onSuccess: async (tokenResponse) => {
-      try {
-        await login({ access_token: tokenResponse.access_token })
-      } catch (err: any) {
-        setError(err?.message ?? t('errors.generic'))
-      } finally {
-        setLoading(false)
-      }
-    },
-    onError: () => {
-      setError(t('errors.generic'))
-      setLoading(false)
-    },
-  })
-
   function handleLogin() {
     setLoading(true)
     setError(null)
-    googleLogin()
+
+    const google = (window as any).google
+    if (!google?.accounts?.id) {
+      setError(t('errors.googleNotLoaded'))
+      setLoading(false)
+      return
+    }
+
+    google.accounts.id.initialize({
+      client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+      callback: async (response: { credential?: string }) => {
+        try {
+          await login(response)
+        } catch (err: any) {
+          setError(err?.message ?? t('errors.generic'))
+        } finally {
+          setLoading(false)
+        }
+      },
+      ux_mode: 'popup',
+    })
+
+    google.accounts.id.prompt((notification: any) => {
+      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+        google.accounts.id.renderButton(
+          document.getElementById('google-signin-fallback'),
+          { theme: 'outline', size: 'large', width: '100%' }
+        )
+        const btn = document.getElementById('google-signin-fallback')?.querySelector('div[role="button"]') as HTMLElement
+        if (btn) btn.click()
+        else {
+          setError(t('errors.popupBlocked'))
+          setLoading(false)
+        }
+      }
+    })
   }
 
   return (
@@ -58,6 +75,7 @@ export default function LoginButton() {
           </>
         )}
       </button>
+      <div id="google-signin-fallback" className="hidden" />
       {error && (
         <p role="alert" className="text-xs mt-2 text-center" style={{ color: 'var(--palette-destructive)' }}>
           {error}
