@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { useAuth } from '@/contexts/AuthContext'
 import LoginButton from '@/components/auth/LoginButton'
@@ -59,31 +60,21 @@ export default function Home() {
       style={{ background: 'var(--palette-background)' }}
     >
       <div
-        className="w-full max-w-sm rounded-xl p-8 shadow-lg"
+        className="w-full max-w-md rounded-xl p-8 shadow-lg"
         style={{
           background: 'var(--palette-surface-raised)',
           border: '1px solid var(--palette-border)',
         }}
       >
-        <div className="text-center mb-8">
-          <h1
-            className="text-3xl font-bold"
-            style={{ color: 'var(--palette-primary)' }}
-          >
-            {tc('brand.short')}
-          </h1>
-          <p
-            className="text-sm mt-1"
-            style={{ color: 'var(--palette-foreground)' }}
-          >
-            {tc('brand.full')}
-          </p>
-          <p
-            className="text-xs mt-2"
-            style={{ color: 'var(--palette-muted-fg)' }}
-          >
-            {tc('brand.tagline')}
-          </p>
+        <div className="flex justify-center mb-8">
+          <Image
+            src="/logo_horizontal.png"
+            alt="G.S.I - Gestao Inteligente em Saude"
+            width={388}
+            height={132}
+            priority
+            className="dark:brightness-200 dark:contrast-50"
+          />
         </div>
         <LoginButton />
       </div>
