@@ -19,7 +19,7 @@ const openSans = Open_Sans({
 })
 
 export const metadata: Metadata = {
-  title: "GIS - Gestao Inteligente em Saude",
+  title: "GIS - Gestão Inteligente em Saúde",
   description: "Portal de dashboards hospitalares",
   metadataBase: new URL("https://gis.pixelrogue.io"),
   icons: {
@@ -27,13 +27,13 @@ export const metadata: Metadata = {
     apple: "/meta/apple-icon.png",
   },
   openGraph: {
-    title: "GIS - Gestao Inteligente em Saude",
+    title: "GIS - Gestão Inteligente em Saúde",
     description: "Portal de dashboards hospitalares",
     images: ["/meta/metabanner.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "GIS - Gestao Inteligente em Saude",
+    title: "GIS - Gestão Inteligente em Saúde",
     description: "Portal de dashboards hospitalares",
     images: ["/meta/metabanner.png"],
   },
