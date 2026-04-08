@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 
@@ -36,7 +37,7 @@ func (r *HospitalRepo) FindAllActive(ctx context.Context) ([]model.Hospital, err
 	var hospitals []model.Hospital
 	for rows.Next() {
 		var h model.Hospital
-		var periodStart, periodEnd *string
+		var periodStart, periodEnd *time.Time
 
 		err := rows.Scan(
 			&h.ID,
@@ -53,8 +54,14 @@ func (r *HospitalRepo) FindAllActive(ctx context.Context) ([]model.Hospital, err
 			return nil, err
 		}
 
-		h.PeriodStart = periodStart
-		h.PeriodEnd = periodEnd
+		if periodStart != nil {
+			s := periodStart.Format("2006-01-02")
+			h.PeriodStart = &s
+		}
+		if periodEnd != nil {
+			s := periodEnd.Format("2006-01-02")
+			h.PeriodEnd = &s
+		}
 		hospitals = append(hospitals, h)
 	}
 
