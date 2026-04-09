@@ -15,7 +15,7 @@ progress:
 # State: GIS - Gestao Inteligente em Saude
 
 **Last updated:** 2026-04-09
-**Session:** Quick task 260409-cwl: Add Docker Compose presentation service for todogsi.pixelrogue.io
+**Session:** Phase 5 context gathered — RBAC discussion complete, ready for planning
 
 ---
 
@@ -91,6 +91,10 @@ Plan: 2 of 2
 ### Reference Projects
 
 - **ferreiracontabilidade** (`D:\ferreiracontabilidade\app`): Gold standard for Next.js app router patterns, palette.css, component architecture, proxy route, i18n with next-intl
+
+### Roadmap Evolution
+
+- Phase 5 added: Role-Based Access Control (RBAC) — Admin and Manager roles with hospital-level access control
 
 ### Research Flags (Unresolved)
 
