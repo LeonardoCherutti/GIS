@@ -33,6 +33,7 @@ services:
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
       - JWT_SECRET=${JWT_SECRET:-gis-dev-secret-change-in-production}
       - ADMIN_EMAILS=${ADMIN_EMAILS:-}
+      - ALLOWED_DOMAINS=${ALLOWED_DOMAINS:-}
     depends_on:
       postgres:
         condition: service_healthy

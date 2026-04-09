@@ -53,6 +53,18 @@ func (s *AuthService) VerifyAndLogin(ctx context.Context, googleToken string) (*
 			if err != nil {
 				return nil, "", fmt.Errorf("Erro ao criar usuario administrador")
 			}
+		} else if s.isAllowedDomain(email) {
+			// Domain-level gate: auto-create as manager
+			dbUser := &model.User{
+				Email:   email,
+				Name:    &name,
+				Picture: &picture,
+				Role:    "manager",
+			}
+			user, err = s.userRepo.Upsert(ctx, dbUser)
+			if err != nil {
+				return nil, "", fmt.Errorf("Erro ao criar usuario")
+			}
 		} else {
 			return nil, "", fmt.Errorf("Acesso negado. Contate o administrador.")
 		}
@@ -97,6 +109,20 @@ func (s *AuthService) isAdminEmail(email string) bool {
 	lower := strings.ToLower(email)
 	for _, admin := range s.cfg.AdminEmails {
 		if strings.ToLower(admin) == lower {
+			return true
+		}
+	}
+	return false
+}
+
+func (s *AuthService) isAllowedDomain(email string) bool {
+	parts := strings.SplitN(strings.ToLower(email), "@", 2)
+	if len(parts) != 2 {
+		return false
+	}
+	domain := parts[1]
+	for _, allowed := range s.cfg.AllowedDomains {
+		if strings.ToLower(allowed) == domain {
 			return true
 		}
 	}

@@ -12,6 +12,7 @@ type Config struct {
 	GoogleClientID string
 	JWTSecret      string
 	AdminEmails    []string
+	AllowedDomains []string
 }
 
 func Load() Config {
@@ -32,6 +33,7 @@ func Load() Config {
 		GoogleClientID: os.Getenv("GOOGLE_CLIENT_ID"),
 		JWTSecret:      jwtSecret,
 		AdminEmails:    parseCSV(os.Getenv("ADMIN_EMAILS")),
+		AllowedDomains: parseCSV(os.Getenv("ALLOWED_DOMAINS")),
 	}
 }
 
