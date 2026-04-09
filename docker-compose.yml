@@ -31,8 +31,7 @@ services:
       - PORT=8080
       - DATABASE_URL=postgres://gis:${DB_PASSWORD:-gisdev}@postgres:5432/gis?sslmode=disable
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
-      # IMPORTANT: Set JWT_SECRET in production — sessions break on redeploy without it
-      - JWT_SECRET=${JWT_SECRET:-}
+      - JWT_SECRET=${JWT_SECRET:-gis-dev-secret-change-in-production}
       - ADMIN_EMAILS=${ADMIN_EMAILS:-}
     depends_on:
       postgres:
