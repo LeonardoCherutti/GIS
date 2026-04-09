@@ -25,11 +25,12 @@ func New(pool *pgxpool.Pool, cfg *config.Config) chi.Router {
 	// Services
 	authService := service.NewAuthService(cfg, userRepo)
 	hospitalService := service.NewHospitalService(hospitalRepo)
-	_ = service.NewUserService(userRepo) // Used by admin handler in Plan 03
+	userService := service.NewUserService(userRepo)
 
 	// Handlers
 	authHandler := handler.NewAuthHandler(authService)
 	hospitalHandler := handler.NewHospitalHandler(hospitalService)
+	adminHandler := handler.NewAdminHandler(userService)
 
 	// Public routes
 	r.Head("/api/health", handler.Health)
@@ -42,11 +43,14 @@ func New(pool *pgxpool.Pool, cfg *config.Config) chi.Router {
 		r.Get("/api/hospitals", hospitalHandler.List)
 	})
 
-	// Admin routes (handler added in Plan 03)
+	// Admin routes
 	r.Group(func(r chi.Router) {
 		r.Use(middleware.Auth(cfg.JWTSecret))
 		r.Use(middleware.RequireAdmin)
-		// Admin endpoints added in Plan 03
+		r.Get("/api/admin/users", adminHandler.ListUsers)
+		r.Post("/api/admin/users", adminHandler.CreateUser)
+		r.Put("/api/admin/users/{id}/hospitals", adminHandler.UpdateHospitals)
+		r.Delete("/api/admin/users/{id}", adminHandler.DeleteUser)
 	})
 
 	return r
