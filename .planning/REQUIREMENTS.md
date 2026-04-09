@@ -75,16 +75,16 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Role-Based Access Control (RBAC)
 
 - [ ] **RBAC-01**: Database schema for users table and user_hospitals junction table with proper constraints
-- [ ] **RBAC-02**: Replace env-var email allowlist (ALLOWED_EMAILS/ALLOWED_DOMAINS) with DB-driven user lookup
-- [ ] **RBAC-03**: Admin auto-seed via ADMIN_EMAILS env var on first login
-- [ ] **RBAC-04**: JWT includes role claim, auth middleware extracts role into request context
-- [ ] **RBAC-05**: Hospital API filters results by user role (admins see all, managers see assigned only)
+- [x] **RBAC-02**: Replace env-var email allowlist (ALLOWED_EMAILS/ALLOWED_DOMAINS) with DB-driven user lookup
+- [x] **RBAC-03**: Admin auto-seed via ADMIN_EMAILS env var on first login
+- [x] **RBAC-04**: JWT includes role claim, auth middleware extracts role into request context
+- [x] **RBAC-05**: Hospital API filters results by user role (admins see all, managers see assigned only)
 - [ ] **RBAC-06**: Admin CRUD API endpoints for user management (list, create manager, update hospitals, delete)
-- [ ] **RBAC-07**: RequireAdmin middleware protects admin-only API routes
+- [x] **RBAC-07**: RequireAdmin middleware protects admin-only API routes
 - [ ] **RBAC-08**: Frontend AuthContext exposes user role from JWT
 - [ ] **RBAC-09**: AdminGuard component redirects non-admin users from /admin routes
 - [ ] **RBAC-10**: Admin page with user table, hospital checkbox assignment, and add-manager form
-- [ ] **RBAC-11**: Login rejection shows "Acesso negado. Contate o administrador." for unregistered users
+- [x] **RBAC-11**: Login rejection shows "Acesso negado. Contate o administrador." for unregistered users
 - [ ] **RBAC-12**: AppHeader conditionally shows admin link for admin-role users only
 
 ## v2 Requirements
