@@ -8,6 +8,7 @@ const messageImports = {
     auth: (await import('../messages/pt-BR/auth.json')).default,
     hospital: (await import('../messages/pt-BR/hospital.json')).default,
     dashboard: (await import('../messages/pt-BR/dashboard.json')).default,
+    admin: (await import('../messages/pt-BR/admin.json')).default,
   }),
 } as const
 
