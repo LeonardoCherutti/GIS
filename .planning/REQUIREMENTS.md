@@ -79,7 +79,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **RBAC-03**: Admin auto-seed via ADMIN_EMAILS env var on first login
 - [x] **RBAC-04**: JWT includes role claim, auth middleware extracts role into request context
 - [x] **RBAC-05**: Hospital API filters results by user role (admins see all, managers see assigned only)
-- [ ] **RBAC-06**: Admin CRUD API endpoints for user management (list, create manager, update hospitals, delete)
+- [x] **RBAC-06**: Admin CRUD API endpoints for user management (list, create manager, update hospitals, delete)
 - [x] **RBAC-07**: RequireAdmin middleware protects admin-only API routes
 - [ ] **RBAC-08**: Frontend AuthContext exposes user role from JWT
 - [ ] **RBAC-09**: AdminGuard component redirects non-admin users from /admin routes
