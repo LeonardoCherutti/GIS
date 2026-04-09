@@ -1,6 +1,7 @@
 package config
 
 import (
+	"log"
 	"os"
 	"strings"
 )
@@ -22,6 +23,7 @@ func Load() Config {
 	jwtSecret := os.Getenv("JWT_SECRET")
 	if jwtSecret == "" {
 		jwtSecret = "gis-dev-secret-change-in-production"
+		log.Println("WARNING: JWT_SECRET not set — using insecure default. Sessions will break on redeploy. Set JWT_SECRET in your environment.")
 	}
 
 	return Config{
