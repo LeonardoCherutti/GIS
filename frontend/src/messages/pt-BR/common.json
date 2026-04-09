@@ -16,5 +16,6 @@
     "copyright": "\u00a9 {year} G.I.S. Gestao Inteligente em Saude. Todos os direitos reservados.",
     "madeBy": "Desenvolvido por <link>Pixelrogue Art</link>"
   },
-  "loading": "Carregando..."
+  "loading": "Carregando...",
+  "admin": "Admin"
 }

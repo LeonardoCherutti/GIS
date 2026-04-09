@@ -9,6 +9,7 @@ interface AuthUser {
   name: string
   picture: string
   sub: string
+  role: 'admin' | 'manager'
 }
 
 interface AuthContextType {
@@ -32,6 +33,7 @@ function parseJwt(token: string): AuthUser | null {
       name: payload.name,
       picture: payload.picture,
       sub: payload.sub,
+      role: payload.role ?? 'manager',
     }
   } catch {
     return null
