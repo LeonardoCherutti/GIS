@@ -18,10 +18,14 @@ func New(pool *pgxpool.Pool, cfg *config.Config) chi.Router {
 	r.Use(chimw.Recoverer)
 	r.Use(chimw.RequestID)
 
-	// Services
-	authService := service.NewAuthService(cfg)
+	// Repositories
 	hospitalRepo := repository.NewHospitalRepo(pool)
+	userRepo := repository.NewUserRepo(pool)
+
+	// Services
+	authService := service.NewAuthService(cfg, userRepo)
 	hospitalService := service.NewHospitalService(hospitalRepo)
+	_ = service.NewUserService(userRepo) // Used by admin handler in Plan 03
 
 	// Handlers
 	authHandler := handler.NewAuthHandler(authService)
@@ -36,6 +40,13 @@ func New(pool *pgxpool.Pool, cfg *config.Config) chi.Router {
 	r.Group(func(r chi.Router) {
 		r.Use(middleware.Auth(cfg.JWTSecret))
 		r.Get("/api/hospitals", hospitalHandler.List)
+	})
+
+	// Admin routes (handler added in Plan 03)
+	r.Group(func(r chi.Router) {
+		r.Use(middleware.Auth(cfg.JWTSecret))
+		r.Use(middleware.RequireAdmin)
+		// Admin endpoints added in Plan 03
 	})
 
 	return r

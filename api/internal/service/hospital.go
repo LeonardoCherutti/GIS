@@ -18,3 +18,7 @@ func NewHospitalService(repo *repository.HospitalRepo) *HospitalService {
 func (s *HospitalService) ListActive(ctx context.Context) ([]model.Hospital, error) {
 	return s.repo.FindAllActive(ctx)
 }
+
+func (s *HospitalService) ListByUserAccess(ctx context.Context, email string) ([]model.Hospital, error) {
+	return s.repo.FindByUserAccess(ctx, email)
+}

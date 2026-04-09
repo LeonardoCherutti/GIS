@@ -75,3 +75,64 @@ func (r *HospitalRepo) FindAllActive(ctx context.Context) ([]model.Hospital, err
 
 	return hospitals, nil
 }
+
+func (r *HospitalRepo) FindByUserAccess(ctx context.Context, email string) ([]model.Hospital, error) {
+	query := `
+		SELECT h.id, h.name, h.cnes, h.logo_url, h.period_start, h.period_end,
+		       h.sort_order, h.created_at,
+		       dc.embed_url
+		FROM hospitals h
+		LEFT JOIN dashboard_configs dc ON dc.hospital_id = h.id AND dc.active = true
+		INNER JOIN user_hospitals uh ON uh.hospital_id = h.id
+		INNER JOIN users u ON u.id = uh.user_id AND u.email = $1
+		WHERE h.active = true
+		ORDER BY h.sort_order, h.name
+	`
+
+	rows, err := r.pool.Query(ctx, query, email)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var hospitals []model.Hospital
+	for rows.Next() {
+		var h model.Hospital
+		var periodStart, periodEnd *time.Time
+
+		err := rows.Scan(
+			&h.ID,
+			&h.Name,
+			&h.CNES,
+			&h.LogoURL,
+			&periodStart,
+			&periodEnd,
+			&h.SortOrder,
+			&h.CreatedAt,
+			&h.PowerBIURL,
+		)
+		if err != nil {
+			return nil, err
+		}
+
+		if periodStart != nil {
+			s := periodStart.Format("2006-01-02")
+			h.PeriodStart = &s
+		}
+		if periodEnd != nil {
+			s := periodEnd.Format("2006-01-02")
+			h.PeriodEnd = &s
+		}
+		hospitals = append(hospitals, h)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	if hospitals == nil {
+		hospitals = []model.Hospital{}
+	}
+
+	return hospitals, nil
+}
