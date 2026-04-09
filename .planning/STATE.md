@@ -15,25 +15,23 @@ progress:
 # State: GIS - Gestao Inteligente em Saude
 
 **Last updated:** 2026-04-09
-**Session:** Phase 5 context gathered — RBAC discussion complete, ready for planning
+**Session:** Completed 05-01-PLAN.md (RBAC foundation: schema, models, repo, config)
 
 ---
 
 ## Project Reference
 
 **Core value:** Authenticated users can quickly access hospital-specific Power BI dashboards from a single, clean portal
-**Current focus:** Phase 04 — polish-i18n
+**Current focus:** Phase 05 — RBAC
 
 ---
 
 ## Current Position
 
-Phase: 04 (polish-i18n) — EXECUTING
-Plan: 2 of 2
-**Phase:** 04
-**Plan:** Not started
-**Status:** Milestone complete
-**Progress:** [██████████] 100%
+**Phase:** 05 (RBAC)
+**Plan:** 1 of 4 complete
+**Status:** Executing
+**Progress:** [##........] 25%
 
 ### Phase Progress
 
@@ -43,6 +41,7 @@ Plan: 2 of 2
 | 2. Auth + Data | Complete (3/3 plans) |
 | 3. Core UI | In progress (1/5 plans) |
 | 4. Polish + i18n | In progress (1/2 plans) |
+| 5. RBAC | In progress (1/4 plans) |
 
 ---
 
@@ -87,6 +86,9 @@ Plan: 2 of 2
 | No auth check in proxy.ts | GIS uses client-side AuthGuard, not middleware auth |
 | Phase 04 P01 | 3min | 2 tasks | 14 files |
 | Phase 04 P02 | 3min | 2 tasks | 15 files |
+| AdminEmails replaces AllowedEmails+AllowedDomains | Single config field; DB-driven user lookup in 05-02 |
+| Nullable Name/Picture on User model | Managers created by admin with email only; populated on first login |
+| Phase 05 P01 | 2min | 2 tasks | 7 files |
 
 ### Reference Projects
 
