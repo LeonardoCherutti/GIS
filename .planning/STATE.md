@@ -15,7 +15,7 @@ progress:
 # State: GIS - Gestao Inteligente em Saude
 
 **Last updated:** 2026-04-09
-**Session:** Quick task 260409-cdi: Create animated HTML presentation from PLANO-TELAS-NATIVAS for client
+**Session:** Quick task 260409-cwl: Add Docker Compose presentation service for todogsi.pixelrogue.io
 
 ---
 
@@ -113,6 +113,7 @@ None.
 | 260407-pp2 | Fix Google OAuth client_id missing at Docker build time | 2026-04-07 | b177f77 | [260407-pp2-fix-google-oauth-client-id-missing-at-do](./quick/260407-pp2-fix-google-oauth-client-id-missing-at-do/) |
 | 260408-l73 | Add GIS horizontal logo branding to login page and dashboard header | 2026-04-08 | 548fb58, 4ed1a70 | [260408-l73-add-gis-horizontal-logo-branding-to-logi](./quick/260408-l73-add-gis-horizontal-logo-branding-to-logi/) |
 | 260409-cdi | Create animated HTML presentation from native screens plan | 2026-04-09 | 203cb69 | [260409-cdi-create-animated-html-presentation-from-p](./quick/260409-cdi-create-animated-html-presentation-from-p/) |
+| 260409-cwl | Add Docker Compose presentation service for todogsi.pixelrogue.io | 2026-04-09 | 588c471, 308edd6 | [260409-cwl-add-docker-compose-service-to-serve-pres](./quick/260409-cwl-add-docker-compose-service-to-serve-pres/) |
 
 ---
 
