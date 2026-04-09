@@ -50,24 +50,27 @@ function AuthProviderInner({ children }: { children: ReactNode }) {
   const isAuthenticated = user !== null
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem('gis_auth_token')
-      if (saved) {
-        const parsed = parseJwt(saved)
-        if (parsed) {
-          setUser(parsed)
-          setToken(saved)
-          // Refresh httpOnly cookie to ensure it exists
-          fetch('/api/session', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token: saved }),
-          })
+    const restore = async () => {
+      try {
+        const saved = localStorage.getItem('gis_auth_token')
+        if (saved) {
+          const parsed = parseJwt(saved)
+          if (parsed) {
+            // Refresh httpOnly cookie BEFORE marking as loaded
+            await fetch('/api/session', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ token: saved }),
+            })
+            setUser(parsed)
+            setToken(saved)
+          }
         }
+      } finally {
+        setIsLoading(false)
       }
-    } finally {
-      setIsLoading(false)
     }
+    restore()
   }, [])
 
   const login = useCallback(async (credentialResponse: { credential?: string }) => {
