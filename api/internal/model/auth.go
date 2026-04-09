@@ -5,6 +5,7 @@ type AuthUser struct {
 	Name    string `json:"name"`
 	Picture string `json:"picture"`
 	Sub     string `json:"sub"`
+	Role    string `json:"role"`
 }
 
 type LoginRequest struct {

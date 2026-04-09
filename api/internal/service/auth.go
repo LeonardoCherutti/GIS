@@ -11,14 +11,16 @@ import (
 
 	"gis-api/internal/config"
 	"gis-api/internal/model"
+	"gis-api/internal/repository"
 )
 
 type AuthService struct {
-	cfg *config.Config
+	cfg      *config.Config
+	userRepo *repository.UserRepo
 }
 
-func NewAuthService(cfg *config.Config) *AuthService {
-	return &AuthService{cfg: cfg}
+func NewAuthService(cfg *config.Config, userRepo *repository.UserRepo) *AuthService {
+	return &AuthService{cfg: cfg, userRepo: userRepo}
 }
 
 func (s *AuthService) VerifyAndLogin(ctx context.Context, googleToken string) (*model.AuthUser, string, error) {
@@ -32,23 +34,53 @@ func (s *AuthService) VerifyAndLogin(ctx context.Context, googleToken string) (*
 	picture, _ := payload.Claims["picture"].(string)
 	sub := payload.Subject
 
-	if !s.isAllowed(email) {
-		return nil, "", fmt.Errorf("Email nao autorizado")
+	// Look up user in DB
+	user, err := s.userRepo.FindByEmail(ctx, email)
+	if err != nil {
+		return nil, "", fmt.Errorf("Erro ao verificar usuario")
 	}
 
-	user := &model.AuthUser{
-		Email:   email,
+	if user == nil {
+		// User not in DB -- check if admin email for auto-seed
+		if s.isAdminEmail(email) {
+			dbUser := &model.User{
+				Email:   email,
+				Name:    &name,
+				Picture: &picture,
+				Role:    "admin",
+			}
+			user, err = s.userRepo.Upsert(ctx, dbUser)
+			if err != nil {
+				return nil, "", fmt.Errorf("Erro ao criar usuario administrador")
+			}
+		} else {
+			return nil, "", fmt.Errorf("Acesso negado. Contate o administrador.")
+		}
+	} else {
+		// Existing user -- update name/picture from Google profile
+		user.Name = &name
+		user.Picture = &picture
+		user, err = s.userRepo.Upsert(ctx, user)
+		if err != nil {
+			return nil, "", fmt.Errorf("Erro ao atualizar perfil do usuario")
+		}
+	}
+
+	authUser := &model.AuthUser{
+		Email:   user.Email,
 		Name:    name,
 		Picture: picture,
 		Sub:     sub,
+		Role:    user.Role,
 	}
 
 	now := time.Now()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"email":   email,
+		"email":   user.Email,
 		"name":    name,
 		"picture": picture,
 		"sub":     sub,
+		"role":    user.Role,
 		"iat":     now.Unix(),
 		"exp":     now.Add(24 * time.Hour).Unix(),
 	})
@@ -58,20 +90,16 @@ func (s *AuthService) VerifyAndLogin(ctx context.Context, googleToken string) (*
 		return nil, "", fmt.Errorf("Erro ao gerar token")
 	}
 
-	return user, signed, nil
+	return authUser, signed, nil
 }
 
-func (s *AuthService) isAllowed(email string) bool {
+func (s *AuthService) isAdminEmail(email string) bool {
 	lower := strings.ToLower(email)
-
-	for _, allowed := range s.cfg.AdminEmails {
-		if strings.ToLower(allowed) == lower {
+	for _, admin := range s.cfg.AdminEmails {
+		if strings.ToLower(admin) == lower {
 			return true
 		}
 	}
-
-	// TODO(05-02): Replace with DB-driven user lookup once auth handler is wired to UserRepo.
-	// For now, admin emails act as the allowlist. Full RBAC check comes in plan 05-02.
 	return false
 }
 

@@ -13,6 +13,7 @@ import (
 type contextKey string
 
 const UserEmailKey contextKey = "user_email"
+const UserRoleKey contextKey = "user_role"
 
 func Auth(jwtSecret string) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
@@ -49,7 +50,9 @@ func Auth(jwtSecret string) func(http.Handler) http.Handler {
 			}
 
 			email, _ := claims["email"].(string)
+			role, _ := claims["role"].(string)
 			ctx := context.WithValue(r.Context(), UserEmailKey, email)
+			ctx = context.WithValue(ctx, UserRoleKey, role)
 			next.ServeHTTP(w, r.WithContext(ctx))
 		})
 	}
