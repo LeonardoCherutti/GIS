@@ -1888,9 +1888,9 @@ p { font-size: 15px; line-height: 1.6; color: var(--text-secondary); }
         var oldSlide = slides[currentSlide];
         var newSlide = slides[index];
 
-        // Position new slide off-screen
+        // Position new slide off-screen (disable transition first)
         newSlide.style.transition = 'none';
-        newSlide.className = 'slide';
+        newSlide.classList.remove('active', 'exit-left', 'exit-right');
         if (direction === 'left') {
             newSlide.style.transform = 'translate(-50%, -50%) translateX(100vw)';
         } else {
@@ -1901,22 +1901,26 @@ p { font-size: 15px; line-height: 1.6; color: var(--text-secondary); }
         // Force reflow
         void newSlide.offsetWidth;
 
-        // Re-enable transition
+        // Re-enable transition and animate to center
         newSlide.style.transition = '';
-        newSlide.style.transform = '';
-        newSlide.style.opacity = '';
+        newSlide.style.transform = 'translate(-50%, -50%) translateX(0)';
+        newSlide.style.opacity = '1';
+        newSlide.style.zIndex = '2';
 
         // Animate old slide out
         oldSlide.classList.remove('active');
         oldSlide.classList.add(direction === 'left' ? 'exit-left' : 'exit-right');
 
-        // Animate new slide in
-        newSlide.classList.add('active');
-
         currentSlide = index;
         updateUI();
 
         setTimeout(function() {
+            // Clean up: move new slide to CSS-class-driven state
+            newSlide.style.transform = '';
+            newSlide.style.opacity = '';
+            newSlide.style.zIndex = '';
+            newSlide.classList.add('active');
+            // Clean up old slide
             oldSlide.classList.remove('exit-left', 'exit-right');
             isAnimating = false;
         }, 420);
