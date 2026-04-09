@@ -81,11 +81,11 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **RBAC-05**: Hospital API filters results by user role (admins see all, managers see assigned only)
 - [x] **RBAC-06**: Admin CRUD API endpoints for user management (list, create manager, update hospitals, delete)
 - [x] **RBAC-07**: RequireAdmin middleware protects admin-only API routes
-- [ ] **RBAC-08**: Frontend AuthContext exposes user role from JWT
-- [ ] **RBAC-09**: AdminGuard component redirects non-admin users from /admin routes
-- [ ] **RBAC-10**: Admin page with user table, hospital checkbox assignment, and add-manager form
+- [x] **RBAC-08**: Frontend AuthContext exposes user role from JWT
+- [x] **RBAC-09**: AdminGuard component redirects non-admin users from /admin routes
+- [x] **RBAC-10**: Admin page with user table, hospital checkbox assignment, and add-manager form
 - [x] **RBAC-11**: Login rejection shows "Acesso negado. Contate o administrador." for unregistered users
-- [ ] **RBAC-12**: AppHeader conditionally shows admin link for admin-role users only
+- [x] **RBAC-12**: AppHeader conditionally shows admin link for admin-role users only
 
 ## v2 Requirements
 
