@@ -64,22 +64,14 @@ func (s *AuthService) VerifyAndLogin(ctx context.Context, googleToken string) (*
 func (s *AuthService) isAllowed(email string) bool {
 	lower := strings.ToLower(email)
 
-	for _, allowed := range s.cfg.AllowedEmails {
+	for _, allowed := range s.cfg.AdminEmails {
 		if strings.ToLower(allowed) == lower {
 			return true
 		}
 	}
 
-	parts := strings.SplitN(lower, "@", 2)
-	if len(parts) == 2 {
-		domain := parts[1]
-		for _, allowed := range s.cfg.AllowedDomains {
-			if strings.ToLower(allowed) == domain {
-				return true
-			}
-		}
-	}
-
+	// TODO(05-02): Replace with DB-driven user lookup once auth handler is wired to UserRepo.
+	// For now, admin emails act as the allowlist. Full RBAC check comes in plan 05-02.
 	return false
 }
 

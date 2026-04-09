@@ -32,8 +32,7 @@ services:
       - DATABASE_URL=postgres://gis:${DB_PASSWORD:-gisdev}@postgres:5432/gis?sslmode=disable
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
       - JWT_SECRET=${JWT_SECRET:-gis-dev-secret-change-in-production}
-      - ALLOWED_EMAILS=${ALLOWED_EMAILS:-}
-      - ALLOWED_DOMAINS=${ALLOWED_DOMAINS:-}
+      - ADMIN_EMAILS=${ADMIN_EMAILS:-}
     depends_on:
       postgres:
         condition: service_healthy
