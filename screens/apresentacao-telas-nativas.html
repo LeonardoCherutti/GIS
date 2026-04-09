@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telas Nativas GIS - Plano v2.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+:root {
+  --primary: #16AEA6;
+  --primary-dark: #0D7377;
+  --primary-light: #E8F8F5;
+  --bg-body: #F0F4F5;
+  --bg-slide: #FFFFFF;
+  --text-primary: #1a2332;
+  --text-secondary: #4a5568;
+  --text-muted: #8896a4;
+  --shadow-slide: 0 8px 32px rgba(0,0,0,0.10);
+  --shadow-card: 0 2px 8px rgba(0,0,0,0.08);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --low: #4CAF50;
+  --medium: #FF9800;
+  --high: #F44336;
+  --chart-1: #16AEA6;
+  --chart-2: #0D7377;
+  --chart-3: #2196F3;
+  --chart-4: #9C27B0;
+  --chart-5: #FF5722;
+  --chart-6: #607D8B;
+  --transition-speed: 400ms;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: var(--bg-body);
+  color: var(--text-primary);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================
+   SLIDE CONTAINER
+   ============================================================ */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.slide {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(96vw, 1280px);
+  height: min(90vh, 720px);
+  transform: translate(-50%, -50%) translateX(100vw);
+  background: var(--bg-slide);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-slide);
+  padding: 48px 56px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transition: transform var(--transition-speed) cubic-bezier(.4,0,.2,1),
+              opacity var(--transition-speed) cubic-bezier(.4,0,.2,1);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.slide.active {
+  transform: translate(-50%, -50%) translateX(0);
+  opacity: 1;
+  z-index: 2;
+}
+
+.slide.exit-left {
+  transform: translate(-50%, -50%) translateX(-100vw);
+  opacity: 0;
+  z-index: 1;
+}
+
+.slide.exit-right {
+  transform: translate(-50%, -50%) translateX(100vw);
+  opacity: 0;
+  z-index: 1;
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+.nav-area {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 80px;
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.nav-area:hover { opacity: 1; }
+.nav-area.left { left: 0; }
+.nav-area.right { right: 0; }
+.nav-area .material-icons {
+  font-size: 36px;
+  color: var(--primary);
+  background: rgba(255,255,255,0.85);
+  border-radius: 50%;
+  padding: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Slide counter */
+.slide-counter {
+  position: fixed;
+  bottom: 16px;
+  right: 24px;
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+  z-index: 10;
+  background: rgba(255,255,255,0.85);
+  padding: 4px 14px;
+  border-radius: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+/* Dot indicators */
+.dots {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+}
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #cfd8dc;
+  transition: background 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+.dot.active {
+  background: var(--primary);
+  transform: scale(1.3);
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+h1 { font-size: 36px; font-weight: 700; line-height: 1.2; }
+h2 { font-size: 28px; font-weight: 700; line-height: 1.3; color: var(--primary-dark); margin-bottom: 16px; }
+h3 { font-size: 20px; font-weight: 500; color: var(--primary-dark); margin-bottom: 8px; }
+h4 { font-size: 16px; font-weight: 500; color: var(--text-secondary); }
+p { font-size: 15px; line-height: 1.6; color: var(--text-secondary); }
+.subtitle { font-size: 18px; font-weight: 300; color: var(--text-secondary); margin-top: 8px; }
+.small { font-size: 13px; }
+
+/* ============================================================
+   COVER SLIDE
+   ============================================================ */
+.cover {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary-light) 0%, #fff 60%);
+}
+.cover .logo-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.cover .logo-icon {
+  width: 56px; height: 56px;
+  background: var(--primary);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 28px; font-weight: 700;
+}
+.cover .logo-text {
+  font-size: 24px; font-weight: 700; color: var(--primary-dark);
+  letter-spacing: 2px;
+}
+.cover h1 { font-size: 42px; margin-bottom: 8px; color: var(--text-primary); }
+.cover .date { font-size: 14px; color: var(--text-muted); margin-top: 24px; }
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.badge-low { background: #e8f5e9; color: var(--low); }
+.badge-medium { background: #fff3e0; color: var(--medium); }
+.badge-high { background: #ffebee; color: var(--high); }
+
+.flex { display: flex; }
+.gap-8 { gap: 8px; }
+.gap-12 { gap: 12px; }
+.gap-16 { gap: 16px; }
+.gap-24 { gap: 24px; }
+.flex-1 { flex: 1; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+
+/* ============================================================
+   GRID OF SCREEN CARDS (Slide 3)
+   ============================================================ */
+.screen-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  flex: 1;
+}
+.screen-card {
+  background: var(--primary-light);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-left: 4px solid var(--primary);
+  transition: transform 0.2s;
+}
+.screen-card:hover { transform: translateY(-2px); }
+.screen-card .card-icon {
+  font-size: 28px;
+  color: var(--primary);
+}
+.screen-card .card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.screen-card .card-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* ============================================================
+   MOCKUP STYLES (Screen detail slides)
+   ============================================================ */
+.slide-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.mockup-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+}
+
+.mockup-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.mock-filter {
+  background: var(--primary-light);
+  border: 1px solid #b2dfdb;
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 11px;
+  color: var(--primary-dark);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.mockup-body {
+  display: grid;
+  gap: 10px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* KPI row */
+.kpi-row {
+  display: flex;
+  gap: 10px;
+}
+.kpi-mock {
+  flex: 1;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.kpi-mock .kpi-label {
+  font-size: 10px;
+  font-weight: 400;
+  opacity: 0.85;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.kpi-mock .kpi-value {
+  font-size: 18px;
+  font-weight: 700;
+}
+.kpi-mock.alt {
+  background: linear-gradient(135deg, #2196F3 0%, #1565C0 100%);
+}
+.kpi-mock.alt2 {
+  background: linear-gradient(135deg, #9C27B0 0%, #6A1B9A 100%);
+}
+.kpi-mock.alt3 {
+  background: linear-gradient(135deg, #FF9800 0%, #E65100 100%);
+}
+
+/* Chart boxes */
+.chart-box {
+  background: #f8fafb;
+  border: 1px solid #e8eef2;
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.chart-box .chart-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.chart-box .chart-title .material-icons {
+  font-size: 16px;
+  color: var(--primary);
+}
+.chart-box .chart-visual {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  min-height: 40px;
+}
+
+/* Bar mocks */
+.bar-h {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+.bar-h-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.bar-h-item .bar-fill {
+  height: 10px;
+  border-radius: 3px;
+  background: var(--primary);
+  opacity: 0.7;
+}
+
+/* Vertical bars */
+.vbar {
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  background: var(--primary);
+  opacity: 0.65;
+  min-width: 8px;
+  transition: opacity 0.2s;
+}
+.vbar:hover { opacity: 1; }
+.vbar.c2 { background: var(--chart-3); }
+.vbar.c3 { background: var(--chart-4); }
+.vbar.c4 { background: var(--chart-5); }
+
+/* Line mock */
+.line-mock {
+  flex: 1;
+  position: relative;
+  min-height: 40px;
+}
+.line-mock svg { width: 100%; height: 100%; }
+.line-mock polyline {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Donut mock */
+.donut-mock {
+  width: 70px; height: 70px;
+  border-radius: 50%;
+  background: conic-gradient(var(--primary) 0% 42%, var(--chart-3) 42% 73%, #e0e0e0 73% 100%);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto;
+}
+.donut-mock-inner {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: #f8fafb;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: var(--text-secondary);
+}
+
+/* Area mock */
+.area-mock {
+  flex: 1;
+  position: relative;
+  min-height: 40px;
+}
+.area-mock svg { width: 100%; height: 100%; }
+
+/* Table mock */
+.table-mock {
+  width: 100%;
+  font-size: 10px;
+  border-collapse: collapse;
+}
+.table-mock th {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  font-weight: 600;
+  padding: 4px 8px;
+  text-align: left;
+  border-bottom: 2px solid var(--primary);
+}
+.table-mock td {
+  padding: 3px 8px;
+  border-bottom: 1px solid #eee;
+  color: var(--text-muted);
+}
+
+/* Modal mock */
+.modal-btn-mock {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s;
+}
+.modal-btn-mock:hover { transform: scale(1.03); }
+
+/* ============================================================
+   TREE DIAGRAM (Slide 15)
+   ============================================================ */
+.tree {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+.tree-root {
+  background: var(--primary);
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 14px;
+  position: relative;
+}
+.tree-connector {
+  width: 2px;
+  height: 20px;
+  background: var(--primary);
+}
+.tree-branches {
+  display: flex;
+  gap: 0;
+  position: relative;
+}
+.tree-branches::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 24px;
+  right: 24px;
+  height: 2px;
+  background: var(--primary);
+}
+.tree-branch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 85px;
+}
+.tree-branch-connector {
+  width: 2px;
+  height: 16px;
+  background: var(--primary);
+}
+.tree-leaf {
+  background: var(--primary-light);
+  border: 1px solid #b2dfdb;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--primary-dark);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   COMPONENT MATRIX (Slide 16)
+   ============================================================ */
+.comp-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.comp-matrix th {
+  padding: 4px 6px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--primary-dark);
+  border-bottom: 2px solid var(--primary);
+}
+.comp-matrix th:first-child {
+  text-align: left;
+  min-width: 140px;
+}
+.comp-matrix td {
+  padding: 3px 6px;
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+.comp-matrix td:first-child {
+  text-align: left;
+  font-weight: 500;
+  color: var(--text-primary);
+  font-family: 'Roboto Mono', monospace;
+  font-size: 10px;
+}
+.comp-dot {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+.comp-dot.empty {
+  background: none;
+}
+
+/* ============================================================
+   COMPLEXITY BAR CHART (Slide 17)
+   ============================================================ */
+.complexity-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.complexity-label {
+  min-width: 150px;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: right;
+  color: var(--text-secondary);
+}
+.complexity-bar-bg {
+  flex: 1;
+  height: 22px;
+  background: #f0f4f5;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+.complexity-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  transition: width 0.6s cubic-bezier(.4,0,.2,1);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   CLOSING SLIDE
+   ============================================================ */
+.closing {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  color: #fff;
+}
+.closing h2 { color: #fff; }
+.closing p { color: rgba(255,255,255,0.85); }
+
+.tech-pills {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 12px;
+}
+.tech-pill {
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+}
+
+/* Section dividers */
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--primary);
+  margin-bottom: 6px;
+  margin-top: 8px;
+}
+
+/* Elements list */
+.elements-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+.element-tag {
+  background: #f0f4f5;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 10px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Summary stats row */
+.stats-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 20px 0;
+}
+.stat-box {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: var(--radius-sm);
+  padding: 14px 24px;
+  text-align: center;
+}
+.stat-box .stat-number {
+  font-size: 32px;
+  font-weight: 700;
+}
+.stat-box .stat-label {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-top: 4px;
+}
+
+/* Objective slide */
+.obj-card {
+  background: var(--primary-light);
+  border-radius: var(--radius-sm);
+  padding: 20px 24px;
+  border-left: 4px solid var(--primary);
+  margin-bottom: 12px;
+}
+.obj-card h3 { margin-bottom: 4px; }
+
+.arrow-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: var(--primary);
+  margin: 8px 0;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  flex: 1;
+}
+
+/* scrollbar for slides with lots of content */
+.slide::-webkit-scrollbar { width: 4px; }
+.slide::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ============================== SLIDE 1: COVER ============================== -->
+<div class="slide cover active" data-slide="0">
+  <div class="logo-bar">
+    <div class="logo-icon">G</div>
+    <div class="logo-text">GIS</div>
+  </div>
+  <h1>Telas Nativas GIS</h1>
+  <p class="subtitle">Plano v2.0 — Substituir Power BI por Dashboards Nativos</p>
+  <p class="subtitle" style="font-size:15px; margin-top:16px; color:var(--primary-dark);">
+    11 telas interativas com graficos, filtros cruzados e dados em tempo real
+  </p>
+  <p class="date">Abril 2026</p>
+</div>
+
+<!-- ============================== SLIDE 2: OBJETIVO ============================== -->
+<div class="slide" data-slide="1">
+  <h2>Objetivo</h2>
+  <div class="two-col" style="align-items: start;">
+    <div>
+      <div class="obj-card">
+        <h3>Hoje (Power BI)</h3>
+        <p>Dashboards embeddados via iframe com URLs publicas "Publish to Web". Sem controle de dados, sem filtragem cruzada, dependencia de licenca Power BI.</p>
+      </div>
+      <div class="arrow-icon">
+        <span class="material-icons">arrow_downward</span>
+      </div>
+      <div class="obj-card" style="border-left-color: var(--low);">
+        <h3>Futuro (Telas Nativas)</h3>
+        <p>Dashboards construidos em Next.js + Recharts, lendo dados diretamente do Postgres via Go API. Filtros cruzados, dados em tempo real, controle total.</p>
+      </div>
+    </div>
+    <div>
+      <div class="section-label">Decisoes Tomadas</div>
+      <div style="display:flex; flex-direction:column; gap:8px; margin-top:8px;">
+        <div class="element-tag" style="padding:8px 14px; font-size:12px;">Biblioteca de graficos: <strong>Recharts</strong></div>
+        <div class="element-tag" style="padding:8px 14px; font-size:12px;">Fonte de dados: <strong>Postgres</strong></div>
+        <div class="element-tag" style="padding:8px 14px; font-size:12px;">Cross-filtering: <strong>Sim</strong></div>
+        <div class="element-tag" style="padding:8px 14px; font-size:12px;">Filtros globais: <strong>Persistem entre telas</strong></div>
+        <div class="element-tag" style="padding:8px 14px; font-size:12px;">Toolkit tabelas: <strong>TanStack Table</strong></div>
+        <div class="element-tag" style="padding:8px 14px; font-size:12px;">Pipeline de ingestao: <strong>Fora de escopo</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 3: VISAO GERAL ============================== -->
+<div class="slide" data-slide="2">
+  <h2>Visao Geral das 11 Telas</h2>
+  <div class="screen-grid">
+    <div class="screen-card">
+      <span class="card-icon material-icons">home</span>
+      <span class="card-title">1. Home</span>
+      <span class="card-desc">Navegacao central para as telas</span>
+      <span class="badge badge-low">Baixa</span>
+    </div>
+    <div class="screen-card">
+      <span class="card-icon material-icons">business</span>
+      <span class="card-title">2. CNES</span>
+      <span class="card-desc">Dados cadastrais do estabelecimento</span>
+      <span class="badge badge-medium">Media-Alta</span>
+    </div>
+    <div class="screen-card">
+      <span class="card-icon material-icons">account_balance_wallet</span>
+      <span class="card-title">3. Resumo Financeiro</span>
+      <span class="card-desc">Totais anuais de producao e faturamento</span>
+      <span class="badge badge-low">Baixa</span>
+    </div>
+    <div class="screen-card">
+      <span class="card-icon material-icons">local_hospital</span>
+      <span class="card-title">4. Ambulatorial</span>
+      <span class="card-desc">Detalhamento ambulatorial</span>
+      <span class="badge badge-medium">Media</span>
+    </div>
+    <div class="screen-card">
+      <span class="card-icon material-icons">hotel</span>
+      <span class="card-title">5. Hospitalar</span>
+      <span class="card-desc">Detalhamento de internacoes</span>
+      <span class="badge badge-high">Alta</span>
+    </div>
+    <div class="screen-card">
+      <span class="card-icon material-icons">medical_services</span>
+      <span class="card-title">6. Servicos Profissionais</span>
+      <span class="card-desc">Atos profissionais nas internacoes</span>
+      <span class="badge badge-medium">Media</span>
+    </div>
+    <div class="screen-card">
+      <span class="card-icon material-icons">compare_arrows</span>
+      <span class="card-title">7. Alta vs. Faturamento</span>
+      <span class="card-desc">Gap temporal alta/faturamento</span>
+      <span class="badge badge-medium">Media</span>
+    </div>
+    <div class="screen-card">
+      <span class="card-icon material-icons">trending_up</span>
+      <span class="card-title">8. Taxa de Evolucao</span>
+      <span class="card-desc">Variacao %MoM e %YoY</span>
+      <span class="badge badge-medium">Media</span>
+    </div>
+    <div class="screen-card">
+      <span class="card-icon material-icons">people</span>
+      <span class="card-title">9. Especialidades</span>
+      <span class="card-desc">Producao por especialidade</span>
+      <span class="badge badge-medium">Media</span>
+    </div>
+    <div class="screen-card">
+      <span class="card-icon material-icons">replay</span>
+      <span class="card-title">10. Reprocessamento</span>
+      <span class="card-desc">AIHs rejeitadas e timeline</span>
+      <span class="badge badge-medium">Media</span>
+    </div>
+    <div class="screen-card">
+      <span class="card-icon material-icons">table_chart</span>
+      <span class="card-title">11. Registros</span>
+      <span class="card-desc">Acesso direto aos dados-fonte</span>
+      <span class="badge badge-medium">Media</span>
+    </div>
+    <div class="screen-card" style="border-left-color: transparent; background: transparent; justify-content: center; align-items: center;">
+      <span style="font-size: 36px; font-weight:300; color: var(--primary);">28</span>
+      <span class="card-desc" style="text-align:center;">graficos + 25 filtros</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 4: TELA 1 - HOME ============================== -->
+<div class="slide" data-slide="3">
+  <div class="slide-header">
+    <div>
+      <h2 style="margin-bottom:0;">Tela 1: Home</h2>
+      <p class="small">Tela inicial do dashboard por hospital</p>
+    </div>
+    <span class="badge badge-low">Baixa</span>
+  </div>
+  <div class="mockup-container">
+    <div class="mockup-body" style="grid-template-rows: auto 1fr auto; grid-template-columns: 1fr;">
+      <!-- Hospital header -->
+      <div class="chart-box" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border:none; padding:16px 24px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:44px;height:44px;background:rgba(255,255,255,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+            <span class="material-icons" style="color:#fff;font-size:24px;">local_hospital</span>
+          </div>
+          <div>
+            <div style="color:#fff;font-size:16px;font-weight:700;">Hospital Municipal de Canoas</div>
+            <div style="color:rgba(255,255,255,0.7);font-size:12px;">CNES: 2345678 | Canoas - RS</div>
+          </div>
+        </div>
+      </div>
+      <!-- Nav cards grid -->
+      <div style="display:grid; grid-template-columns: repeat(4,1fr); gap:10px; padding:8px 0;">
+        <div class="chart-box" style="align-items:center; text-align:center; padding:14px 8px; cursor:default;">
+          <span class="material-icons" style="font-size:28px;color:var(--primary);">business</span>
+          <div style="font-size:12px;font-weight:600;margin-top:4px;">CNES</div>
+        </div>
+        <div class="chart-box" style="align-items:center; text-align:center; padding:14px 8px;">
+          <span class="material-icons" style="font-size:28px;color:var(--primary);">account_balance_wallet</span>
+          <div style="font-size:12px;font-weight:600;margin-top:4px;">Resumo Financeiro</div>
+        </div>
+        <div class="chart-box" style="align-items:center; text-align:center; padding:14px 8px;">
+          <span class="material-icons" style="font-size:28px;color:var(--primary);">local_hospital</span>
+          <div style="font-size:12px;font-weight:600;margin-top:4px;">Ambulatorial</div>
+        </div>
+        <div class="chart-box" style="align-items:center; text-align:center; padding:14px 8px;">
+          <span class="material-icons" style="font-size:28px;color:var(--primary);">hotel</span>
+          <div style="font-size:12px;font-weight:600;margin-top:4px;">Hospitalar</div>
+        </div>
+        <div class="chart-box" style="align-items:center; text-align:center; padding:14px 8px;">
+          <span class="material-icons" style="font-size:28px;color:var(--primary);">medical_services</span>
+          <div style="font-size:12px;font-weight:600;margin-top:4px;">Serv. Profissionais</div>
+        </div>
+        <div class="chart-box" style="align-items:center; text-align:center; padding:14px 8px;">
+          <span class="material-icons" style="font-size:28px;color:var(--primary);">compare_arrows</span>
+          <div style="font-size:12px;font-weight:600;margin-top:4px;">Alta vs. Faturamento</div>
+        </div>
+        <div class="chart-box" style="align-items:center; text-align:center; padding:14px 8px;">
+          <span class="material-icons" style="font-size:28px;color:var(--primary);">trending_up</span>
+          <div style="font-size:12px;font-weight:600;margin-top:4px;">Evolucao</div>
+        </div>
+        <div class="chart-box" style="align-items:center; text-align:center; padding:14px 8px;">
+          <span class="material-icons" style="font-size:28px;color:var(--primary);">people</span>
+          <div style="font-size:12px;font-weight:600;margin-top:4px;">Especialidades</div>
+        </div>
+      </div>
+      <!-- Disclaimer -->
+      <div class="chart-box" style="background:#fff8e1; border-color:#ffe082; padding:8px 14px;">
+        <div style="font-size:10px; color:#e65100; display:flex; align-items:center; gap:6px;">
+          <span class="material-icons" style="font-size:14px;">info</span>
+          Aviso legal: Dados sujeitos a atualizacao conforme publicacao do DATASUS.
+        </div>
+      </div>
+    </div>
+    <div class="elements-list">
+      <span class="element-tag">DashboardHome</span>
+      <span class="element-tag">HospitalHeader</span>
+      <span class="element-tag">DisclaimerBanner</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 5: TELA 2 - CNES ============================== -->
+<div class="slide" data-slide="4">
+  <div class="slide-header">
+    <div>
+      <h2 style="margin-bottom:0;">Tela 2: CNES</h2>
+      <p class="small">Dados cadastrais do estabelecimento</p>
+    </div>
+    <span class="badge badge-medium">Media-Alta</span>
+  </div>
+  <div class="mockup-container">
+    <div class="mockup-body" style="grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr 1fr;">
+      <div class="chart-box" style="align-items:center; justify-content:center; gap:8px; cursor:default;">
+        <span class="material-icons" style="font-size:32px;color:var(--primary);">bed</span>
+        <div class="modal-btn-mock" style="font-size:12px; padding:8px 16px;">Leitos</div>
+        <div style="font-size:10px; color:var(--text-muted);">Tabela de leitos</div>
+      </div>
+      <div class="chart-box" style="align-items:center; justify-content:center; gap:8px;">
+        <span class="material-icons" style="font-size:32px;color:var(--chart-3);">account_tree</span>
+        <div class="modal-btn-mock" style="font-size:12px; padding:8px 16px; background:var(--chart-3);">Instalacoes</div>
+        <div style="font-size:10px; color:var(--text-muted);">Diagrama hierarquico</div>
+      </div>
+      <div class="chart-box" style="align-items:center; justify-content:center; gap:8px;">
+        <span class="material-icons" style="font-size:32px;color:var(--chart-4);">hub</span>
+        <div class="modal-btn-mock" style="font-size:12px; padding:8px 16px; background:var(--chart-4);">Servicos</div>
+        <div style="font-size:10px; color:var(--text-muted);">Diagrama hierarquico</div>
+      </div>
+      <div class="chart-box" style="align-items:center; justify-content:center; gap:8px;">
+        <span class="material-icons" style="font-size:32px;color:var(--chart-5);">handshake</span>
+        <div class="modal-btn-mock" style="font-size:12px; padding:8px 16px; background:var(--chart-5);">Convenios</div>
+        <div style="font-size:10px; color:var(--text-muted);">Tabela</div>
+      </div>
+      <div class="chart-box" style="align-items:center; justify-content:center; gap:8px;">
+        <span class="material-icons" style="font-size:32px;color:var(--chart-6);">school</span>
+        <div class="modal-btn-mock" style="font-size:12px; padding:8px 16px; background:var(--chart-6);">Especialidades</div>
+        <div style="font-size:10px; color:var(--text-muted);">Tabela</div>
+      </div>
+      <div class="chart-box" style="align-items:center; justify-content:center; gap:8px;">
+        <span class="material-icons" style="font-size:32px;color:var(--primary-dark);">verified</span>
+        <div class="modal-btn-mock" style="font-size:12px; padding:8px 16px; background:var(--primary-dark);">Habilitacoes</div>
+        <div style="font-size:10px; color:var(--text-muted);">Tabela</div>
+      </div>
+    </div>
+    <div class="elements-list">
+      <span class="element-tag">CnesOverview</span>
+      <span class="element-tag">DataModal</span>
+      <span class="element-tag">DataTable</span>
+      <span class="element-tag">OrgChart / TreeDiagram</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 6: TELA 3 - RESUMO FINANCEIRO ============================== -->
+<div class="slide" data-slide="5">
+  <div class="slide-header">
+    <div>
+      <h2 style="margin-bottom:0;">Tela 3: Resumo Financeiro</h2>
+      <p class="small">Totais anuais de producao e faturamento</p>
+    </div>
+    <span class="badge badge-low">Baixa</span>
+  </div>
+  <div class="mockup-container">
+    <div class="mockup-filters">
+      <span class="mock-filter">2024</span>
+      <span class="mock-filter" style="opacity:0.5;">2023</span>
+      <span class="mock-filter" style="opacity:0.5;">2022</span>
+    </div>
+    <div class="mockup-body" style="grid-template-columns: 1fr; grid-template-rows: auto auto auto; gap:14px;">
+      <!-- Faturamento Total -->
+      <div>
+        <div class="section-label">Faturamento Total</div>
+        <div class="kpi-row">
+          <div class="kpi-mock"><span class="kpi-label">Producao Total</span><span class="kpi-value">45.230</span></div>
+          <div class="kpi-mock"><span class="kpi-label">Valor Total</span><span class="kpi-value">R$ 12,8M</span></div>
+        </div>
+      </div>
+      <!-- Faturamento Ambulatorial -->
+      <div>
+        <div class="section-label">Faturamento Ambulatorial</div>
+        <div class="kpi-row">
+          <div class="kpi-mock alt"><span class="kpi-label">Atendimentos</span><span class="kpi-value">32.100</span></div>
+          <div class="kpi-mock alt"><span class="kpi-label">Faturamento SIA</span><span class="kpi-value">R$ 4,2M</span></div>
+        </div>
+      </div>
+      <!-- Faturamento Hospitalar -->
+      <div>
+        <div class="section-label">Faturamento Hospitalar</div>
+        <div class="kpi-row">
+          <div class="kpi-mock alt2"><span class="kpi-label">AIHs</span><span class="kpi-value">13.130</span></div>
+          <div class="kpi-mock alt2"><span class="kpi-label">Faturamento SIH</span><span class="kpi-value">R$ 8,6M</span></div>
+          <div class="kpi-mock alt3"><span class="kpi-label">Serv. Profissionais</span><span class="kpi-value">R$ 2,1M</span></div>
+          <div class="kpi-mock alt3"><span class="kpi-label">Serv. Hospitalares</span><span class="kpi-value">R$ 4,3M</span></div>
+          <div class="kpi-mock" style="background:linear-gradient(135deg,#607D8B,#455A64);"><span class="kpi-label">Atos na Internacao</span><span class="kpi-value">R$ 2,2M</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="elements-list">
+      <span class="element-tag">KpiCard</span>
+      <span class="element-tag">KpiSection</span>
+      <span class="element-tag">PeriodSlicer</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 7: TELA 4 - AMBULATORIAL ============================== -->
+<div class="slide" data-slide="6">
+  <div class="slide-header">
+    <div>
+      <h2 style="margin-bottom:0;">Tela 4: Ambulatorial</h2>
+      <p class="small">Detalhamento de atendimentos ambulatoriais</p>
+    </div>
+    <span class="badge badge-medium">Media</span>
+  </div>
+  <div class="mockup-container">
+    <div class="mockup-filters">
+      <span class="mock-filter">2024</span>
+      <span class="mock-filter" style="background:var(--primary);color:#fff;">BPA Consolidado</span>
+      <span class="mock-filter" style="opacity:0.4;">Cross-filter ativo</span>
+    </div>
+    <!-- KPIs -->
+    <div class="kpi-row">
+      <div class="kpi-mock"><span class="kpi-label">Atendimentos</span><span class="kpi-value">32.100</span></div>
+      <div class="kpi-mock alt"><span class="kpi-label">Faturamento</span><span class="kpi-value">R$ 4,2M</span></div>
+    </div>
+    <!-- Charts grid -->
+    <div class="mockup-body" style="grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; flex:1;">
+      <!-- Producao por subgrupo -->
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">bar_chart</span>Producao por Subgrupo</div>
+        <div class="bar-h">
+          <div class="bar-h-item"><span style="width:50px;">Clinico</span><div class="bar-fill" style="width:80%;"></div></div>
+          <div class="bar-h-item"><span style="width:50px;">Cirurgico</span><div class="bar-fill" style="width:55%;background:var(--chart-3);"></div></div>
+          <div class="bar-h-item"><span style="width:50px;">Exames</span><div class="bar-fill" style="width:40%;background:var(--chart-4);"></div></div>
+          <div class="bar-h-item"><span style="width:50px;">Outros</span><div class="bar-fill" style="width:25%;background:var(--chart-5);"></div></div>
+        </div>
+      </div>
+      <!-- Genero donut -->
+      <div class="chart-box" style="align-items:center; justify-content:center;">
+        <div class="chart-title"><span class="material-icons">donut_large</span>Genero</div>
+        <div class="donut-mock">
+          <div class="donut-mock-inner">100%</div>
+        </div>
+        <div style="display:flex; gap:12px; margin-top:6px; font-size:10px; color:var(--text-muted);">
+          <span style="display:flex;align-items:center;gap:3px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--primary);display:inline-block;"></span>Fem. 42%</span>
+          <span style="display:flex;align-items:center;gap:3px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--chart-3);display:inline-block;"></span>Masc. 58%</span>
+        </div>
+      </div>
+      <!-- Faturamento line -->
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">show_chart</span>Faturamento Ambulatorial (mensal)</div>
+        <div class="line-mock">
+          <svg viewBox="0 0 200 50" preserveAspectRatio="none">
+            <polyline points="0,40 25,35 50,30 75,25 100,28 125,20 150,15 175,18 200,10" stroke="var(--primary)" />
+            <polyline points="0,45 25,42 50,38 75,35 100,37 125,30 150,28 175,32 200,22" stroke="var(--chart-3)" stroke-dasharray="4,3" />
+          </svg>
+        </div>
+      </div>
+      <!-- Origem / CBO -->
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">bar_chart</span>Origem do Cidadao / CBO</div>
+        <div class="bar-h">
+          <div class="bar-h-item"><span style="width:30px;">RS</span><div class="bar-fill" style="width:90%;"></div></div>
+          <div class="bar-h-item"><span style="width:30px;">SC</span><div class="bar-fill" style="width:30%;background:var(--chart-3);"></div></div>
+          <div class="bar-h-item"><span style="width:30px;">PR</span><div class="bar-fill" style="width:15%;background:var(--chart-4);"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="elements-list">
+      <span class="element-tag">KpiCard</span>
+      <span class="element-tag">HorizontalBarChart x4</span>
+      <span class="element-tag">LineChart</span>
+      <span class="element-tag">DonutChart</span>
+      <span class="element-tag">PeriodSlicer</span>
+      <span class="element-tag">ToggleButton</span>
+      <span class="element-tag">CrossFilterProvider</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 8: TELA 5 - HOSPITALAR ============================== -->
+<div class="slide" data-slide="7">
+  <div class="slide-header">
+    <div>
+      <h2 style="margin-bottom:0;">Tela 5: Hospitalar</h2>
+      <p class="small">Detalhamento de internacoes — tela mais complexa</p>
+    </div>
+    <span class="badge badge-high">Alta</span>
+  </div>
+  <div class="mockup-container">
+    <div class="mockup-filters">
+      <span class="mock-filter">Carater</span>
+      <span class="mock-filter">Tipo de Leito</span>
+      <span class="mock-filter">Resolutividade CID</span>
+      <span class="mock-filter">Complexidade</span>
+      <span class="mock-filter">2024</span>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-mock"><span class="kpi-label">Internacoes</span><span class="kpi-value">13.130</span></div>
+      <div class="kpi-mock alt"><span class="kpi-label">Faturamento SIH</span><span class="kpi-value">R$ 8,6M</span></div>
+      <div class="kpi-mock alt2"><span class="kpi-label">Serv. Hosp.</span><span class="kpi-value">R$ 4,3M</span></div>
+      <div class="kpi-mock alt3"><span class="kpi-label">Serv. Prof.</span><span class="kpi-value">R$ 2,1M</span></div>
+    </div>
+    <div class="mockup-body" style="grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; flex:1;">
+      <!-- AIHs line -->
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">show_chart</span>Qtd. AIHs</div>
+        <div class="line-mock">
+          <svg viewBox="0 0 200 50" preserveAspectRatio="none">
+            <polyline points="0,35 30,30 60,25 90,20 120,22 150,15 180,18" stroke="var(--low)" />
+            <polyline points="0,45 30,43 60,44 90,42 120,43 150,44 180,42" stroke="var(--high)" stroke-dasharray="3,3" />
+          </svg>
+        </div>
+        <div style="font-size:9px;color:var(--text-muted);display:flex;gap:8px;">
+          <span style="color:var(--low);">--- Aprovadas</span>
+          <span style="color:var(--high);">- - Rejeitadas</span>
+        </div>
+      </div>
+      <!-- Valor AIHs line -->
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">show_chart</span>Valor Total AIHs</div>
+        <div class="line-mock">
+          <svg viewBox="0 0 200 50" preserveAspectRatio="none">
+            <polyline points="0,40 30,35 60,28 90,22 120,25 150,18 180,12" stroke="var(--primary)" />
+          </svg>
+        </div>
+      </div>
+      <!-- Area serv prof -->
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">area_chart</span>Serv. Profissionais</div>
+        <div class="area-mock">
+          <svg viewBox="0 0 200 50" preserveAspectRatio="none">
+            <polygon points="0,50 0,38 30,32 60,28 90,22 120,25 150,18 180,15 200,12 200,50" fill="var(--primary)" opacity="0.2" />
+            <polyline points="0,38 30,32 60,28 90,22 120,25 150,18 180,15 200,12" fill="none" stroke="var(--primary)" stroke-width="2" />
+          </svg>
+        </div>
+      </div>
+      <!-- Grupo procedimentos -->
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">bar_chart</span>Grupo de Procedimentos</div>
+        <div class="bar-h">
+          <div class="bar-h-item"><span style="width:60px;font-size:9px;">Clinica</span><div class="bar-fill" style="width:75%;"></div></div>
+          <div class="bar-h-item"><span style="width:60px;font-size:9px;">Cirurgia</span><div class="bar-fill" style="width:55%;background:var(--chart-3);"></div></div>
+          <div class="bar-h-item"><span style="width:60px;font-size:9px;">Obstetric.</span><div class="bar-fill" style="width:30%;background:var(--chart-4);"></div></div>
+        </div>
+      </div>
+      <!-- Subgrupo -->
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">bar_chart</span>Subgrupo</div>
+        <div class="bar-h">
+          <div class="bar-h-item"><span style="width:50px;font-size:9px;">Intern.</span><div class="bar-fill" style="width:70%;"></div></div>
+          <div class="bar-h-item"><span style="width:50px;font-size:9px;">UTI</span><div class="bar-fill" style="width:40%;background:var(--chart-3);"></div></div>
+          <div class="bar-h-item"><span style="width:50px;font-size:9px;">Semi</span><div class="bar-fill" style="width:20%;background:var(--chart-4);"></div></div>
+        </div>
+      </div>
+      <!-- Ranking -->
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">format_list_numbered</span>Proc. Principais (ranking)</div>
+        <div class="bar-h" style="font-size:9px;">
+          <div class="bar-h-item"><span style="width:70px;">Parto normal</span><div class="bar-fill" style="width:85%;"></div></div>
+          <div class="bar-h-item"><span style="width:70px;">Cesariana</span><div class="bar-fill" style="width:60%;background:var(--chart-3);"></div></div>
+          <div class="bar-h-item"><span style="width:70px;">Hernia</span><div class="bar-fill" style="width:35%;background:var(--chart-4);"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="elements-list">
+      <span class="element-tag">9 graficos</span>
+      <span class="element-tag">5 filtros</span>
+      <span class="element-tag">KpiCard</span>
+      <span class="element-tag">LineChart</span>
+      <span class="element-tag">AreaChart</span>
+      <span class="element-tag">HorizontalBarChart</span>
+      <span class="element-tag">RankingChart</span>
+      <span class="element-tag">FilterBar</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 9: TELA 6 - SERVICOS PROFISSIONAIS ============================== -->
+<div class="slide" data-slide="8">
+  <div class="slide-header">
+    <div>
+      <h2 style="margin-bottom:0;">Tela 6: Servicos Profissionais</h2>
+      <p class="small">Atos profissionais nas internacoes</p>
+    </div>
+    <span class="badge badge-medium">Media</span>
+  </div>
+  <div class="mockup-container">
+    <div class="mockup-filters">
+      <span class="mock-filter">2024</span>
+      <span class="mock-filter" style="opacity:0.4;">Cross-filter ativo</span>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-mock"><span class="kpi-label">Proc. Secundarios</span><span class="kpi-value">8.420</span></div>
+      <div class="kpi-mock alt"><span class="kpi-label">Valor Financeiro</span><span class="kpi-value">R$ 2,1M</span></div>
+    </div>
+    <div class="mockup-body" style="grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; flex:1;">
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">area_chart</span>Serv. Profissionais (qtd/tempo)</div>
+        <div class="area-mock">
+          <svg viewBox="0 0 200 50" preserveAspectRatio="none">
+            <polygon points="0,50 0,40 40,32 80,28 120,25 160,20 200,15 200,50" fill="var(--primary)" opacity="0.2" />
+            <polyline points="0,40 40,32 80,28 120,25 160,20 200,15" fill="none" stroke="var(--primary)" stroke-width="2" />
+          </svg>
+        </div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">area_chart</span>Valor Serv. Hospitalares</div>
+        <div class="area-mock">
+          <svg viewBox="0 0 200 50" preserveAspectRatio="none">
+            <polygon points="0,50 0,42 40,35 80,30 120,28 160,22 200,18 200,50" fill="var(--chart-3)" opacity="0.2" />
+            <polyline points="0,42 40,35 80,30 120,28 160,22 200,18" fill="none" stroke="var(--chart-3)" stroke-width="2" />
+          </svg>
+        </div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">bar_chart</span>Proc. Secundarios por Grupo</div>
+        <div class="bar-h">
+          <div class="bar-h-item"><span style="width:60px;font-size:9px;">Cirurgia</span><div class="bar-fill" style="width:70%;"></div></div>
+          <div class="bar-h-item"><span style="width:60px;font-size:9px;">Anestesia</span><div class="bar-fill" style="width:50%;background:var(--chart-3);"></div></div>
+          <div class="bar-h-item"><span style="width:60px;font-size:9px;">Imagem</span><div class="bar-fill" style="width:30%;background:var(--chart-4);"></div></div>
+        </div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">format_list_numbered</span>Ranking Proc. Secundarios</div>
+        <div class="bar-h" style="font-size:9px;">
+          <div class="bar-h-item"><span style="width:65px;">Anestesia g.</span><div class="bar-fill" style="width:80%;"></div></div>
+          <div class="bar-h-item"><span style="width:65px;">Hemogram</span><div class="bar-fill" style="width:55%;background:var(--chart-3);"></div></div>
+          <div class="bar-h-item"><span style="width:65px;">Raio-X</span><div class="bar-fill" style="width:35%;background:var(--chart-4);"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="elements-list">
+      <span class="element-tag">KpiCard</span>
+      <span class="element-tag">AreaChart x2</span>
+      <span class="element-tag">HorizontalBarChart x2</span>
+      <span class="element-tag">RankingChart</span>
+      <span class="element-tag">PeriodSlicer</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 10: TELA 7 - ALTA VS FATURAMENTO ============================== -->
+<div class="slide" data-slide="9">
+  <div class="slide-header">
+    <div>
+      <h2 style="margin-bottom:0;">Tela 7: Alta vs. Faturamento</h2>
+      <p class="small">Gap temporal entre alta do paciente e faturamento DATASUS</p>
+    </div>
+    <span class="badge badge-medium">Media</span>
+  </div>
+  <div class="mockup-container">
+    <div class="mockup-filters">
+      <span class="mock-filter">Carater</span>
+      <span class="mock-filter">Tipo de Leito</span>
+      <span class="mock-filter">Resolutividade CID</span>
+      <span class="mock-filter">Complexidade</span>
+      <span class="mock-filter">2024</span>
+      <span class="mock-filter" style="background:var(--primary);color:#fff;">Inverter Logica</span>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-mock"><span class="kpi-label">Internacoes</span><span class="kpi-value">13.130</span></div>
+      <div class="kpi-mock alt"><span class="kpi-label">Valor Total</span><span class="kpi-value">R$ 8,6M</span></div>
+    </div>
+    <div class="mockup-body" style="grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; flex:1;">
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">bar_chart</span>Qtd. AIHs por Mes de Faturamento</div>
+        <div class="chart-visual">
+          <div class="vbar" style="height:60%;"></div>
+          <div class="vbar" style="height:75%;"></div>
+          <div class="vbar" style="height:55%;"></div>
+          <div class="vbar" style="height:80%;"></div>
+          <div class="vbar" style="height:65%;"></div>
+          <div class="vbar" style="height:90%;"></div>
+          <div class="vbar" style="height:70%;"></div>
+          <div class="vbar" style="height:50%;"></div>
+          <div class="vbar" style="height:85%;"></div>
+          <div class="vbar" style="height:60%;"></div>
+          <div class="vbar" style="height:75%;"></div>
+          <div class="vbar" style="height:45%;"></div>
+        </div>
+        <div style="font-size:9px;color:var(--text-muted);text-align:center;margin-top:4px;">Jan — Dez</div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">bar_chart</span>Valor AIHs por Mes de Faturamento</div>
+        <div class="chart-visual">
+          <div class="vbar c2" style="height:55%;"></div>
+          <div class="vbar c2" style="height:70%;"></div>
+          <div class="vbar c2" style="height:50%;"></div>
+          <div class="vbar c2" style="height:85%;"></div>
+          <div class="vbar c2" style="height:60%;"></div>
+          <div class="vbar c2" style="height:95%;"></div>
+          <div class="vbar c2" style="height:65%;"></div>
+          <div class="vbar c2" style="height:45%;"></div>
+          <div class="vbar c2" style="height:80%;"></div>
+          <div class="vbar c2" style="height:55%;"></div>
+          <div class="vbar c2" style="height:70%;"></div>
+          <div class="vbar c2" style="height:40%;"></div>
+        </div>
+        <div style="font-size:9px;color:var(--text-muted);text-align:center;margin-top:4px;">Jan — Dez</div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:6px; font-style:italic;">Botao "Inverter Logica" alterna entre mes de saida e mes de faturamento.</p>
+    <div class="elements-list">
+      <span class="element-tag">KpiCard</span>
+      <span class="element-tag">HorizontalBarChart x2</span>
+      <span class="element-tag">InvertLogicToggle</span>
+      <span class="element-tag">FilterBar</span>
+      <span class="element-tag">PeriodSlicer</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 11: TELA 8 - TAXA DE EVOLUCAO ============================== -->
+<div class="slide" data-slide="10">
+  <div class="slide-header">
+    <div>
+      <h2 style="margin-bottom:0;">Tela 8: Taxa de Evolucao</h2>
+      <p class="small">Variacao percentual %MoM e %YoY por segmento</p>
+    </div>
+    <span class="badge badge-medium">Media</span>
+  </div>
+  <div class="mockup-container">
+    <div class="mockup-filters">
+      <span class="mock-filter">2024</span>
+      <span class="mock-filter">Categoria de Origem</span>
+      <span class="mock-filter" style="opacity:0.4;">Cross-filter ativo</span>
+    </div>
+    <!-- Metric toggles -->
+    <div style="display:flex;gap:8px;margin-bottom:8px;">
+      <div class="modal-btn-mock" style="font-size:11px;padding:6px 14px;">Fat. Ambulatorial</div>
+      <div class="modal-btn-mock" style="font-size:11px;padding:6px 14px;background:var(--text-muted);">Fat. Hospitalar</div>
+      <div class="modal-btn-mock" style="font-size:11px;padding:6px 14px;background:var(--text-muted);">Val. Medio Diarias YoY%</div>
+      <div class="modal-btn-mock" style="font-size:11px;padding:6px 14px;background:var(--text-muted);">Val. Medio Diarias MoM%</div>
+    </div>
+    <div class="chart-box" style="flex:1;">
+      <div class="chart-title"><span class="material-icons">show_chart</span>Faturamento Ambulatorial — Variacao % Mensal</div>
+      <div class="line-mock" style="flex:1;">
+        <svg viewBox="0 0 300 80" preserveAspectRatio="none">
+          <!-- Zero line -->
+          <line x1="0" y1="40" x2="300" y2="40" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4,4" />
+          <!-- Line with positive and negative -->
+          <polyline points="0,42 25,38 50,30 75,35 100,25 125,28 150,45 175,50 200,42 225,35 250,28 275,20 300,25" stroke="var(--primary)" stroke-width="2.5" fill="none" />
+          <!-- Dots -->
+          <circle cx="50" cy="30" r="3" fill="var(--primary)" />
+          <circle cx="100" cy="25" r="3" fill="var(--primary)" />
+          <circle cx="150" cy="45" r="3" fill="var(--high)" />
+          <circle cx="175" cy="50" r="3" fill="var(--high)" />
+          <circle cx="275" cy="20" r="3" fill="var(--low)" />
+        </svg>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-muted);">
+        <span>Jan</span><span>Fev</span><span>Mar</span><span>Abr</span><span>Mai</span><span>Jun</span><span>Jul</span><span>Ago</span><span>Set</span><span>Out</span><span>Nov</span><span>Dez</span>
+      </div>
+    </div>
+    <p class="small" style="margin-top:6px; font-style:italic;">Titulo do grafico muda dinamicamente conforme a metrica selecionada.</p>
+    <div class="elements-list">
+      <span class="element-tag">MetricToggleGroup</span>
+      <span class="element-tag">DynamicTitle</span>
+      <span class="element-tag">LineChart</span>
+      <span class="element-tag">PeriodSlicer</span>
+      <span class="element-tag">FilterBar</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 12: TELA 9 - ESPECIALIDADES ============================== -->
+<div class="slide" data-slide="11">
+  <div class="slide-header">
+    <div>
+      <h2 style="margin-bottom:0;">Tela 9: Especialidades</h2>
+      <p class="small">Producao e internacao por especialidade medica</p>
+    </div>
+    <span class="badge badge-medium">Media</span>
+  </div>
+  <div class="mockup-container">
+    <div class="mockup-filters">
+      <span class="mock-filter">Periodo</span>
+      <span class="mock-filter">Grupo TOS</span>
+      <span class="mock-filter">Especialidade</span>
+      <span class="mock-filter">Categoria</span>
+    </div>
+    <div class="kpi-row">
+      <div class="kpi-mock"><span class="kpi-label">Valor Medio AIH</span><span class="kpi-value">R$ 3.240</span></div>
+    </div>
+    <div class="mockup-body" style="grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; flex:1;">
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">bar_chart</span>Valor Medio AIH por Especialidade</div>
+        <div class="chart-visual" style="align-items:flex-end;gap:6px;padding:0 4px;">
+          <div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:2px;">
+            <div style="font-size:8px;color:var(--text-muted);">R$4,2k</div>
+            <div class="vbar" style="height:85%;"></div>
+            <div style="font-size:8px;color:var(--text-muted);">Clin.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:2px;">
+            <div style="font-size:8px;color:var(--text-muted);">R$3,8k</div>
+            <div class="vbar c2" style="height:72%;"></div>
+            <div style="font-size:8px;color:var(--text-muted);">Cirur.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:2px;">
+            <div style="font-size:8px;color:var(--text-muted);">R$2,9k</div>
+            <div class="vbar c3" style="height:55%;"></div>
+            <div style="font-size:8px;color:var(--text-muted);">Obst.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:2px;">
+            <div style="font-size:8px;color:var(--text-muted);">R$5,1k</div>
+            <div class="vbar c4" style="height:95%;"></div>
+            <div style="font-size:8px;color:var(--text-muted);">Ped.</div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">bar_chart</span>Media de Permanencia por Espec.</div>
+        <div class="chart-visual" style="align-items:flex-end;gap:6px;padding:0 4px;">
+          <div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:2px;">
+            <div style="font-size:8px;color:var(--text-muted);">5,2d</div>
+            <div class="vbar" style="height:65%;background:var(--chart-5);"></div>
+            <div style="font-size:8px;color:var(--text-muted);">Clin.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:2px;">
+            <div style="font-size:8px;color:var(--text-muted);">3,8d</div>
+            <div class="vbar" style="height:48%;background:var(--chart-6);"></div>
+            <div style="font-size:8px;color:var(--text-muted);">Cirur.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:2px;">
+            <div style="font-size:8px;color:var(--text-muted);">2,1d</div>
+            <div class="vbar" style="height:28%;background:var(--primary);"></div>
+            <div style="font-size:8px;color:var(--text-muted);">Obst.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:2px;">
+            <div style="font-size:8px;color:var(--text-muted);">7,4d</div>
+            <div class="vbar" style="height:92%;background:var(--high);"></div>
+            <div style="font-size:8px;color:var(--text-muted);">Ped.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-top:6px;">
+      <span class="material-icons" style="color:var(--text-muted);font-size:18px;">chevron_left</span>
+      <span style="font-size:11px;color:var(--text-secondary);font-weight:500;">Pagina 1 de 3</span>
+      <span class="material-icons" style="color:var(--text-muted);font-size:18px;">chevron_right</span>
+    </div>
+    <div class="elements-list">
+      <span class="element-tag">VerticalBarChart x2</span>
+      <span class="element-tag">KpiCard</span>
+      <span class="element-tag">SubPageNavigator</span>
+      <span class="element-tag">FilterBar</span>
+      <span class="element-tag">PeriodSlicer</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 13: TELA 10 - REPROCESSAMENTO ============================== -->
+<div class="slide" data-slide="12">
+  <div class="slide-header">
+    <div>
+      <h2 style="margin-bottom:0;">Tela 10: Analise de Reprocessamento</h2>
+      <p class="small">Timeline de reprocessamento das AIHs rejeitadas</p>
+    </div>
+    <span class="badge badge-medium">Media</span>
+  </div>
+  <div class="mockup-container">
+    <div class="mockup-filters">
+      <span class="mock-filter">2024</span>
+      <span class="mock-filter" style="background:var(--primary);color:#fff;">Relatorio Geral</span>
+      <span class="mock-filter" style="opacity:0.5;">Detalhamento</span>
+    </div>
+    <div class="mockup-body" style="grid-template-columns: 1.5fr 1fr; grid-template-rows: 1fr; flex:1;">
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">bar_chart</span>Erros Mais Frequentes</div>
+        <div class="bar-h">
+          <div class="bar-h-item"><span style="width:100px;font-size:9px;">Proc. incompativel</span><div class="bar-fill" style="width:80%;background:var(--high);"></div></div>
+          <div class="bar-h-item"><span style="width:100px;font-size:9px;">CID invalido</span><div class="bar-fill" style="width:55%;background:var(--medium);"></div></div>
+          <div class="bar-h-item"><span style="width:100px;font-size:9px;">Habilitacao</span><div class="bar-fill" style="width:40%;background:var(--medium);"></div></div>
+          <div class="bar-h-item"><span style="width:100px;font-size:9px;">Duplicidade</span><div class="bar-fill" style="width:25%;background:var(--chart-3);"></div></div>
+          <div class="bar-h-item"><span style="width:100px;font-size:9px;">Valor excedido</span><div class="bar-fill" style="width:15%;background:var(--chart-6);"></div></div>
+        </div>
+      </div>
+      <div class="chart-box" style="align-items:center; justify-content:center;">
+        <div class="chart-title"><span class="material-icons">donut_large</span>Situacao Geral</div>
+        <div class="donut-mock" style="width:100px;height:100px;background:conic-gradient(var(--low) 0% 68%, var(--high) 68% 100%);">
+          <div class="donut-mock-inner" style="width:55px;height:55px;">
+            <div style="text-align:center;">
+              <div style="font-size:14px;font-weight:700;">1.340</div>
+              <div style="font-size:8px;">total</div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:8px;font-size:10px;color:var(--text-muted);">
+          <span style="display:flex;align-items:center;gap:3px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--low);display:inline-block;"></span>Reprocessadas 68%</span>
+          <span style="display:flex;align-items:center;gap:3px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--high);display:inline-block;"></span>Pendentes 32%</span>
+        </div>
+      </div>
+    </div>
+    <div class="elements-list">
+      <span class="element-tag">ViewModeToggle</span>
+      <span class="element-tag">HorizontalBarChart</span>
+      <span class="element-tag">DonutChart</span>
+      <span class="element-tag">PeriodSlicer</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 14: TELA 11 - DETALHAMENTO DE REGISTRO ============================== -->
+<div class="slide" data-slide="13">
+  <div class="slide-header">
+    <div>
+      <h2 style="margin-bottom:0;">Tela 11: Detalhamento de Registro</h2>
+      <p class="small">Acesso direto as tabelas-fonte de dados</p>
+    </div>
+    <span class="badge badge-medium">Media</span>
+  </div>
+  <div class="mockup-container">
+    <div class="mockup-body" style="grid-template-columns: 1fr; grid-template-rows: auto 1fr;">
+      <!-- 3 buttons -->
+      <div style="display:flex;gap:16px;justify-content:center;margin:16px 0;">
+        <div class="modal-btn-mock" style="flex-direction:column;align-items:center;padding:20px 32px;font-size:14px;">
+          <span class="material-icons" style="font-size:32px;margin-bottom:4px;">outpatient</span>
+          PA
+          <span style="font-size:10px;font-weight:300;opacity:0.8;">Producao Ambulatorial</span>
+        </div>
+        <div class="modal-btn-mock" style="flex-direction:column;align-items:center;padding:20px 32px;font-size:14px;background:var(--chart-3);">
+          <span class="material-icons" style="font-size:32px;margin-bottom:4px;">hotel</span>
+          RD
+          <span style="font-size:10px;font-weight:300;opacity:0.8;">Registro de Internacao</span>
+        </div>
+        <div class="modal-btn-mock" style="flex-direction:column;align-items:center;padding:20px 32px;font-size:14px;background:var(--chart-4);">
+          <span class="material-icons" style="font-size:32px;margin-bottom:4px;">medical_services</span>
+          SP
+          <span style="font-size:10px;font-weight:300;opacity:0.8;">Servicos Profissionais</span>
+        </div>
+      </div>
+      <!-- Mock table -->
+      <div class="chart-box">
+        <div class="chart-title"><span class="material-icons">table_chart</span>Preview: Producao Ambulatorial (PA)</div>
+        <div style="display:flex;gap:8px;margin-bottom:8px;">
+          <div class="mock-filter" style="font-size:10px;">Buscar...</div>
+          <div class="mock-filter" style="font-size:10px;">Pagina 1 de 42</div>
+        </div>
+        <table class="table-mock">
+          <tr><th>CNES</th><th>Competencia</th><th>CBO</th><th>Procedimento</th><th>Quantidade</th><th>Valor</th></tr>
+          <tr><td>2345678</td><td>01/2024</td><td>225142</td><td>03.01.01.007-2</td><td>145</td><td>R$ 12.340</td></tr>
+          <tr><td>2345678</td><td>01/2024</td><td>223505</td><td>03.01.06.002-1</td><td>89</td><td>R$ 8.920</td></tr>
+          <tr><td>2345678</td><td>02/2024</td><td>225142</td><td>03.01.01.007-2</td><td>132</td><td>R$ 11.280</td></tr>
+          <tr><td colspan="6" style="text-align:center;font-style:italic;color:#bbb;">... paginacao server-side ...</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="elements-list">
+      <span class="element-tag">RawDataModal</span>
+      <span class="element-tag">DataTable (paginado + busca)</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 15: ARQUITETURA DE NAVEGACAO ============================== -->
+<div class="slide" data-slide="14">
+  <h2>Arquitetura de Navegacao</h2>
+  <p class="small" style="margin-bottom:12px;">Todas as telas sob a rota <code style="background:var(--primary-light);padding:2px 8px;border-radius:4px;color:var(--primary-dark);font-weight:500;">/hospital/{cnes}/</code> — filtros globais persistem via React Context.</p>
+  <div style="display:flex;justify-content:center;flex:1;align-items:center;">
+    <div class="tree">
+      <div class="tree-root">/hospital/{cnes}/</div>
+      <div class="tree-connector"></div>
+      <div class="tree-branches">
+        <div class="tree-branch">
+          <div class="tree-branch-connector"></div>
+          <div class="tree-leaf">/ <br><strong>Home</strong></div>
+        </div>
+        <div class="tree-branch">
+          <div class="tree-branch-connector"></div>
+          <div class="tree-leaf">/cnes <br><strong>CNES</strong></div>
+        </div>
+        <div class="tree-branch">
+          <div class="tree-branch-connector"></div>
+          <div class="tree-leaf">/resumo <br><strong>Financeiro</strong></div>
+        </div>
+        <div class="tree-branch">
+          <div class="tree-branch-connector"></div>
+          <div class="tree-leaf">/ambulatorial <br><strong>Ambulat.</strong></div>
+        </div>
+        <div class="tree-branch">
+          <div class="tree-branch-connector"></div>
+          <div class="tree-leaf">/hospitalar <br><strong>Hospitalar</strong></div>
+        </div>
+        <div class="tree-branch">
+          <div class="tree-branch-connector"></div>
+          <div class="tree-leaf">/servicos <br><strong>Serv. Prof.</strong></div>
+        </div>
+        <div class="tree-branch">
+          <div class="tree-branch-connector"></div>
+          <div class="tree-leaf">/alta <br><strong>Alta vs. Fat.</strong></div>
+        </div>
+        <div class="tree-branch">
+          <div class="tree-branch-connector"></div>
+          <div class="tree-leaf">/evolucao <br><strong>Evolucao</strong></div>
+        </div>
+        <div class="tree-branch">
+          <div class="tree-branch-connector"></div>
+          <div class="tree-leaf">/especialidades <br><strong>Espec.</strong></div>
+        </div>
+        <div class="tree-branch">
+          <div class="tree-branch-connector"></div>
+          <div class="tree-leaf">/reprocessamento <br><strong>Reproc.</strong></div>
+        </div>
+        <div class="tree-branch">
+          <div class="tree-branch-connector"></div>
+          <div class="tree-leaf">/registros <br><strong>Registros</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;gap:16px;justify-content:center;margin-top:12px;">
+    <div class="element-tag" style="padding:6px 14px;font-size:12px;"><strong>11</strong> rotas</div>
+    <div class="element-tag" style="padding:6px 14px;font-size:12px;"><strong>CrossFilterProvider</strong> global</div>
+    <div class="element-tag" style="padding:6px 14px;font-size:12px;"><strong>PeriodSlicer</strong> persistente</div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 16: COMPONENTES REUTILIZAVEIS ============================== -->
+<div class="slide" data-slide="15">
+  <h2>Componentes Reutilizaveis</h2>
+  <p class="small" style="margin-bottom:10px;">~15 componentes compartilhados entre as 11 telas — reduz esforco de desenvolvimento significativamente.</p>
+  <div style="overflow-x:auto;flex:1;">
+    <table class="comp-matrix">
+      <tr>
+        <th>Componente</th>
+        <th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th><th>T8</th><th>T9</th><th>T10</th><th>T11</th>
+      </tr>
+      <tr>
+        <td>KpiCard</td>
+        <td></td><td></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td></td><td></td>
+      </tr>
+      <tr>
+        <td>HorizBarChart</td>
+        <td></td><td></td><td></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td></td><td></td><td><span class="comp-dot"></span></td><td></td>
+      </tr>
+      <tr>
+        <td>VertBarChart</td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="comp-dot"></span></td><td></td><td></td>
+      </tr>
+      <tr>
+        <td>LineChart</td>
+        <td></td><td></td><td></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td></td><td></td><td><span class="comp-dot"></span></td><td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <td>AreaChart</td>
+        <td></td><td></td><td></td><td></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <td>DonutChart</td>
+        <td></td><td></td><td></td><td><span class="comp-dot"></span></td><td></td><td></td><td></td><td></td><td></td><td><span class="comp-dot"></span></td><td></td>
+      </tr>
+      <tr>
+        <td>RankingChart</td>
+        <td></td><td></td><td></td><td></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <td>DataTable</td>
+        <td></td><td><span class="comp-dot"></span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="comp-dot"></span></td>
+      </tr>
+      <tr>
+        <td>OrgChart</td>
+        <td></td><td><span class="comp-dot"></span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <td>PeriodSlicer</td>
+        <td></td><td></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td></td>
+      </tr>
+      <tr>
+        <td>FilterBar</td>
+        <td></td><td></td><td></td><td></td><td><span class="comp-dot"></span></td><td></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td></td><td></td>
+      </tr>
+      <tr>
+        <td>CrossFilterProv.</td>
+        <td></td><td></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td><span class="comp-dot"></span></td><td></td>
+      </tr>
+      <tr>
+        <td>DataModal</td>
+        <td></td><td><span class="comp-dot"></span></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="comp-dot"></span></td>
+      </tr>
+      <tr>
+        <td>MetricToggle</td>
+        <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><span class="comp-dot"></span></td><td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <td>ToggleButton</td>
+        <td></td><td></td><td></td><td><span class="comp-dot"></span></td><td></td><td></td><td><span class="comp-dot"></span></td><td></td><td></td><td></td><td></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 17: RESUMO DE COMPLEXIDADE ============================== -->
+<div class="slide" data-slide="16">
+  <h2>Resumo de Complexidade</h2>
+  <p class="small" style="margin-bottom:12px;">Esforco estimado por tela com base no numero de graficos e filtros.</p>
+
+  <div style="flex:1;">
+    <div class="complexity-row">
+      <span class="complexity-label">1. Home</span>
+      <div class="complexity-bar-bg"><div class="complexity-bar-fill" style="width:8%;background:var(--low);">0+0</div></div>
+    </div>
+    <div class="complexity-row">
+      <span class="complexity-label">2. CNES</span>
+      <div class="complexity-bar-bg"><div class="complexity-bar-fill" style="width:30%;background:var(--medium);">6 modais</div></div>
+    </div>
+    <div class="complexity-row">
+      <span class="complexity-label">3. Resumo Financeiro</span>
+      <div class="complexity-bar-bg"><div class="complexity-bar-fill" style="width:10%;background:var(--low);">0+1</div></div>
+    </div>
+    <div class="complexity-row">
+      <span class="complexity-label">4. Ambulatorial</span>
+      <div class="complexity-bar-bg"><div class="complexity-bar-fill" style="width:50%;background:var(--medium);">7+2</div></div>
+    </div>
+    <div class="complexity-row">
+      <span class="complexity-label">5. Hospitalar</span>
+      <div class="complexity-bar-bg"><div class="complexity-bar-fill" style="width:90%;background:var(--high);">9+5</div></div>
+    </div>
+    <div class="complexity-row">
+      <span class="complexity-label">6. Serv. Profissionais</span>
+      <div class="complexity-bar-bg"><div class="complexity-bar-fill" style="width:38%;background:var(--medium);">5+1</div></div>
+    </div>
+    <div class="complexity-row">
+      <span class="complexity-label">7. Alta vs. Faturamento</span>
+      <div class="complexity-bar-bg"><div class="complexity-bar-fill" style="width:45%;background:var(--medium);">2+6</div></div>
+    </div>
+    <div class="complexity-row">
+      <span class="complexity-label">8. Taxa de Evolucao</span>
+      <div class="complexity-bar-bg"><div class="complexity-bar-fill" style="width:28%;background:var(--medium);">1+3</div></div>
+    </div>
+    <div class="complexity-row">
+      <span class="complexity-label">9. Especialidades</span>
+      <div class="complexity-bar-bg"><div class="complexity-bar-fill" style="width:35%;background:var(--medium);">2+4</div></div>
+    </div>
+    <div class="complexity-row">
+      <span class="complexity-label">10. Reprocessamento</span>
+      <div class="complexity-bar-bg"><div class="complexity-bar-fill" style="width:25%;background:var(--medium);">2+2</div></div>
+    </div>
+    <div class="complexity-row">
+      <span class="complexity-label">11. Registros</span>
+      <div class="complexity-bar-bg"><div class="complexity-bar-fill" style="width:15%;background:var(--medium);">0+1</div></div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:20px;justify-content:center;margin-top:12px;">
+    <div style="text-align:center;">
+      <div style="font-size:28px;font-weight:700;color:var(--primary);">~28</div>
+      <div style="font-size:11px;color:var(--text-muted);">graficos</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-size:28px;font-weight:700;color:var(--chart-3);">~25</div>
+      <div style="font-size:11px;color:var(--text-muted);">filtros</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-size:28px;font-weight:700;color:var(--chart-4);">~35</div>
+      <div style="font-size:11px;color:var(--text-muted);">tabelas DB</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-size:28px;font-weight:700;color:var(--chart-5);">~15-20</div>
+      <div style="font-size:11px;color:var(--text-muted);">endpoints API</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== SLIDE 18: ENCERRAMENTO ============================== -->
+<div class="slide closing" data-slide="17">
+  <div class="logo-bar" style="justify-content:center;margin-bottom:16px;">
+    <div class="logo-icon" style="background:rgba(255,255,255,0.2);"><span style="color:#fff;">G</span></div>
+    <div class="logo-text" style="color:#fff;">GIS</div>
+  </div>
+  <h2>Proximos Passos</h2>
+  <p style="max-width:600px;margin:0 auto 20px;">Com as decisoes tomadas e o plano detalhado, o desenvolvimento pode comecar.</p>
+
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-number">11</div><div class="stat-label">Telas Nativas</div></div>
+    <div class="stat-box"><div class="stat-number">~15</div><div class="stat-label">Componentes</div></div>
+    <div class="stat-box"><div class="stat-number">~35</div><div class="stat-label">Tabelas Postgres</div></div>
+    <div class="stat-box"><div class="stat-number">~20</div><div class="stat-label">Endpoints API</div></div>
+  </div>
+
+  <div class="tech-pills">
+    <span class="tech-pill">Next.js</span>
+    <span class="tech-pill">Recharts</span>
+    <span class="tech-pill">TanStack Table</span>
+    <span class="tech-pill">Go API</span>
+    <span class="tech-pill">Postgres</span>
+    <span class="tech-pill">React Context</span>
+  </div>
+
+  <div style="margin-top:24px;">
+    <h4 style="color:rgba(255,255,255,0.9);margin-bottom:8px;">O que precisa ser feito</h4>
+    <div style="display:flex;gap:24px;justify-content:center;">
+      <div style="text-align:left;">
+        <p style="color:rgba(255,255,255,0.7);font-size:13px;"><strong style="color:#fff;">Backend:</strong> ~35 tabelas + ~20 endpoints + seed data</p>
+      </div>
+      <div style="text-align:left;">
+        <p style="color:rgba(255,255,255,0.7);font-size:13px;"><strong style="color:#fff;">Frontend:</strong> ~15 componentes + 11 telas + cross-filter system</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="date" style="color:rgba(255,255,255,0.5);margin-top:24px;">GIS - Gestao Inteligente em Saude | Abril 2026</p>
+</div>
+
+</div><!-- /deck -->
+
+<!-- Navigation areas -->
+<div class="nav-area left" id="nav-left">
+  <span class="material-icons">chevron_left</span>
+</div>
+<div class="nav-area right" id="nav-right">
+  <span class="material-icons">chevron_right</span>
+</div>
+
+<!-- Counter -->
+<div class="slide-counter" id="counter">1 / 18</div>
+
+<!-- Dots -->
+<div class="dots" id="dots"></div>
+
+<script>
+(function() {
+    'use strict';
+
+    var slides = document.querySelectorAll('.slide');
+    var totalSlides = slides.length;
+    var currentSlide = 0;
+    var isAnimating = false;
+    var counter = document.getElementById('counter');
+    var dotsContainer = document.getElementById('dots');
+
+    // Build dots
+    for (var i = 0; i < totalSlides; i++) {
+        var dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('data-index', i);
+        dot.addEventListener('click', function() {
+            goToSlide(parseInt(this.getAttribute('data-index')));
+        });
+        dotsContainer.appendChild(dot);
+    }
+
+    function updateUI() {
+        counter.textContent = (currentSlide + 1) + ' / ' + totalSlides;
+        var dots = dotsContainer.querySelectorAll('.dot');
+        for (var i = 0; i < dots.length; i++) {
+            dots[i].classList.toggle('active', i === currentSlide);
+        }
+    }
+
+    function goToSlide(index) {
+        if (isAnimating || index === currentSlide || index < 0 || index >= totalSlides) return;
+        isAnimating = true;
+
+        var direction = index > currentSlide ? 'left' : 'right';
+        var oldSlide = slides[currentSlide];
+        var newSlide = slides[index];
+
+        // Position new slide off-screen
+        newSlide.style.transition = 'none';
+        newSlide.className = 'slide';
+        if (direction === 'left') {
+            newSlide.style.transform = 'translate(-50%, -50%) translateX(100vw)';
+        } else {
+            newSlide.style.transform = 'translate(-50%, -50%) translateX(-100vw)';
+        }
+        newSlide.style.opacity = '0';
+
+        // Force reflow
+        void newSlide.offsetWidth;
+
+        // Re-enable transition
+        newSlide.style.transition = '';
+        newSlide.style.transform = '';
+        newSlide.style.opacity = '';
+
+        // Animate old slide out
+        oldSlide.classList.remove('active');
+        oldSlide.classList.add(direction === 'left' ? 'exit-left' : 'exit-right');
+
+        // Animate new slide in
+        newSlide.classList.add('active');
+
+        currentSlide = index;
+        updateUI();
+
+        setTimeout(function() {
+            oldSlide.classList.remove('exit-left', 'exit-right');
+            isAnimating = false;
+        }, 420);
+    }
+
+    function nextSlide() {
+        if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+        if (currentSlide > 0) goToSlide(currentSlide - 1);
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+            e.preventDefault();
+            nextSlide();
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            prevSlide();
+        } else if (e.key === 'Home') {
+            e.preventDefault();
+            goToSlide(0);
+        } else if (e.key === 'End') {
+            e.preventDefault();
+            goToSlide(totalSlides - 1);
+        }
+    });
+
+    // Click navigation
+    document.getElementById('nav-left').addEventListener('click', prevSlide);
+    document.getElementById('nav-right').addEventListener('click', nextSlide);
+
+    // Initialize
+    updateUI();
+})();
+</script>
+
+</body>
+</html>
