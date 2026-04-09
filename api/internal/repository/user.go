@@ -79,7 +79,7 @@ func (r *UserRepo) CreateManager(ctx context.Context, email string) (*model.User
 func (r *UserRepo) ListAll(ctx context.Context) ([]model.UserWithHospitals, error) {
 	query := `
 		SELECT u.id, u.email, u.name, u.picture, u.role, u.created_at, u.updated_at,
-		       h.id, h.name, h.cnes, h.logo_url, h.sort_order, h.created_at
+		       h.id, h.name, h.cnes
 		FROM users u
 		LEFT JOIN user_hospitals uh ON uh.user_id = u.id
 		LEFT JOIN hospitals h ON h.id = uh.hospital_id
@@ -98,13 +98,10 @@ func (r *UserRepo) ListAll(ctx context.Context) ([]model.UserWithHospitals, erro
 	for rows.Next() {
 		var u model.User
 		var hID, hName, hCNES *string
-		var hLogoURL *string
-		var hSortOrder *int
-		var hCreatedAt *string
 
 		err := rows.Scan(
 			&u.ID, &u.Email, &u.Name, &u.Picture, &u.Role, &u.CreatedAt, &u.UpdatedAt,
-			&hID, &hName, &hCNES, &hLogoURL, &hSortOrder, &hCreatedAt,
+			&hID, &hName, &hCNES,
 		)
 		if err != nil {
 			return nil, err
@@ -121,16 +118,11 @@ func (r *UserRepo) ListAll(ctx context.Context) ([]model.UserWithHospitals, erro
 		}
 
 		if hID != nil {
-			h := model.Hospital{
-				ID:      *hID,
-				Name:    *hName,
-				CNES:    *hCNES,
-				LogoURL: hLogoURL,
-			}
-			if hSortOrder != nil {
-				h.SortOrder = *hSortOrder
-			}
-			uw.Hospitals = append(uw.Hospitals, h)
+			uw.Hospitals = append(uw.Hospitals, model.Hospital{
+				ID:   *hID,
+				Name: *hName,
+				CNES: *hCNES,
+			})
 		}
 	}
 
