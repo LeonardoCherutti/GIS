@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS user_hospitals;
+DROP TABLE IF EXISTS users;
