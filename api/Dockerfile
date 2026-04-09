@@ -9,5 +9,6 @@ FROM alpine:3.19
 RUN apk add --no-cache wget
 WORKDIR /app
 COPY --from=builder /api .
+COPY --from=builder /build/migrations ./migrations
 EXPOSE 8080
 CMD ["./api"]
