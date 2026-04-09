@@ -72,6 +72,21 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **I18N-02**: All UI strings extracted to pt-BR message files (no hardcoded Portuguese)
 - [x] **I18N-03**: i18n-ready architecture supporting future language additions
 
+### Role-Based Access Control (RBAC)
+
+- [ ] **RBAC-01**: Database schema for users table and user_hospitals junction table with proper constraints
+- [ ] **RBAC-02**: Replace env-var email allowlist (ALLOWED_EMAILS/ALLOWED_DOMAINS) with DB-driven user lookup
+- [ ] **RBAC-03**: Admin auto-seed via ADMIN_EMAILS env var on first login
+- [ ] **RBAC-04**: JWT includes role claim, auth middleware extracts role into request context
+- [ ] **RBAC-05**: Hospital API filters results by user role (admins see all, managers see assigned only)
+- [ ] **RBAC-06**: Admin CRUD API endpoints for user management (list, create manager, update hospitals, delete)
+- [ ] **RBAC-07**: RequireAdmin middleware protects admin-only API routes
+- [ ] **RBAC-08**: Frontend AuthContext exposes user role from JWT
+- [ ] **RBAC-09**: AdminGuard component redirects non-admin users from /admin routes
+- [ ] **RBAC-10**: Admin page with user table, hospital checkbox assignment, and add-manager form
+- [ ] **RBAC-11**: Login rejection shows "Acesso negado. Contate o administrador." for unregistered users
+- [ ] **RBAC-12**: AppHeader conditionally shows admin link for admin-role users only
+
 ## v2 Requirements
 
 Deferred to future release. Tracked but not in current roadmap.
@@ -101,8 +116,7 @@ Explicitly excluded. Documented to prevent scope creep.
 | Feature | Reason |
 |---------|--------|
 | Custom data visualizations | v2+ scope, Power BI serves current needs |
-| Admin panel | Hospitals managed via DB/seed scripts in v1 |
-| RBAC / per-user access | All users see all hospitals, insufficient scale to justify |
+| Hospital CRUD admin panel | Hospitals managed via DB/seed scripts in v1 |
 | Mobile native app | Web-first, Power BI not mobile-friendly |
 | Real-time data / WebSockets | Dashboard data is periodic, no live feeds |
 | Multi-tenant white-labeling | Single organization portal |
@@ -156,12 +170,24 @@ Which phases cover which requirements. Updated during roadmap creation.
 | I18N-01 | Phase 4 | Complete |
 | I18N-02 | Phase 4 | Complete |
 | I18N-03 | Phase 4 | Complete |
+| RBAC-01 | Phase 5 | Planned |
+| RBAC-02 | Phase 5 | Planned |
+| RBAC-03 | Phase 5 | Planned |
+| RBAC-04 | Phase 5 | Planned |
+| RBAC-05 | Phase 5 | Planned |
+| RBAC-06 | Phase 5 | Planned |
+| RBAC-07 | Phase 5 | Planned |
+| RBAC-08 | Phase 5 | Planned |
+| RBAC-09 | Phase 5 | Planned |
+| RBAC-10 | Phase 5 | Planned |
+| RBAC-11 | Phase 5 | Planned |
+| RBAC-12 | Phase 5 | Planned |
 
 **Coverage:**
-- v1 requirements: 41 total
-- Mapped to phases: 41
+- v1 requirements: 53 total
+- Mapped to phases: 53
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-07*
-*Last updated: 2026-04-07 after roadmap creation*
+*Last updated: 2026-04-09 after Phase 5 planning*

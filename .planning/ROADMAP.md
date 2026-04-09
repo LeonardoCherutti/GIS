@@ -13,6 +13,7 @@
 - [x] **Phase 2: Auth + Data** - Google OAuth popup, session cookies, auth middleware, hospital API endpoints, SPA navigation
 - [ ] **Phase 3: Core UI** - Hospital card grid, Power BI dashboard embed, design system, dark mode, user profile
 - [x] **Phase 4: Polish + i18n** - next-intl with pt-BR messages, i18n-ready architecture (completed 2026-04-07)
+- [ ] **Phase 5: RBAC** - Two-role permission system (Admin + Manager) with hospital-level access control
 
 ---
 
@@ -101,8 +102,30 @@ Plans:
 | 2. Auth + Data | 3/3 | Complete | 2026-04-07 |
 | 3. Core UI | 4/5 | In Progress|  |
 | 4. Polish + i18n | 2/2 | Complete   | 2026-04-07 |
+| 5. RBAC | 0/4 | Planned | |
+
+### Phase 5: Role-Based Access Control (RBAC)
+
+**Goal:** Admins and managers can log in with role-appropriate access -- admins see all hospitals and manage users, managers see only assigned hospitals
+**Requirements**: RBAC-01, RBAC-02, RBAC-03, RBAC-04, RBAC-05, RBAC-06, RBAC-07, RBAC-08, RBAC-09, RBAC-10, RBAC-11, RBAC-12
+**Depends on:** Phase 4
+**Success Criteria** (what must be TRUE):
+  1. Admin-email user auto-receives admin role on first login
+  2. Admin can create managers, assign hospitals, and delete managers via /admin page
+  3. Managers see only their assigned hospitals in the grid
+  4. Unregistered Google accounts are rejected with "Acesso negado. Contate o administrador."
+  5. Non-admin users cannot access the /admin page
+**Plans:** 4 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — DB schema (users + user_hospitals), Go models, UserRepo, config migration
+- [ ] 05-02-PLAN.md — Auth refactor (DB lookup), role in JWT/middleware, hospital filtering, RequireAdmin
+- [ ] 05-03-PLAN.md — Admin CRUD API endpoints (list/create/update/delete users)
+- [ ] 05-04-PLAN.md — Frontend admin page, AdminGuard, role-aware header, user management UI
+
+**UI hint**: yes
 
 ---
 
 *Roadmap created: 2026-04-07*
-*Last updated: 2026-04-07 after Phase 4 planning*
+*Last updated: 2026-04-09 after Phase 5 planning*
