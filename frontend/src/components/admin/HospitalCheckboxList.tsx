@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 
 interface HospitalCheckboxListProps {
@@ -17,7 +17,14 @@ export default function HospitalCheckboxList({
   onCancel,
 }: HospitalCheckboxListProps) {
   const [selected, setSelected] = useState<Set<string>>(new Set(assignedIds))
+  const [search, setSearch] = useState('')
   const t = useTranslations('admin')
+
+  const filtered = useMemo(() => {
+    if (!search.trim()) return allHospitals
+    const q = search.toLowerCase()
+    return allHospitals.filter((h) => h.name.toLowerCase().includes(q))
+  }, [allHospitals, search])
 
   function toggleHospital(id: string) {
     setSelected((prev) => {
@@ -39,24 +46,51 @@ export default function HospitalCheckboxList({
         borderColor: 'var(--palette-border)',
       }}
     >
+      <input
+        type="text"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder={t('searchHospitals')}
+        className="w-full px-3 py-2 mb-3 rounded-md border text-sm focus:ring-2 focus:outline-none"
+        style={{
+          background: 'var(--palette-background)',
+          borderColor: 'var(--palette-border)',
+          color: 'var(--palette-fg)',
+        }}
+      />
       <div className="space-y-2 mb-4 max-h-60 overflow-y-auto">
-        {allHospitals.map((hospital) => (
-          <label
-            key={hospital.id}
-            className="flex items-center gap-2 cursor-pointer text-sm"
-            style={{ color: 'var(--palette-fg)' }}
+        {filtered.length === 0 ? (
+          <p
+            className="text-sm py-2 text-center"
+            style={{ color: 'var(--palette-muted-fg)' }}
           >
-            <input
-              type="checkbox"
-              checked={selected.has(hospital.id)}
-              onChange={() => toggleHospital(hospital.id)}
-              className="rounded"
-              style={{ accentColor: 'var(--palette-primary)' }}
-            />
-            {hospital.name}
-          </label>
-        ))}
+            {t('noResults')}
+          </p>
+        ) : (
+          filtered.map((hospital) => (
+            <label
+              key={hospital.id}
+              className="flex items-center gap-2 cursor-pointer text-sm px-1 py-1 rounded transition-colors hover:opacity-80"
+              style={{ color: 'var(--palette-fg)' }}
+            >
+              <input
+                type="checkbox"
+                checked={selected.has(hospital.id)}
+                onChange={() => toggleHospital(hospital.id)}
+                className="rounded"
+                style={{ accentColor: 'var(--palette-primary)' }}
+              />
+              {hospital.name}
+            </label>
+          ))
+        )}
       </div>
+      <p
+        className="text-xs mb-3"
+        style={{ color: 'var(--palette-muted-fg)' }}
+      >
+        {selected.size} {t('selected')}
+      </p>
       <div className="flex gap-2">
         <button
           onClick={() => onSave(Array.from(selected))}

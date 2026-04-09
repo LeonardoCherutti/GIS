@@ -23,5 +23,8 @@
   "errorUpdate": "Erro ao atualizar hospitais",
   "errorLoad": "Erro ao carregar usuarios",
   "userExists": "Este email ja esta cadastrado",
-  "allHospitals": "Todos (administrador)"
+  "allHospitals": "Todos (administrador)",
+  "searchHospitals": "Buscar hospital...",
+  "noResults": "Nenhum hospital encontrado",
+  "selected": "selecionado(s)"
 }
