@@ -64,6 +64,20 @@ services:
     networks:
       - internal
 
+  presentation:
+    build:
+      context: ./presentation
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.presentation.rule=Host(`todogsi.pixelrogue.io`)"
+      - "traefik.http.routers.presentation.entrypoints=websecure"
+      - "traefik.http.routers.presentation.tls.certresolver=myresolver"
+      - "traefik.docker.network=coolify"
+    networks:
+      - coolify
+
 volumes:
   pgdata:
 
