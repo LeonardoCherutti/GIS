@@ -18,6 +18,8 @@ interface AuthContextType {
   isLoading: boolean
   token: string | null
   login: (credentialResponse: { credential?: string }) => Promise<void>
+  loginPassword: (email: string, password: string) => Promise<void>
+  applySession: (token: string, user: AuthUser) => Promise<void>
   logout: () => Promise<void>
 }
 
@@ -100,6 +102,28 @@ function AuthProviderInner({ children }: { children: ReactNode }) {
     setToken(result.data.token)
   }, [])
 
+  const applySession = useCallback(async (jwtToken: string, authUser: AuthUser) => {
+    localStorage.setItem('gis_auth_token', jwtToken)
+    await fetch('/api/session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: jwtToken }),
+    })
+    setUser(authUser)
+    setToken(jwtToken)
+  }, [])
+
+  const loginPassword = useCallback(async (email: string, password: string) => {
+    const result = await apiFetch<{ token: string; user: AuthUser }>('/auth/login-password', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    })
+    if (!result.ok) {
+      throw new Error(result.error.message ?? 'Erro ao autenticar')
+    }
+    await applySession(result.data.token, result.data.user)
+  }, [applySession])
+
   const logout = useCallback(async () => {
     localStorage.removeItem('gis_auth_token')
     await fetch('/api/session', { method: 'DELETE' })
@@ -108,7 +132,7 @@ function AuthProviderInner({ children }: { children: ReactNode }) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, isLoading, token, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, isLoading, token, login, loginPassword, applySession, logout }}>
       {children}
     </AuthContext.Provider>
   )

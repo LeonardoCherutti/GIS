@@ -6,7 +6,13 @@ import { toast } from 'sonner'
 import { apiFetch } from '@/lib/api/client'
 
 interface AddManagerFormProps {
-  onSuccess: () => void
+  onSuccess: (invite?: { token: string; email: string }) => void
+}
+
+interface CreateUserResponse {
+  user: { id: string; email: string }
+  invitation_token?: string
+  expires_at?: string
 }
 
 export default function AddManagerForm({ onSuccess }: AddManagerFormProps) {
@@ -19,7 +25,7 @@ export default function AddManagerForm({ onSuccess }: AddManagerFormProps) {
     if (!email.trim()) return
 
     setSubmitting(true)
-    const result = await apiFetch<{ id: string }>('/admin/users', {
+    const result = await apiFetch<CreateUserResponse>('/admin/users', {
       method: 'POST',
       body: JSON.stringify({ email: email.trim() }),
     })
@@ -27,8 +33,13 @@ export default function AddManagerForm({ onSuccess }: AddManagerFormProps) {
 
     if (result.ok) {
       toast.success(t('userCreated'))
+      const created = result.data
       setEmail('')
-      onSuccess()
+      onSuccess(
+        created.invitation_token
+          ? { token: created.invitation_token, email: created.user.email }
+          : undefined
+      )
     } else {
       if (result.error.status === 409) {
         toast.error(t('userExists'))

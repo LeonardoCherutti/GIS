@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"golang.org/x/crypto/bcrypt"
 	"google.golang.org/api/idtoken"
 
 	"gis-api/internal/config"
@@ -15,12 +16,13 @@ import (
 )
 
 type AuthService struct {
-	cfg      *config.Config
-	userRepo *repository.UserRepo
+	cfg            *config.Config
+	userRepo       *repository.UserRepo
+	invitationRepo *repository.InvitationRepo
 }
 
-func NewAuthService(cfg *config.Config, userRepo *repository.UserRepo) *AuthService {
-	return &AuthService{cfg: cfg, userRepo: userRepo}
+func NewAuthService(cfg *config.Config, userRepo *repository.UserRepo, invitationRepo *repository.InvitationRepo) *AuthService {
+	return &AuthService{cfg: cfg, userRepo: userRepo, invitationRepo: invitationRepo}
 }
 
 func (s *AuthService) VerifyAndLogin(ctx context.Context, googleToken string) (*model.AuthUser, string, error) {
@@ -79,7 +81,41 @@ func (s *AuthService) VerifyAndLogin(ctx context.Context, googleToken string) (*
 		}
 	}
 
+	// Silently consume any pending invitation now that the invited user has authenticated.
+	_ = s.invitationRepo.MarkUsedByUserID(ctx, user.ID)
+
 	return s.issueToken(user.Email, name, picture, sub, user.Role)
+}
+
+func (s *AuthService) PasswordLogin(ctx context.Context, email, password string) (*model.AuthUser, string, error) {
+	user, hash, err := s.userRepo.FindByEmailWithPassword(ctx, strings.ToLower(strings.TrimSpace(email)))
+	if err != nil {
+		return nil, "", fmt.Errorf("Erro ao verificar credenciais")
+	}
+	if user == nil || hash == "" {
+		return nil, "", fmt.Errorf("Credenciais invalidas")
+	}
+	if err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password)); err != nil {
+		return nil, "", fmt.Errorf("Credenciais invalidas")
+	}
+	name := ""
+	if user.Name != nil {
+		name = *user.Name
+	}
+	picture := ""
+	if user.Picture != nil {
+		picture = *user.Picture
+	}
+	return s.issueToken(user.Email, name, picture, user.ID, user.Role)
+}
+
+func (s *AuthService) GoogleTokenEmail(ctx context.Context, googleToken string) (string, error) {
+	payload, err := idtoken.Validate(ctx, googleToken, s.cfg.GoogleClientID)
+	if err != nil {
+		return "", fmt.Errorf("Token do Google invalido")
+	}
+	email, _ := payload.Claims["email"].(string)
+	return strings.ToLower(email), nil
 }
 
 func (s *AuthService) issueToken(email, name, picture, sub, role string) (*model.AuthUser, string, error) {

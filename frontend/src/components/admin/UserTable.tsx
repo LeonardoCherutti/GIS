@@ -24,6 +24,7 @@ interface UserTableProps {
   allHospitals: Array<{ id: string; name: string }>
   onDelete: (userId: string) => void
   onUpdateHospitals: (userId: string, hospitalIds: string[]) => void
+  onRegenerateInvite: (userId: string, email: string) => void
 }
 
 export default function UserTable({
@@ -31,6 +32,7 @@ export default function UserTable({
   allHospitals,
   onDelete,
   onUpdateHospitals,
+  onRegenerateInvite,
 }: UserTableProps) {
   const [editingUserId, setEditingUserId] = useState<string | null>(null)
   const t = useTranslations('admin')
@@ -123,6 +125,16 @@ export default function UserTable({
                       }}
                     >
                       {t('editHospitals')}
+                    </button>
+                    <button
+                      onClick={() => onRegenerateInvite(user.id, user.email)}
+                      className="px-2 py-1 text-xs rounded transition-colors"
+                      style={{
+                        color: 'var(--palette-primary)',
+                        background: 'var(--palette-muted)',
+                      }}
+                    >
+                      {t('regenerateInvite')}
                     </button>
                     <button
                       onClick={() => handleDelete(user.id)}

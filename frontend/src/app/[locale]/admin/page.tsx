@@ -6,6 +6,7 @@ import { toast } from 'sonner'
 import { apiFetch } from '@/lib/api/client'
 import UserTable from '@/components/admin/UserTable'
 import AddManagerForm from '@/components/admin/AddManagerForm'
+import InviteLinkDialog from '@/components/admin/InviteLinkDialog'
 
 interface UserHospital {
   id: string
@@ -32,6 +33,7 @@ export default function AdminPage() {
   const [users, setUsers] = useState<UserWithHospitals[]>([])
   const [allHospitals, setAllHospitals] = useState<Hospital[]>([])
   const [loading, setLoading] = useState(true)
+  const [invite, setInvite] = useState<{ token: string; email: string } | null>(null)
   const t = useTranslations('admin')
 
   const fetchUsers = useCallback(async () => {
@@ -66,6 +68,19 @@ export default function AdminPage() {
       fetchUsers()
     } else {
       toast.error(t('errorDelete'))
+    }
+  }
+
+  async function handleRegenerateInvite(userId: string, email: string) {
+    const result = await apiFetch<{ invitation_token: string }>(
+      `/admin/users/${userId}/invitations`,
+      { method: 'POST' }
+    )
+    if (result.ok) {
+      toast.success(t('inviteRegenerated'))
+      setInvite({ token: result.data.invitation_token, email })
+    } else {
+      toast.error(t('errorRegenerate'))
     }
   }
 
@@ -110,12 +125,23 @@ export default function AdminPage() {
       >
         {t('title')}
       </h1>
-      <AddManagerForm onSuccess={fetchUsers} />
+      <AddManagerForm
+        onSuccess={(created) => {
+          fetchUsers()
+          if (created) setInvite(created)
+        }}
+      />
       <UserTable
         users={users}
         allHospitals={allHospitals.map((h) => ({ id: h.id, name: h.name }))}
         onDelete={handleDelete}
         onUpdateHospitals={handleUpdateHospitals}
+        onRegenerateInvite={handleRegenerateInvite}
+      />
+      <InviteLinkDialog
+        token={invite?.token ?? null}
+        email={invite?.email}
+        onClose={() => setInvite(null)}
       />
     </div>
   )

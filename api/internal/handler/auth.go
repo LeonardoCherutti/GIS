@@ -39,3 +39,21 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 		User:  *user,
 	})
 }
+
+func (h *AuthHandler) LoginPassword(w http.ResponseWriter, r *http.Request) {
+	var req model.PasswordLoginRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeError(w, http.StatusBadRequest, "Requisicao invalida")
+		return
+	}
+	if req.Email == "" || req.Password == "" {
+		writeError(w, http.StatusBadRequest, "Email e senha obrigatorios")
+		return
+	}
+	user, token, err := h.service.PasswordLogin(r.Context(), req.Email, req.Password)
+	if err != nil {
+		writeError(w, http.StatusUnauthorized, err.Error())
+		return
+	}
+	writeJSON(w, http.StatusOK, model.LoginResponse{Token: token, User: *user})
+}

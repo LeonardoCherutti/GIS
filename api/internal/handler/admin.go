@@ -41,7 +41,7 @@ func (h *AdminHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := h.service.CreateManager(r.Context(), req.Email)
+	user, inv, err := h.service.CreateManager(r.Context(), req.Email)
 	if err != nil {
 		if pgErr, ok := err.(*pgconn.PgError); ok && pgErr.Code == "23505" {
 			writeError(w, http.StatusConflict, "Usuario ja existe")
@@ -50,7 +50,25 @@ func (h *AdminHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 		writeError(w, http.StatusInternalServerError, "Erro ao criar usuario")
 		return
 	}
-	writeJSON(w, http.StatusCreated, user)
+	resp := model.CreateUserResponse{User: *user}
+	if inv != nil {
+		resp.InvitationToken = inv.Token
+		resp.ExpiresAt = inv.ExpiresAt
+	}
+	writeJSON(w, http.StatusCreated, resp)
+}
+
+func (h *AdminHandler) RegenerateInvitation(w http.ResponseWriter, r *http.Request) {
+	userID := chi.URLParam(r, "id")
+	inv, err := h.service.RegenerateInvitation(r.Context(), userID)
+	if err != nil {
+		writeError(w, http.StatusInternalServerError, "Erro ao gerar convite")
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]interface{}{
+		"invitation_token": inv.Token,
+		"expires_at":       inv.ExpiresAt,
+	})
 }
 
 func (h *AdminHandler) UpdateHospitals(w http.ResponseWriter, r *http.Request) {

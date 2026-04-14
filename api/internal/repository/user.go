@@ -166,3 +166,31 @@ func (r *UserRepo) Delete(ctx context.Context, userID string) error {
 	_, err := r.pool.Exec(ctx, "DELETE FROM users WHERE id = $1", userID)
 	return err
 }
+
+func (r *UserRepo) SetPassword(ctx context.Context, userID, passwordHash string) error {
+	_, err := r.pool.Exec(ctx,
+		"UPDATE users SET password_hash = $1, updated_at = NOW() WHERE id = $2",
+		passwordHash, userID,
+	)
+	return err
+}
+
+func (r *UserRepo) FindByEmailWithPassword(ctx context.Context, email string) (*model.User, string, error) {
+	query := `
+		SELECT id, email, name, picture, role, created_at, updated_at, COALESCE(password_hash, '')
+		FROM users
+		WHERE email = $1
+	`
+	var u model.User
+	var hash string
+	err := r.pool.QueryRow(ctx, query, email).Scan(
+		&u.ID, &u.Email, &u.Name, &u.Picture, &u.Role, &u.CreatedAt, &u.UpdatedAt, &hash,
+	)
+	if err != nil {
+		if err == pgx.ErrNoRows {
+			return nil, "", nil
+		}
+		return nil, "", err
+	}
+	return &u, hash, nil
+}

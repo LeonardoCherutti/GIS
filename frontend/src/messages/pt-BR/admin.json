@@ -26,5 +26,13 @@
   "allHospitals": "Todos (administrador)",
   "searchHospitals": "Buscar hospital...",
   "noResults": "Nenhum hospital encontrado",
-  "selected": "selecionado(s)"
+  "selected": "selecionado(s)",
+  "inviteTitle": "Link de Convite",
+  "inviteHelp": "Envie este link ao novo gerente. Valido por 7 dias.",
+  "copyLink": "Copiar link",
+  "copied": "Link copiado!",
+  "close": "Fechar",
+  "regenerateInvite": "Gerar novo convite",
+  "inviteRegenerated": "Novo convite gerado",
+  "errorRegenerate": "Erro ao gerar convite"
 }

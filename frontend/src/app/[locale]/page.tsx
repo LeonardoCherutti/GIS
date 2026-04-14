@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { useAuth } from '@/contexts/AuthContext'
 import LoginButton from '@/components/auth/LoginButton'
+import PasswordLoginForm from '@/components/auth/PasswordLoginForm'
 
 export default function Home() {
   const { isAuthenticated, isLoading } = useAuth()
@@ -77,6 +78,12 @@ export default function Home() {
           />
         </div>
         <LoginButton />
+        <div className="flex items-center gap-3 my-4">
+          <div className="flex-1 h-px" style={{ background: 'var(--palette-border)' }} />
+          <span className="text-xs" style={{ color: 'var(--palette-muted-fg)' }}>{ta('or')}</span>
+          <div className="flex-1 h-px" style={{ background: 'var(--palette-border)' }} />
+        </div>
+        <PasswordLoginForm />
       </div>
     </main>
   )
