@@ -34,6 +34,19 @@ func (s *AuthService) VerifyAndLogin(ctx context.Context, googleToken string) (*
 	picture, _ := payload.Claims["picture"].(string)
 	sub := payload.Subject
 
+	// Admin emails from env bypass the DB entirely -- they must always be able to log in
+	// even if the DB is down or the user row is missing. Best-effort upsert for audit/UI.
+	if s.isAdminEmail(email) {
+		dbUser := &model.User{
+			Email:   email,
+			Name:    &name,
+			Picture: &picture,
+			Role:    "admin",
+		}
+		_, _ = s.userRepo.Upsert(ctx, dbUser)
+		return s.issueToken(email, name, picture, sub, "admin")
+	}
+
 	// Look up user in DB
 	user, err := s.userRepo.FindByEmail(ctx, email)
 	if err != nil {
@@ -41,19 +54,7 @@ func (s *AuthService) VerifyAndLogin(ctx context.Context, googleToken string) (*
 	}
 
 	if user == nil {
-		// User not in DB -- check if admin email for auto-seed
-		if s.isAdminEmail(email) {
-			dbUser := &model.User{
-				Email:   email,
-				Name:    &name,
-				Picture: &picture,
-				Role:    "admin",
-			}
-			user, err = s.userRepo.Upsert(ctx, dbUser)
-			if err != nil {
-				return nil, "", fmt.Errorf("Erro ao criar usuario administrador")
-			}
-		} else if s.isAllowedDomain(email) {
+		if s.isAllowedDomain(email) {
 			// Domain-level gate: auto-create as manager
 			dbUser := &model.User{
 				Email:   email,
@@ -78,21 +79,25 @@ func (s *AuthService) VerifyAndLogin(ctx context.Context, googleToken string) (*
 		}
 	}
 
+	return s.issueToken(user.Email, name, picture, sub, user.Role)
+}
+
+func (s *AuthService) issueToken(email, name, picture, sub, role string) (*model.AuthUser, string, error) {
 	authUser := &model.AuthUser{
-		Email:   user.Email,
+		Email:   email,
 		Name:    name,
 		Picture: picture,
 		Sub:     sub,
-		Role:    user.Role,
+		Role:    role,
 	}
 
 	now := time.Now()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"email":   user.Email,
+		"email":   email,
 		"name":    name,
 		"picture": picture,
 		"sub":     sub,
-		"role":    user.Role,
+		"role":    role,
 		"iat":     now.Unix(),
 		"exp":     now.Add(24 * time.Hour).Unix(),
 	})
