@@ -13,13 +13,15 @@ export default function AppHeader() {
 
   return (
     <header className="flex items-center justify-between px-6 py-3 bg-surface-raised border-b border-border">
-      <Image
-        src="/logo_horizontal.png"
-        alt="G.S.I"
-        width={156}
-        height={53}
-        className="dark:brightness-200 dark:contrast-50"
-      />
+      <Link href="/hospital" aria-label={t('home')}>
+        <Image
+          src="/logo_horizontal.png"
+          alt="G.S.I"
+          width={156}
+          height={53}
+          className="dark:brightness-200 dark:contrast-50"
+        />
+      </Link>
       <div className="flex items-center gap-2">
         {user?.role === 'admin' && (
           <Link
