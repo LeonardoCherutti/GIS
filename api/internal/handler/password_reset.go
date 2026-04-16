@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
 
@@ -28,7 +29,7 @@ func (h *PasswordResetHandler) ForgotPassword(w http.ResponseWriter, r *http.Req
 		writeError(w, http.StatusBadRequest, "Email obrigatorio")
 		return
 	}
-	go h.service.InitiateReset(r.Context(), req.Email)
+	go h.service.InitiateReset(context.Background(), req.Email)
 	writeJSON(w, http.StatusOK, map[string]string{
 		"message": "Se o email estiver cadastrado, voce recebera um link de recuperacao",
 	})
