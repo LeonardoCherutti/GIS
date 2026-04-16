@@ -29,7 +29,14 @@ func New(pool *pgxpool.Pool, cfg *config.Config) chi.Router {
 	authService := service.NewAuthService(cfg, userRepo, invitationRepo)
 	hospitalService := service.NewHospitalService(hospitalRepo)
 	userService := service.NewUserService(userRepo, invitationService)
-	emailService := service.NewEmailService(cfg.ResendAPIKey, cfg.ResendFromEmail)
+	emailService := service.NewEmailService(service.SMTPConfig{
+		Host:     cfg.SMTPHost,
+		Port:     cfg.SMTPPort,
+		Username: cfg.SMTPUsername,
+		Password: cfg.SMTPPassword,
+		From:     cfg.SMTPFrom,
+		Secure:   cfg.SMTPSecure,
+	})
 	passwordResetService := service.NewPasswordResetService(passwordResetRepo, userRepo, emailService, cfg.FrontendURL)
 
 	// Handlers

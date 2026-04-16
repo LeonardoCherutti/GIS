@@ -3,6 +3,7 @@ package config
 import (
 	"log"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -13,9 +14,13 @@ type Config struct {
 	JWTSecret      string
 	AdminEmails     []string
 	AllowedDomains  []string
-	ResendAPIKey    string
-	ResendFromEmail string
-	FrontendURL     string
+	SMTPHost     string
+	SMTPPort     int
+	SMTPUsername string
+	SMTPPassword string
+	SMTPFrom     string
+	SMTPSecure   bool
+	FrontendURL  string
 }
 
 func Load() Config {
@@ -37,10 +42,25 @@ func Load() Config {
 		JWTSecret:      jwtSecret,
 		AdminEmails:    parseCSV(os.Getenv("ADMIN_EMAILS")),
 		AllowedDomains:  parseCSV(os.Getenv("ALLOWED_DOMAINS")),
-		ResendAPIKey:    os.Getenv("RESEND_API_KEY"),
-		ResendFromEmail: os.Getenv("RESEND_FROM_EMAIL"),
-		FrontendURL:     os.Getenv("FRONTEND_URL"),
+		SMTPHost:     os.Getenv("SMTP_HOST"),
+		SMTPPort:     parsePort(os.Getenv("SMTP_PORT"), 587),
+		SMTPUsername: os.Getenv("SMTP_USERNAME"),
+		SMTPPassword: os.Getenv("SMTP_PASSWORD"),
+		SMTPFrom:     os.Getenv("SMTP_FROM"),
+		SMTPSecure:   os.Getenv("SMTP_SECURE") == "true",
+		FrontendURL:  os.Getenv("FRONTEND_URL"),
 	}
+}
+
+func parsePort(s string, defaultPort int) int {
+	if s == "" {
+		return defaultPort
+	}
+	p, err := strconv.Atoi(s)
+	if err != nil {
+		return defaultPort
+	}
+	return p
 }
 
 func parseCSV(s string) []string {

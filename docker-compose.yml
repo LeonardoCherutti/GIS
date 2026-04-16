@@ -34,8 +34,12 @@ services:
       - JWT_SECRET=${JWT_SECRET:-gis-dev-secret-change-in-production}
       - ADMIN_EMAILS=${ADMIN_EMAILS:-}
       - ALLOWED_DOMAINS=${ALLOWED_DOMAINS:-}
-      - RESEND_API_KEY=${RESEND_API_KEY:-}
-      - RESEND_FROM_EMAIL=${RESEND_FROM_EMAIL:-noreply@todogsi.pixelrogue.io}
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USERNAME=${SMTP_USERNAME:-}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
+      - SMTP_FROM=${SMTP_FROM:-}
+      - SMTP_SECURE=${SMTP_SECURE:-false}
       - FRONTEND_URL=${FRONTEND_URL:-http://localhost:3000}
     depends_on:
       postgres:
