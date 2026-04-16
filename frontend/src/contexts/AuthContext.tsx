@@ -30,6 +30,9 @@ function parseJwt(token: string): AuthUser | null {
     const base64Url = token.split('.')[1]
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
     const payload = JSON.parse(atob(base64))
+    if (payload.exp && payload.exp * 1000 < Date.now()) {
+      return null
+    }
     return {
       email: payload.email,
       name: payload.name,
@@ -66,6 +69,10 @@ function AuthProviderInner({ children }: { children: ReactNode }) {
             })
             setUser(parsed)
             setToken(saved)
+          } else {
+            // Token expired — clean up
+            localStorage.removeItem('gis_auth_token')
+            await fetch('/api/session', { method: 'DELETE' })
           }
         }
       } finally {

@@ -22,6 +22,11 @@ export async function apiFetch<T>(
       { ...fetchOptions, headers: { ...headers, ...fetchOptions.headers as Record<string, string> } }
     )
     if (!res.ok) {
+      if (res.status === 401 && typeof window !== 'undefined') {
+        localStorage.removeItem('gis_auth_token')
+        await fetch('/api/session', { method: 'DELETE' })
+        window.location.href = '/'
+      }
       const body = await res.json().catch(() => ({}))
       return {
         ok: false,
