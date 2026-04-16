@@ -1,12 +1,14 @@
 'use client'
 
 import { FormEvent, useState } from 'react'
-import { useTranslations } from 'next-intl'
+import Link from 'next/link'
+import { useLocale, useTranslations } from 'next-intl'
 import { useAuth } from '@/contexts/AuthContext'
 
 export default function PasswordLoginForm() {
   const { loginPassword } = useAuth()
   const t = useTranslations('auth')
+  const locale = useLocale()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -56,6 +58,15 @@ export default function PasswordLoginForm() {
           color: 'var(--palette-foreground)',
         }}
       />
+      <div className="w-full text-right mt-[-4px]">
+        <Link
+          href={`/${locale}/forgot-password`}
+          className="text-xs hover:underline"
+          style={{ color: 'var(--palette-muted-fg)' }}
+        >
+          {t('forgotPassword')}
+        </Link>
+      </div>
       <button
         type="submit"
         disabled={loading}

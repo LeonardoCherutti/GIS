@@ -1,122 +1,83 @@
 'use client'
 
-import { FormEvent, Suspense, useEffect, useRef, useState } from 'react'
+import { FormEvent, Suspense, useEffect, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useTranslations } from 'next-intl'
-import { useAuth } from '@/contexts/AuthContext'
+import { useLocale, useTranslations } from 'next-intl'
 import { apiFetch } from '@/lib/api/client'
 import PasswordStrengthMeter from '@/components/auth/PasswordStrengthMeter'
 
-interface InvitationInfo {
-  email: string
-  expires_at: string
-}
-
-interface AuthUser {
-  email: string
-  name: string
-  picture: string
-  sub: string
-  role: 'admin' | 'manager'
-}
-
-function RegisterInner() {
+function ResetPasswordInner() {
   const searchParams = useSearchParams()
   const token = searchParams.get('token') ?? ''
   const router = useRouter()
-  const tr = useTranslations('register')
+  const t = useTranslations('resetPassword')
   const tc = useTranslations('common')
-  const { applySession } = useAuth()
+  const locale = useLocale()
 
-  const [invite, setInvite] = useState<InvitationInfo | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [invalid, setInvalid] = useState<string | null>(null)
+  const [validating, setValidating] = useState(true)
+  const [tokenValid, setTokenValid] = useState(false)
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const googleBtnRef = useRef<HTMLDivElement>(null)
+  const [success, setSuccess] = useState(false)
 
   useEffect(() => {
-    async function load() {
+    async function validate() {
       if (!token) {
-        setInvalid(tr('errors.invalidToken'))
-        setLoading(false)
+        setError(t('errors.missingToken'))
+        setValidating(false)
         return
       }
-      const result = await apiFetch<InvitationInfo>(`/invitations/${encodeURIComponent(token)}`)
-      if (result.ok) {
-        setInvite(result.data)
+      const result = await apiFetch<{ valid: boolean }>(`/auth/reset-password/${encodeURIComponent(token)}`)
+      if (result.ok && result.data.valid) {
+        setTokenValid(true)
       } else {
-        setInvalid(result.error.message ?? tr('errors.invalidToken'))
+        setError(t('errors.invalidToken'))
       }
-      setLoading(false)
+      setValidating(false)
     }
-    load()
-  }, [token, tr])
-
-  useEffect(() => {
-    if (!invite || invalid) return
-    const google = (window as unknown as { google?: { accounts: { id: { initialize: (o: unknown) => void; renderButton: (el: HTMLElement | null, o: unknown) => void } } } }).google
-    if (!google?.accounts?.id) return
-
-    google.accounts.id.initialize({
-      client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-      callback: async (response: { credential?: string }) => {
-        if (!response.credential) return
-        const result = await apiFetch<{ token: string; user: AuthUser }>(
-          `/invitations/${encodeURIComponent(token)}/accept-google`,
-          {
-            method: 'POST',
-            body: JSON.stringify({ google_token: response.credential }),
-          }
-        )
-        if (result.ok) {
-          await applySession(result.data.token, result.data.user)
-          router.push('/hospital')
-        } else {
-          setError(result.error.message ?? tr('errors.generic'))
-        }
-      },
-    })
-    google.accounts.id.renderButton(googleBtnRef.current, {
-      type: 'standard',
-      theme: 'outline',
-      size: 'large',
-      width: 320,
-    })
-  }, [invite, invalid, token, applySession, router, tr])
+    validate()
+  }, [token, t])
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (password.length < 10) {
-      setError(tr('errors.passwordTooShort'))
+      setError(t('errors.passwordTooShort'))
       return
     }
     if (password !== confirmPassword) {
-      setError(tr('errors.passwordMismatch'))
+      setError(t('errors.passwordMismatch'))
       return
     }
     setSubmitting(true)
     setError(null)
-    const result = await apiFetch<{ token: string; user: AuthUser }>(
-      `/invitations/${encodeURIComponent(token)}/accept-password`,
+    const result = await apiFetch<{ message: string }>(
+      `/auth/reset-password/${encodeURIComponent(token)}`,
       {
         method: 'POST',
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ password, confirm_password: confirmPassword }),
       }
     )
     if (result.ok) {
-      await applySession(result.data.token, result.data.user)
-      router.push('/hospital')
+      setSuccess(true)
+      setTimeout(() => router.push(`/${locale}`), 2000)
     } else {
-      setError(result.error.message ?? tr('errors.generic'))
+      const msg = result.error.message ?? ''
+      if (msg.includes('muito comum')) {
+        setError(t('errors.commonPassword'))
+      } else if (msg.includes('invalido') || msg.includes('expirado')) {
+        setError(t('errors.invalidToken'))
+      } else {
+        setError(t('errors.generic'))
+      }
       setSubmitting(false)
     }
   }
 
-  if (loading) {
+  if (validating) {
     return (
       <main className="flex min-h-screen items-center justify-center" style={{ background: 'var(--palette-background)' }}>
         <p style={{ color: 'var(--palette-muted-fg)' }}>{tc('loading')}</p>
@@ -124,7 +85,7 @@ function RegisterInner() {
     )
   }
 
-  if (invalid || !invite) {
+  if (!tokenValid && !success) {
     return (
       <main className="flex min-h-screen items-center justify-center px-4" style={{ background: 'var(--palette-background)' }}>
         <div
@@ -134,7 +95,31 @@ function RegisterInner() {
             border: '1px solid var(--palette-border)',
           }}
         >
-          <p style={{ color: 'var(--palette-destructive)' }}>{invalid ?? tr('errors.invalidToken')}</p>
+          <p className="mb-4" style={{ color: 'var(--palette-destructive)' }}>{error}</p>
+          <Link
+            href={`/${locale}/forgot-password`}
+            className="text-sm hover:underline"
+            style={{ color: 'var(--palette-primary)' }}
+          >
+            {t('errors.tokenExpired')}
+          </Link>
+        </div>
+      </main>
+    )
+  }
+
+  if (success) {
+    return (
+      <main className="flex min-h-screen items-center justify-center px-4" style={{ background: 'var(--palette-background)' }}>
+        <div
+          className="w-full max-w-sm rounded-xl p-8 text-center"
+          style={{
+            background: 'var(--palette-surface-raised)',
+            border: '1px solid var(--palette-border)',
+          }}
+        >
+          <p className="text-lg font-semibold mb-2" style={{ color: 'var(--palette-primary)' }}>{t('success')}</p>
+          <p className="text-sm" style={{ color: 'var(--palette-muted-fg)' }}>Redirecionando...</p>
         </div>
       </main>
     )
@@ -160,19 +145,19 @@ function RegisterInner() {
           />
         </div>
         <h1 className="text-lg font-semibold mb-1 text-center" style={{ color: 'var(--palette-foreground)' }}>
-          {tr('title')}
+          {t('title')}
         </h1>
         <p className="text-sm mb-6 text-center" style={{ color: 'var(--palette-muted-fg)' }}>
-          {tr('subtitle', { email: invite.email })}
+          {t('subtitle')}
         </p>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3 mb-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <input
             type="password"
             required
             minLength={10}
             autoComplete="new-password"
-            placeholder={tr('password')}
+            placeholder={t('password')}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full h-11 px-3 rounded-md text-sm"
@@ -188,7 +173,7 @@ function RegisterInner() {
             required
             minLength={10}
             autoComplete="new-password"
-            placeholder={tr('confirmPassword')}
+            placeholder={t('confirmPassword')}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             className="w-full h-11 px-3 rounded-md text-sm"
@@ -204,7 +189,7 @@ function RegisterInner() {
             className="w-full h-11 rounded-md text-white cursor-pointer text-sm font-medium disabled:opacity-50 transition-colors"
             style={{ background: 'var(--palette-primary)' }}
           >
-            {submitting ? '…' : tr('submit')}
+            {submitting ? '...' : t('submit')}
           </button>
           {error && (
             <p role="alert" className="text-xs text-center" style={{ color: 'var(--palette-destructive)' }}>
@@ -212,22 +197,15 @@ function RegisterInner() {
             </p>
           )}
         </form>
-
-        <div className="flex items-center gap-3 my-4">
-          <div className="flex-1 h-px" style={{ background: 'var(--palette-border)' }} />
-          <span className="text-xs" style={{ color: 'var(--palette-muted-fg)' }}>{tr('googleInstead')}</span>
-          <div className="flex-1 h-px" style={{ background: 'var(--palette-border)' }} />
-        </div>
-        <div className="flex justify-center" ref={googleBtnRef} />
       </div>
     </main>
   )
 }
 
-export default function RegisterPage() {
+export default function ResetPasswordPage() {
   return (
     <Suspense fallback={null}>
-      <RegisterInner />
+      <ResetPasswordInner />
     </Suspense>
   )
 }

@@ -10,6 +10,8 @@ const messageImports = {
     dashboard: (await import('../messages/pt-BR/dashboard.json')).default,
     admin: (await import('../messages/pt-BR/admin.json')).default,
     register: (await import('../messages/pt-BR/register.json')).default,
+    forgotPassword: (await import('../messages/pt-BR/forgotPassword.json')).default,
+    resetPassword: (await import('../messages/pt-BR/resetPassword.json')).default,
   }),
 } as const
 

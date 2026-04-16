@@ -2,14 +2,14 @@
   "title": "Completar Cadastro",
   "subtitle": "Convite para {email}",
   "setPassword": "Definir Senha",
-  "password": "Senha (minimo 8 caracteres)",
+  "password": "Senha (minimo 10 caracteres)",
   "confirmPassword": "Confirmar Senha",
   "submit": "Concluir Cadastro",
   "googleInstead": "Ou entrar com Google",
   "errors": {
     "invalidToken": "Convite invalido ou expirado",
     "passwordMismatch": "As senhas nao coincidem",
-    "passwordTooShort": "A senha deve ter ao menos 8 caracteres",
+    "passwordTooShort": "A senha deve ter ao menos 10 caracteres",
     "generic": "Erro ao concluir cadastro"
   }
 }
