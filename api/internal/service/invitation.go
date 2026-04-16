@@ -10,6 +10,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	"gis-api/internal/model"
+	pwvalidate "gis-api/internal/password"
 	"gis-api/internal/repository"
 )
 
@@ -63,8 +64,8 @@ func (s *InvitationService) AcceptPassword(ctx context.Context, token, password 
 	if err != nil {
 		return "", err
 	}
-	if len(password) < 8 {
-		return "", fmt.Errorf("senha deve ter pelo menos 8 caracteres")
+	if err := pwvalidate.Validate(password); err != nil {
+		return "", err
 	}
 	hash, err := bcrypt.GenerateFromPassword([]byte(password), 12)
 	if err != nil {
