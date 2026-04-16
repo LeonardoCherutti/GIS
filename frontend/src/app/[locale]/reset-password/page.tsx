@@ -44,7 +44,7 @@ function ResetPasswordInner() {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    if (password.length < 10) {
+    if (password.length < 8) {
       setError(t('errors.passwordTooShort'))
       return
     }
@@ -155,7 +155,7 @@ function ResetPasswordInner() {
           <input
             type="password"
             required
-            minLength={10}
+            minLength={8}
             autoComplete="new-password"
             placeholder={t('password')}
             value={password}
@@ -171,7 +171,7 @@ function ResetPasswordInner() {
           <input
             type="password"
             required
-            minLength={10}
+            minLength={8}
             autoComplete="new-password"
             placeholder={t('confirmPassword')}
             value={confirmPassword}

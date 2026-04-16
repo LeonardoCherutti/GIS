@@ -10,7 +10,7 @@ interface PasswordStrengthMeterProps {
 function getScore(password: string): number {
   if (password.length === 0) return 0
   if (password.length < 6) return 1
-  if (password.length < 10) return 2
+  if (password.length < 8) return 2
   if (password.length < 15) return 3
   return 4
 }
@@ -25,7 +25,7 @@ const SEGMENT_COLORS = [
 export default function PasswordStrengthMeter({ password }: PasswordStrengthMeterProps) {
   const t = useTranslations('resetPassword')
   const score = getScore(password)
-  const meetsMinimum = password.length >= 10
+  const meetsMinimum = password.length >= 8
 
   return (
     <div

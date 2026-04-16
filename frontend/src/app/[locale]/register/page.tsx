@@ -90,7 +90,7 @@ function RegisterInner() {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    if (password.length < 10) {
+    if (password.length < 8) {
       setError(tr('errors.passwordTooShort'))
       return
     }
@@ -170,7 +170,7 @@ function RegisterInner() {
           <input
             type="password"
             required
-            minLength={10}
+            minLength={8}
             autoComplete="new-password"
             placeholder={tr('password')}
             value={password}
@@ -186,7 +186,7 @@ function RegisterInner() {
           <input
             type="password"
             required
-            minLength={10}
+            minLength={8}
             autoComplete="new-password"
             placeholder={tr('confirmPassword')}
             value={confirmPassword}
