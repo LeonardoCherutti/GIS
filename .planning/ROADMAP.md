@@ -14,6 +14,7 @@
 - [ ] **Phase 3: Core UI** - Hospital card grid, Power BI dashboard embed, design system, dark mode, user profile
 - [x] **Phase 4: Polish + i18n** - next-intl with pt-BR messages, i18n-ready architecture (completed 2026-04-07)
 - [ ] **Phase 5: RBAC** - Two-role permission system (Admin + Manager) with hospital-level access control
+- [ ] **Phase 6: Password Security + Recovery** - Strong password enforcement and self-service forgot-password flow
 
 ---
 
@@ -103,6 +104,7 @@ Plans:
 | 3. Core UI | 4/5 | In Progress|  |
 | 4. Polish + i18n | 2/2 | Complete   | 2026-04-07 |
 | 5. RBAC | 0/4 | Planned | |
+| 6. Password Security + Recovery | 0/0 | Planned | |
 
 ### Phase 5: Role-Based Access Control (RBAC)
 
@@ -125,7 +127,21 @@ Plans:
 
 **UI hint**: yes
 
+### Phase 6: Password Security + Recovery
+
+**Goal:** Users with password-based login have strong password enforcement and can self-service reset forgotten passwords via email
+**Depends on:** Phase 5
+**Requirements**: PWD-01, PWD-02, PWD-03, PWD-04, PWD-05, PWD-06, PWD-07
+**Success Criteria** (what must be TRUE):
+  1. Password creation/change rejects passwords that don't meet strength rules (length, uppercase, number, special char)
+  2. User can request password reset from login page via email
+  3. Reset token is time-limited and single-use
+  4. User can set new password via reset link with strength validation
+  5. Password strength meter provides real-time feedback during input
+
+**UI hint**: yes
+
 ---
 
 *Roadmap created: 2026-04-07*
-*Last updated: 2026-04-09 after Phase 5 planning*
+*Last updated: 2026-04-16 after Phase 6 addition*

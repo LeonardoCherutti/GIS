@@ -87,6 +87,16 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **RBAC-11**: Login rejection shows "Acesso negado. Contate o administrador." for unregistered users
 - [x] **RBAC-12**: AppHeader conditionally shows admin link for admin-role users only
 
+### Password Security + Recovery
+
+- [ ] **PWD-01**: Password strength validation enforces minimum 10 chars, uppercase, lowercase, number, and special character
+- [ ] **PWD-02**: Real-time password strength meter with visual feedback during input
+- [ ] **PWD-03**: Forgot password link on login page triggers reset email request
+- [ ] **PWD-04**: Password reset token is time-limited (1 hour) and single-use
+- [ ] **PWD-05**: Reset link leads to set-new-password page with strength validation
+- [ ] **PWD-06**: Backend sends password reset emails (SMTP or transactional email service)
+- [ ] **PWD-07**: Existing invitation accept-password flow also enforces new strength rules
+
 ## v2 Requirements
 
 Deferred to future release. Tracked but not in current roadmap.
@@ -183,9 +193,17 @@ Which phases cover which requirements. Updated during roadmap creation.
 | RBAC-11 | Phase 5 | Planned |
 | RBAC-12 | Phase 5 | Planned |
 
+| PWD-01 | Phase 6 | Planned |
+| PWD-02 | Phase 6 | Planned |
+| PWD-03 | Phase 6 | Planned |
+| PWD-04 | Phase 6 | Planned |
+| PWD-05 | Phase 6 | Planned |
+| PWD-06 | Phase 6 | Planned |
+| PWD-07 | Phase 6 | Planned |
+
 **Coverage:**
-- v1 requirements: 53 total
-- Mapped to phases: 53
+- v1 requirements: 60 total
+- Mapped to phases: 60
 - Unmapped: 0
 
 ---
