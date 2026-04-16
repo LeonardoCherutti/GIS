@@ -22,18 +22,22 @@ func New(pool *pgxpool.Pool, cfg *config.Config) chi.Router {
 	hospitalRepo := repository.NewHospitalRepo(pool)
 	userRepo := repository.NewUserRepo(pool)
 	invitationRepo := repository.NewInvitationRepo(pool)
+	passwordResetRepo := repository.NewPasswordResetRepo(pool)
 
 	// Services
 	invitationService := service.NewInvitationService(invitationRepo, userRepo)
 	authService := service.NewAuthService(cfg, userRepo, invitationRepo)
 	hospitalService := service.NewHospitalService(hospitalRepo)
 	userService := service.NewUserService(userRepo, invitationService)
+	emailService := service.NewEmailService(cfg.ResendAPIKey, cfg.ResendFromEmail)
+	passwordResetService := service.NewPasswordResetService(passwordResetRepo, userRepo, emailService, cfg.FrontendURL)
 
 	// Handlers
 	authHandler := handler.NewAuthHandler(authService)
 	hospitalHandler := handler.NewHospitalHandler(hospitalService)
 	adminHandler := handler.NewAdminHandler(userService)
 	invitationHandler := handler.NewInvitationHandler(invitationService, authService)
+	passwordResetHandler := handler.NewPasswordResetHandler(passwordResetService)
 
 	// Public routes
 	r.Head("/api/health", handler.Health)
@@ -43,6 +47,9 @@ func New(pool *pgxpool.Pool, cfg *config.Config) chi.Router {
 	r.Get("/api/invitations/{token}", invitationHandler.Get)
 	r.Post("/api/invitations/{token}/accept-password", invitationHandler.AcceptPassword)
 	r.Post("/api/invitations/{token}/accept-google", invitationHandler.AcceptGoogle)
+	r.Post("/api/auth/forgot-password", passwordResetHandler.ForgotPassword)
+	r.Get("/api/auth/reset-password/{token}", passwordResetHandler.ValidateToken)
+	r.Post("/api/auth/reset-password/{token}", passwordResetHandler.ResetPassword)
 
 	// Protected routes
 	r.Group(func(r chi.Router) {
