@@ -3,13 +3,13 @@ gwd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-04-16T11:55:18.876Z"
+last_updated: "2026-04-16T12:16:37.096Z"
 progress:
   total_phases: 6
   completed_phases: 5
-  total_plans: 17
+  total_plans: 20
   completed_plans: 17
-  percent: 100
+  percent: 85
 ---
 
 # State: GIS - Gestao Inteligente em Saude
