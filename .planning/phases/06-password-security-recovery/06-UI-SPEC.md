@@ -36,13 +36,18 @@ Declared values (multiples of 4):
 |-------|-------|-------|
 | xs | 4px | Icon-to-text gaps in hint rows |
 | sm | 8px | Gap between strength bar segments |
-| md | 12px | Gap between form fields (matches existing gap-3) |
-| lg | 16px | Card inner padding horizontal |
+| lg | 16px | Card inner padding horizontal, gap between form fields |
 | xl | 24px | Card inner padding vertical (p-6) |
 | 2xl | 32px | Card outer padding (p-8 on sm+) |
 | 3xl | 48px | Vertical breathing room between card and viewport edge |
 
-Exceptions: Strength bar segments use 2px gap between them for visual separation. Touch targets are 44px height (h-11 class, matching existing inputs/buttons).
+Exceptions:
+
+| Value | Justification |
+|-------|---------------|
+| 2px | Visual micro-gap between strength bar segments for segment separation; not a layout token, purely decorative spacing within the PasswordStrengthMeter component |
+| 12px | Matches existing `gap-3` convention used on the register page for form-field vertical gaps; retained for consistency with the existing register form, not used as a general layout token |
+| 44px | Touch-target minimum height (h-11 class) for inputs and buttons; accessibility requirement, not a layout spacing token |
 
 ---
 
@@ -104,7 +109,7 @@ Accent reserved for: primary CTA buttons on forgot-password page, reset-password
 
 **Layout:** Vertical stack below password input field.
 
-1. **Color bar:** 4 equal-width segments, 8px height, 4px border-radius per segment. Segments fill left-to-right based on score. Gap between segments: 2px.
+1. **Color bar:** 4 equal-width segments, 8px height, 4px border-radius per segment. Segments fill left-to-right based on score. Gap between segments: 2px (exception — see Spacing Scale).
 2. **Hint text:** Below color bar. Single line: "Minimo 10 caracteres" with checkmark icon (lucide `Check`, 14px) when met, or circle icon (lucide `Circle`, 14px) when not met.
 
 **Scoring logic (frontend, length-only):**
@@ -123,6 +128,8 @@ Accent reserved for: primary CTA buttons on forgot-password page, reset-password
 ## Page Layouts
 
 ### Forgot Password Page (`/forgot-password`)
+
+**Focal point:** The email input field and "Enviar Link" submit button — the single action the user must complete.
 
 **Layout:** Centered card on full-viewport background. Identical to register page structure.
 
@@ -150,6 +157,8 @@ Accent reserved for: primary CTA buttons on forgot-password page, reset-password
 ```
 
 ### Reset Password Page (`/reset-password?token=...`)
+
+**Focal point:** The new password input with its strength meter — guiding the user toward a strong password choice.
 
 **Layout:** Centered card, identical to register page structure.
 
