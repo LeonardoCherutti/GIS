@@ -104,7 +104,7 @@ Plans:
 | 3. Core UI | 4/5 | In Progress|  |
 | 4. Polish + i18n | 2/2 | Complete   | 2026-04-07 |
 | 5. RBAC | 0/4 | Planned | |
-| 6. Password Security + Recovery | 0/0 | Planned | |
+| 6. Password Security + Recovery | 0/3 | Planned | |
 
 ### Phase 5: Role-Based Access Control (RBAC)
 
@@ -133,15 +133,21 @@ Plans:
 **Depends on:** Phase 5
 **Requirements**: PWD-01, PWD-02, PWD-03, PWD-04, PWD-05, PWD-06, PWD-07
 **Success Criteria** (what must be TRUE):
-  1. Password creation/change rejects passwords that don't meet strength rules (length, uppercase, number, special char)
+  1. Password creation/change rejects passwords that don't meet strength rules (min 10 chars + common password blocklist)
   2. User can request password reset from login page via email
   3. Reset token is time-limited and single-use
   4. User can set new password via reset link with strength validation
   5. Password strength meter provides real-time feedback during input
+**Plans:** 3 plans
+
+Plans:
+- [ ] 06-01-PLAN.md — Shared password validation package (10-char min + 10k blocklist) and invitation flow update
+- [ ] 06-02-PLAN.md — Backend reset flow: migration, repository, Resend email service, handlers, route wiring
+- [ ] 06-03-PLAN.md — Frontend: PasswordStrengthMeter, forgot-password page, reset-password page, login/register updates
 
 **UI hint**: yes
 
 ---
 
 *Roadmap created: 2026-04-07*
-*Last updated: 2026-04-16 after Phase 6 addition*
+*Last updated: 2026-04-16 after Phase 6 planning*
