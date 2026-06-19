@@ -46,7 +46,7 @@ export function DashboardEmbed({ url, title }: DashboardEmbedProps) {
   }
 
   return (
-    <div ref={containerRef} className="relative" style={{ height: 'calc(100vh - 8rem)' }}>
+    <div ref={containerRef} className="relative" style={{ height: 'calc(100vh - 4rem)' }}>
       {loading && (
         <div className="absolute inset-0 z-10 flex items-center justify-center">
           <div className="text-center">

@@ -12,12 +12,12 @@ export default function AppHeader() {
   const t = useTranslations('common')
 
   return (
-    <header className="flex items-center justify-between px-6 py-3 bg-surface-raised border-b border-border">
+    <header className="flex absolute opacity-0 hover:opacity-100 transition-all z-2 w-full top-0 items-center justify-between px-10 py-0 bg-surface-raised border-b border-border">
       <Link href="/hospital" aria-label={t('home')}>
         <Image
           src="/logo_horizontal.png"
           alt="G.S.I"
-          width={156}
+          width={140}
           height={53}
           className="dark:brightness-200 dark:contrast-50"
         />

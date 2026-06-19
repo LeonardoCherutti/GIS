@@ -39,7 +39,7 @@ export function FullscreenToggle({ containerRef }: FullscreenToggleProps) {
     <Button
       variant="ghost"
       size="icon"
-      className="absolute top-2 right-2 z-20"
+      className="absolute top-32 right-[20px] z-1"
       onClick={toggle}
       aria-label={isFullscreen ? t('fullscreen.exit') : t('fullscreen.enter')}
     >

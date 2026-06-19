@@ -91,24 +91,7 @@ function DashboardContent({
   }
 
   return (
-    <div className="px-6 py-4">
-      <div className="flex items-center justify-between mb-4">
-        <Link
-          href="/hospital"
-          className="flex items-center gap-2 text-sm transition-colors"
-          style={{ color: 'var(--palette-muted-fg)' }}
-        >
-          <ArrowLeft className="size-4" />
-          {th('backToHospitals')}
-        </Link>
-        <h2
-          className="text-lg font-semibold"
-          style={{ color: 'var(--palette-foreground)' }}
-        >
-          {hospital?.name}
-        </h2>
-        <div className="w-32" />
-      </div>
+    <div className="p-0">
 
       {hospital?.powerbi_url ? (
         <DashboardEmbed url={hospital.powerbi_url} title={hospital.name} />
