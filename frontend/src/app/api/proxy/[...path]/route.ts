@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import { handleDevMock } from '@/lib/dev/mock-data'
 
 const API_URL = process.env.API_URL ?? 'http://api:8080'
+const DEV_MODE = process.env.DEV_MODE === 'true'
 
 function extractEmailFromJwt(token: string): string | null {
   try {
@@ -16,6 +18,11 @@ function extractEmailFromJwt(token: string): string | null {
 
 async function proxy(req: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
   const { path } = await params
+
+  if (DEV_MODE) {
+    return handleDevMock(path, req)
+  }
+
   const target = `${API_URL}/api/${path.join('/')}${req.nextUrl.search}`
 
   const cookieStore = await cookies()

@@ -12,3 +12,5 @@ UPDATE hospitals SET cnes = '0000009', logo_url = NULL, period_start = NULL, per
 UPDATE hospitals SET cnes = '0000010', name = 'Hospital Nsa. Sra. do Perpétuo Socorro', logo_url = NULL, period_start = NULL, period_end = NULL WHERE cnes = '0013846';
 UPDATE hospitals SET cnes = '0000011', logo_url = NULL, period_start = NULL, period_end = NULL WHERE cnes = '2577623';
 UPDATE hospitals SET cnes = '0000012', logo_url = NULL, period_start = NULL, period_end = NULL WHERE cnes = '2246988';
+UPDATE hospitals SET cnes = '0000013', logo_url = NULL, period_start = NULL, period_end = NULL WHERE cnes = '2754738';
+UPDATE hospitals SET cnes = '0000014', logo_url = NULL, period_start = NULL, period_end = NULL WHERE cnes = '2374366';

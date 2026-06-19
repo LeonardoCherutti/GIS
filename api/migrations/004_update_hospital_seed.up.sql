@@ -13,6 +13,8 @@ UPDATE hospitals SET cnes = '2232014', logo_url = '/logos/CanoasDasGracas.png', 
 UPDATE hospitals SET cnes = '0013846', name = 'Hospital do Rocio', logo_url = NULL, period_start = '2021-01-01', period_end = '2025-12-31' WHERE cnes = '0000010';
 UPDATE hospitals SET cnes = '2577623', logo_url = '/logos/hcl.png', period_start = '2021-01-01', period_end = '2024-07-31' WHERE cnes = '0000011';
 UPDATE hospitals SET cnes = '2246988', logo_url = NULL, period_start = '2021-01-01', period_end = '2024-07-31' WHERE cnes = '0000012';
+UPDATE hospitals SET cnes = '2754738', logo_url = NULL, period_start = '2021-01-01', period_end = '2026-02-28' WHERE cnes = '0000013';
+UPDATE hospitals SET cnes = '2374366', logo_url = NULL, period_start = '2021-01-01', period_end = '2026-06-30' WHERE cnes = '0000014';
 
 -- Update dashboard_configs to reference new CNES codes
 UPDATE dashboard_configs SET hospital_id = (SELECT id FROM hospitals WHERE cnes = '0014125') WHERE hospital_id = (SELECT id FROM hospitals WHERE cnes = '0014125');

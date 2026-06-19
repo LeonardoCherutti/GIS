@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState, useCallback, ReactNode } from 'react'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { apiFetch } from '@/lib/api/client'
+import { DEV_MOCK_JWT, DEV_MOCK_USER } from '@/lib/dev/mock-data'
 
 interface AuthUser {
   email: string
@@ -19,6 +20,7 @@ interface AuthContextType {
   token: string | null
   login: (credentialResponse: { credential?: string }) => Promise<void>
   loginPassword: (email: string, password: string) => Promise<void>
+  loginDev: () => Promise<void>
   applySession: (token: string, user: AuthUser) => Promise<void>
   logout: () => Promise<void>
 }
@@ -120,6 +122,10 @@ function AuthProviderInner({ children }: { children: ReactNode }) {
     setToken(jwtToken)
   }, [])
 
+  const loginDev = useCallback(async () => {
+    await applySession(DEV_MOCK_JWT, DEV_MOCK_USER)
+  }, [applySession])
+
   const loginPassword = useCallback(async (email: string, password: string) => {
     const result = await apiFetch<{ token: string; user: AuthUser }>('/auth/login-password', {
       method: 'POST',
@@ -139,7 +145,7 @@ function AuthProviderInner({ children }: { children: ReactNode }) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, isLoading, token, login, loginPassword, applySession, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, isLoading, token, login, loginPassword, loginDev, applySession, logout }}>
       {children}
     </AuthContext.Provider>
   )

@@ -8,8 +8,10 @@ import { useAuth } from '@/contexts/AuthContext'
 import LoginButton from '@/components/auth/LoginButton'
 import PasswordLoginForm from '@/components/auth/PasswordLoginForm'
 
+const IS_DEV_MODE = process.env.NEXT_PUBLIC_DEV_MODE === 'true'
+
 export default function Home() {
-  const { isAuthenticated, isLoading } = useAuth()
+  const { isAuthenticated, isLoading, loginDev } = useAuth()
   const router = useRouter()
   const tc = useTranslations('common')
   const ta = useTranslations('auth')
@@ -84,6 +86,21 @@ export default function Home() {
           <div className="flex-1 h-px" style={{ background: 'var(--palette-border)' }} />
         </div>
         <PasswordLoginForm />
+        {IS_DEV_MODE && (
+          <div className="mt-6 pt-4" style={{ borderTop: '1px dashed var(--palette-border)' }}>
+            <button
+              onClick={loginDev}
+              className="w-full py-2 px-4 rounded-lg text-sm font-medium transition-colors"
+              style={{
+                background: 'var(--palette-warning-subtle, #fef3c7)',
+                color: 'var(--palette-warning-fg, #92400e)',
+                border: '1px dashed var(--palette-warning, #f59e0b)',
+              }}
+            >
+              ⚠ Entrar como desenvolvedor (modo dev)
+            </button>
+          </div>
+        )}
       </div>
     </main>
   )

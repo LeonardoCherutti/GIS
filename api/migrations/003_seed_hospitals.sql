@@ -11,7 +11,9 @@ INSERT INTO hospitals (name, cnes, sort_order, active) VALUES
     ('Hospital Nsa. Sra. Das Graças',                   '0000009', 9,  true),
     ('Hospital Nsa. Sra. do Perpétuo Socorro',          '0000010', 10, true),
     ('Hospital do Câncer de Londrina',                  '0000011', 11, true),
-    ('Hospital São Vicente de Paulo',                   '0000012', 12, true);
+    ('Hospital São Vicente de Paulo',                   '0000012', 12, true),
+    ('Santa Casa de Paranavaí',                         '0000013', 13, true),
+    ('Hospital Municipal Santa Luzia',                  '0000014', 14, true);
 
 -- Seed dashboard configurations with Power BI embed URLs
 INSERT INTO dashboard_configs (hospital_id, name, embed_url, active) VALUES
@@ -26,4 +28,6 @@ INSERT INTO dashboard_configs (hospital_id, name, embed_url, active) VALUES
     ((SELECT id FROM hospitals WHERE cnes = '0000009'), 'Principal', 'https://app.powerbi.com/view?r=eyJrIjoiMjE5OWFjOGItMzU2Zi00MDNlLTg2YzMtZmEwZDdmYTQ2YjE0IiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9', true),
     ((SELECT id FROM hospitals WHERE cnes = '0000010'), 'Principal', 'https://app.powerbi.com/view?r=eyJrIjoiN2E0ZDA5OGItNDU5OC00YzU4LTgzZmItNTQ5NjI2ZmI0MGI1IiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9', true),
     ((SELECT id FROM hospitals WHERE cnes = '0000011'), 'Principal', 'https://app.powerbi.com/view?r=eyJrIjoiNjNjMzczYzItMjZlMC00MjliLTgzYTItNDUyZWI1MTFkZjQwIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9', true),
-    ((SELECT id FROM hospitals WHERE cnes = '0000012'), 'Principal', 'https://app.powerbi.com/view?r=eyJrIjoiYWVjNjdlZDQtOTE3Yy00ZDNhLWE0MDQtNzNhZDcxOWRkOGEzIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9', true);
+    ((SELECT id FROM hospitals WHERE cnes = '0000012'), 'Principal', 'https://app.powerbi.com/view?r=eyJrIjoiYWVjNjdlZDQtOTE3Yy00ZDNhLWE0MDQtNzNhZDcxOWRkOGEzIiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9', true),
+    ((SELECT id FROM hospitals WHERE cnes = '0000013'), 'Principal', 'https://app.powerbi.com/view?r=eyJrIjoiYzA5YTc3YWEtNTU4OS00ZTVkLTg1NjItOGQxZjM4NmRhMDQ3IiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9', true),
+    ((SELECT id FROM hospitals WHERE cnes = '0000014'), 'Principal', 'https://app.powerbi.com/view?r=eyJrIjoiN2M1M2NjNDQtZTMwYy00YmUyLTgxNjQtYTIwYjg0NDU4MmU2IiwidCI6IjVhMmEwNzMxLTI1MmQtNGMwNy1hN2Y3LWJmNzUyNGM0NzEyZSJ9', true);
